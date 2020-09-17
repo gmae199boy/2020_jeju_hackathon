@@ -14,9 +14,9 @@ const RoomSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    deposit: {
-        type: Number,
-    },
+    // deposit: {
+    //     type: Number,
+    // },
     monthlyPayment: {
         type: Number,
     },
@@ -49,16 +49,16 @@ const RoomSchema = new mongoose.Schema({
     area: {
         type: String,
     },
-    nearStation: [
-        {
-            name: {
-                type: String,
-            },
-            walkTime: {
-                type: Number,
-            },
-        }
-    ],
+    // nearStation: [
+    //     {
+    //         name: {
+    //             type: String,
+    //         },
+    //         walkTime: {
+    //             type: Number,
+    //         },
+    //     }
+    // ],
     review: [
         {
             auth: {
