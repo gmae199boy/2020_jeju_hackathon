@@ -17,7 +17,7 @@ const createLessee = async (req, res) => {
 
 const readLessee = async(req, res) => {
     try {
-
+        return req.session.lessee;
     } catch (e) {
         console.log(e);
         return e;
@@ -37,11 +37,13 @@ const loginLessee = async (req, res) => {
         const lessee = await Lessee.findByLesseeName(req.body.name);
         if(lessee.name != req.body.name || lessee.password != req.body.password) 
             return null;
-
-        req.session.user = {
-            name: lessee.name,
-        };
-        return {lessee};
+        // if(req.session.user == undefined) {
+        //     req.session.user = new Array();
+        // }
+        req.session.lessee = {
+            lessee: lessee,
+        }
+        return req.session.user;
     } catch (e) {
         console.log(e);
         return e;

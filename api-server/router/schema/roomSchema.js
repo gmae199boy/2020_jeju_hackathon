@@ -14,13 +14,11 @@
 
 const registRoomSchema = {
     body: {
-        type: 'object',
         required: [
             'name',
             'roomType',
             'address',
             'state',
-            'deposit',
             'monthlyPayment',
         ],
         properties: {

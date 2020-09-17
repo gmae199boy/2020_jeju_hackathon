@@ -16,6 +16,8 @@ import fastifySession from 'fastify-session';
 import roomRouter from './router/roomRouter';
 import lessorRouter from './router/lessorRouter';
 import lesseeRouter from './router/lesseeRouter';
+import multer from 'fastify-multer';
+import path from 'path';
 
 require('dotenv').config();
 
@@ -35,12 +37,19 @@ const fastify = require('fastify')({
   trustProxy: true,
 });
 
+fastify.register(multer.contentParser);
+
 fastify.register(require('fastify-cors'), { 
   // put your options here
 });
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
-  secret: 'asdasdasdasdasdasdasdasdasdasdas',
+  secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
+  cookie: {secure: false,},
+});
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, 'public'),
+  prefix: '/public/', // optional: default '/'
 })
 
 // listen port
@@ -59,9 +68,6 @@ db.on('error', function(){
 db.once('open', function(){
     console.log('MongoDB connection success!');
 });
-
-
-
 
 // 커스텀 라우터 등록
 roomRouter.forEach(route => {fastify.route(route);});

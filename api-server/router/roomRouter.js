@@ -11,6 +11,18 @@ import {
     getRoomListSchema,
     registRoomSchema, 
 } from './schema/roomSchema';
+import multer from 'fastify-multer';
+import path from 'path';
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname,"/..", "/..", "/images/" ));
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + file.originalname);
+    }
+});
+  
+const upload = multer({ storage: storage });
 
 const routes = [
     {
@@ -21,6 +33,7 @@ const routes = [
     {
         method: 'POST',
         url: '/room/create',
+        preHandler: upload.array("images", 30),
         handler: registRoom,
         schema: registRoomSchema,
     },

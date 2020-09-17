@@ -3,6 +3,7 @@ import {Lessor} from '../../model/lessor';
 import { caver, ABI_JSON, ADDRESS } from '../../caver';
 import {registRoomTransaction} from './kas/kas';
 
+
 /**
  * 
  * response, reply 인 res 인자는 사용하지 않습니다.
@@ -88,7 +89,6 @@ const getRoomList = async (req, res) => {
 
 const registRoom = async (req, res) => {
     try {
-
         // _addr, _deposit, _monthly, _state, _roomType
         // let room = await registRoomTransaction(
         //     req.body.address,
@@ -98,7 +98,15 @@ const registRoom = async (req, res) => {
         //     req.body.roomType
         // );
         // return room;
-        const newRoom = new Room({...req.body});
+        let pathArray = new Array();
+        for (let i = 0; i < req.files.length; ++i) {
+            pathArray.push(req.files[i].filename);
+        }
+        const newRoom = new Room({
+            ...req.body,
+            imagePath: pathArray,
+        });
+        console.log(newRoom);
         return await Room.Save(newRoom);
     } catch (e) {
         console.log(e);

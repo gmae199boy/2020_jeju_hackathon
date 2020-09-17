@@ -72,6 +72,11 @@ const RoomSchema = new mongoose.Schema({
             },
         }
     ],
+    imagePath: [
+        {
+            type: String,
+        }
+    ]
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {

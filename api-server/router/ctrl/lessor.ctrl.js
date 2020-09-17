@@ -17,7 +17,7 @@ const createLessor = async (req, res) => {
 
 const readLessor = async(req, res) => {
     try {
-
+        return req.session.user;
     } catch (e) {
         console.log(e);
         return e;
@@ -41,7 +41,7 @@ const loginLessor = async (req, res) => {
         req.session.user = {
             name: lessor.name,
         };
-        return {res};
+        return {lessor};
     } catch (e) {
         console.log(e);
         return e;
