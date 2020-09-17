@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-// import autoIncrement from 'mongoose-auto-increment';
-import jwt from 'jsonwebtoken';
 
 const LessorSchema = new mongoose.Schema({
     id: {
@@ -17,7 +15,7 @@ const LessorSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Room',
-        }
+        },
     ],
     address: {
         type: String,
@@ -34,7 +32,7 @@ const LessorSchema = new mongoose.Schema({
             content: {
                 type: String,
             },
-        }
+        },
     ]
 });
 
@@ -70,14 +68,6 @@ LessorSchema.methods.generateToken = function() {
     );
     return token;
 }
-
-
-// LessorSchema.plugin(autoIncrement.plugin, {
-// 	model : 'Broker',
-// 	field : 'id',
-// 	startAt : 0, //시작
-// 	increment : 1 // 증가
-// });
 
 const Lessor = mongoose.model('Lessor', LessorSchema);
 export {Lessor};

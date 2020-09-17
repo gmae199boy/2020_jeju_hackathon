@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-// import autoIncrement from 'mongoose-auto-increment';
 
-const UserSchema = new mongoose.Schema({
+const ReviewSchema = new mongoose.Schema({
     id: {
         type: Number,
         unique: true,
@@ -15,25 +14,18 @@ const UserSchema = new mongoose.Schema({
     latelySeeRoom: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+            ref: 'Room',
         }
     ],
 });
 
-UserSchema.statics.findByProductName = async function(userName) {
+ReviewSchema.statics.findByReviewName = async function(userName) {
     return await this.findOne({ name: userName });
 };
 
-UserSchema.statics.findByProductId = async function(userId) {
+ReviewSchema.statics.findByReviewId = async function(userId) {
     return await this.findOne({ id: userId });
 };
 
-UserSchema.plugin(autoIncrement.plugin, {
-	model : 'User',
-	field : 'id',
-	startAt : 0, //시작
-	increment : 1 // 증가
-});
-
-const User = mongoose.model('Product', UserSchema);
-export {User};
+const Review = mongoose.model('Review', ReviewSchema);
+export {Review};

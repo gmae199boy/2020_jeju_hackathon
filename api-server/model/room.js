@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-// import autoIncrement from 'mongoose-auto-increment';
 
 const RoomSchema = new mongoose.Schema({
     id: {
@@ -113,13 +112,6 @@ RoomSchema.statics.Save = async function(instant) {
     instant.id = idNum;
     return await instant.save();
 }
-
-// RoomSchema.plugin(autoIncrement.plugin, {
-// 	model : 'Room',
-// 	field : 'id',
-// 	startAt : 0, //시작
-// 	increment : 1 // 증가
-// });
 
 const Room = mongoose.model('Room', RoomSchema);
 export {Room};
