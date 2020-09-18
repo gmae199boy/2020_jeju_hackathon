@@ -17,7 +17,6 @@ import roomRouter from './router/roomRouter';
 import lessorRouter from './router/lessorRouter';
 import lesseeRouter from './router/lesseeRouter';
 import multer from 'fastify-multer';
-import path from 'path';
 
 require('dotenv').config();
 
@@ -47,10 +46,6 @@ fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
   cookie: {secure: false,},
 });
-fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, 'public'),
-  prefix: '/public/', // optional: default '/'
-})
 
 // listen port
 const PORT = 8080;
@@ -58,7 +53,7 @@ const PORT = 8080;
 const HOST = '0.0.0.0';
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(`mongodb://localhost:27017/hackathon`, { useNewUrlParser: true,  useUnifiedTopology: true  });
+mongoose.connect(`mongodb://172.17.0.3:27017/hackathon`, { useNewUrlParser: true,  useUnifiedTopology: true  });
 
 var db = mongoose.connection;
 

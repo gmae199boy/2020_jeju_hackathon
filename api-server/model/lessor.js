@@ -17,31 +17,51 @@ const LessorSchema = new mongoose.Schema({
             ref: 'Room',
         },
     ],
-    address: {
-        type: String,
-    },
-    review: [
+    contractedRoom: [
         {
-            auth: {
+            room: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Lessee',
+                ref: 'Room',
             },
-            stars: {
-                type: Number,
+            office: {
+                orner: {
+                    type: String,
+                },
+                address: {
+                    type: String,
+                },
+                struture: {
+                    type: String,
+                },
+                acreage: {
+                    type: Number,
+                },
             },
-            content: {
-                type: String,
-            },
-        },
+            
+        }
     ]
+    // review: [
+    //     {
+    //         auth: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             ref: 'Lessee',
+    //         },
+    //         stars: {
+    //             type: Number,
+    //         },
+    //         content: {
+    //             type: String,
+    //         },
+    //     },
+    // ]
 });
 
 LessorSchema.statics.findByLessorName = async function(lessorName) {
-    return await this.findOne({ name: lessorName });
+    return await this.findOne({ name: lessorName }).lean();
 }
 
 LessorSchema.statics.findByLessorId = async function(lessorId) {
-    return await this.findOne({ id: lessorId });
+    return await this.findOne({ id: lessorId }).lean();
 }
 
 LessorSchema.statics.Save = async function(instant) {

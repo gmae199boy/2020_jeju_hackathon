@@ -26,11 +26,11 @@ const LesseeSchema = new mongoose.Schema({
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
-    return await this.findOne({ name: lesseeName });
+    return await this.findOne({ name: lesseeName }).lean();
 }
 
 LesseeSchema.statics.findByLesseeId = async function(lesseeId) {
-    return await this.findOne({ id: lesseeId });
+    return await this.findOne({ id: lesseeId }).lean();
 }
 
 LesseeSchema.statics.Save = async function(instant) {

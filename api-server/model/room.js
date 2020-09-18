@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const perPage = 20;
+
 const RoomSchema = new mongoose.Schema({
     id: {
         type: Number,
@@ -80,15 +82,14 @@ const RoomSchema = new mongoose.Schema({
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {
-    return await this.findOne({ name: roomName });
+    return await this.findOne({ name: roomName }).lean();
 };
 
 RoomSchema.statics.findByRoomId = async function(roomId) {
-    return await this.findOne({ id: roomId });
+    return await this.findOne({ id: roomId }).lean();
 };
 
 RoomSchema.statics.getRoomList = async function( page = 1 ) {
-    const perPage = 20;
     return await this.find({}, { 
         _id: 0, 
         id: 1,
@@ -98,6 +99,7 @@ RoomSchema.statics.getRoomList = async function( page = 1 ) {
         monthlyPayment: 1,
         address: 1,
         state: 1,
+        imagePath: 1,
     })
     .sort({ $natural: 1 })
     .skip((page - 1) * perPage)
@@ -107,6 +109,24 @@ RoomSchema.statics.getRoomList = async function( page = 1 ) {
     //     if (err) {console.log(err);return null;}
     //     return result;
     // });
+}
+
+RoomSchema.statics.searchByAddress = async function(address, page = 1) {
+    return await this.find({address: { $regex: address }}, { 
+        _id: 0, 
+        id: 1,
+        name: 1,
+        roomType: 1,
+        deposit: 1,
+        monthlyPayment: 1,
+        address: 1,
+        state: 1,
+        imagePath: 1,
+    })
+    .sort({ $natural: 1 })
+    .skip((page - 1) * perPage)
+    .limit(perPage)
+    .lean();
 }
 
 RoomSchema.statics.Save = async function(instant) {

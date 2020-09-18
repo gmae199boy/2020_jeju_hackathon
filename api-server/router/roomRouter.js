@@ -5,6 +5,7 @@ import {
     updateRoom,
     getRoomList,
     reportRoom,
+    searchRoomList,
 } from './ctrl/room.ctrl';
 import {     
     getRoomSchema,
@@ -13,6 +14,7 @@ import {
 } from './schema/roomSchema';
 import multer from 'fastify-multer';
 import path from 'path';
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, path.join(__dirname,"/..", "/..", "/images/" ));
@@ -29,6 +31,11 @@ const routes = [
         method: 'GET',
         url: '/rooms',
         handler: getRoomList,
+    },
+    {
+        method: 'GET',
+        url: '/rooms/:address',
+        handler: searchRoomList,
     },
     {
         method: 'POST',

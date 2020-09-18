@@ -14,7 +14,6 @@
 
 const createLessorSchema = {
     body: {
-        type: 'object',
         required: [
             'name',
             'password',

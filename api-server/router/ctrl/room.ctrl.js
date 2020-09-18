@@ -2,7 +2,10 @@ import {Room} from '../../model/room';
 import {Lessor} from '../../model/lessor';
 import { caver, ABI_JSON, ADDRESS } from '../../caver';
 import {registRoomTransaction} from './kas/kas';
+import fs from 'fs';
+import path from 'path';
 
+const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
 
 /**
  * 
@@ -14,36 +17,34 @@ import {registRoomTransaction} from './kas/kas';
  * 
  */
 
-
-
 /**
  * 테스트용 코드
  * DB를 지우고 다시 시작했을 때, 매물이 하나도 없으니 예제 3개를 만들어서
  * 등록해주는 함수
  */
-const createRoomList = async () => {
-    try{
-        const one = new Room({
-            name: 'one', roomType: 1, address: '청계산', deposit: 1000,
-            monthlyPayment: 10, state: 1,
-        });
-        const two = new Room({
-            name: 'two', roomType: 1, address: '정원', deposit: 1000,
-            monthlyPayment: 10, state: 1,
-        });
-        const three = new Room({
-            name: 'three', roomType: 1, address: '집앞', deposit: 1000,
-            monthlyPayment: 10, state: 1,
-        });
-        await Room.Save(one);
-        await Room.Save(two);
-        await Room.Save(three);
-        return true
-    } catch (e) {
-        console.log(e);
-        return e;
-    }
-}
+// const createRoomList = async () => {
+//     try{
+//         const one = new Room({
+//             name: 'one', roomType: 1, address: '청계산', deposit: 1000,
+//             monthlyPayment: 10, state: 1,
+//         });
+//         const two = new Room({
+//             name: 'two', roomType: 1, address: '정원', deposit: 1000,
+//             monthlyPayment: 10, state: 1,
+//         });
+//         const three = new Room({
+//             name: 'three', roomType: 1, address: '집앞', deposit: 1000,
+//             monthlyPayment: 10, state: 1,
+//         });
+//         await Room.Save(one);
+//         await Room.Save(two);
+//         await Room.Save(three);
+//         return true
+//     } catch (e) {
+//         console.log(e);
+//         return e;
+//     }
+// }
 
 /**
  * 
@@ -55,11 +56,19 @@ const getRoom = async (req, res) => {
 
         // (디버그용) 등록된 매물이 없을 경우, 
         // 매물 3개를 임의 등록한다.
-        const firstId = await Room.findByRoomId(0);
-        if (firstId == undefined) {
-            await createRoomList();
+        // const firstId = await Room.findByRoomId(0);
+        // if (firstId == undefined) {
+        //     await createRoomList();
+        // }
+        let room = await Room.findByRoomId(req.params.id);
+        
+        let images = new Array();
+        for (let i = 0; i < room.imagePath.length; ++i) {
+            images.push(fs.readFileSync(imagePath + room.imagePath[i]));
         }
-        const room = await Room.findByRoomId(req.params.id);
+        
+        room.images = images;
+
         return room;
         // let SC = new caver.klay.Contract(ABI_JSON, ADDRESS);
         // let result = await SC.methods.GetRoom(req.params.id).call();
@@ -73,14 +82,32 @@ const getRoom = async (req, res) => {
 
 const getRoomList = async (req, res) => {
     try {
-        const firstId = await Room.findByRoomId(0);
-        if (firstId == undefined) {
-            await createRoomList();
-        }
+        // const firstId = await Room.findByRoomId(0);
+        // if (firstId == undefined) {
+        //     await createRoomList();
+        // }
         let page = req.query.page;
         let list = await Room.getRoomList(page);
+
+        for (let i = 0; i < list.length; ++i) {
+            list[i].images = fs.readFileSync(imagePath + list[i].imagePath[0]);
+        }
+
         console.log(list);
+        
         return list;
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+}
+
+const searchRoomList = async (req, res) => {
+    try {
+        const roomList = await Room.searchByAddress(req.params.address);
+
+        console.log(roomList);
+        return roomList;
     } catch (e) {
         console.log(e);
         return e;
@@ -106,7 +133,7 @@ const registRoom = async (req, res) => {
             ...req.body,
             imagePath: pathArray,
         });
-        console.log(newRoom);
+
         return await Room.Save(newRoom);
     } catch (e) {
         console.log(e);
@@ -150,4 +177,5 @@ export  {
     updateRoom,
     getRoomList,
     reportRoom,
+    searchRoomList,
 };
