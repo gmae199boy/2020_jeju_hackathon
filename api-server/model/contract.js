@@ -17,58 +17,86 @@ const ContractSchema = new mongoose.Schema({
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'Lessee',
     // },
-    office: {
-        orner: {
-            type: String,
-        },
-        address: {
-            type: String,
-        },
-        struture: {
-            type: String,
-        },
-        acreage: {
-            type: Number,
-        },
+    officeId: {
+        type: Number,
     },
-    contractParty: {
-        lessor: {
-            name: {
-                type: String,
-            },
-            SSN: {
-                type: String,
-            },
-            phoneNumber: {
-                type: String,
-            },
-            address: {
-                type: String,
-            },
-        },
-        lessee: {
-            name: {
-                type: String,
-            },
-            SSN: {
-                type: String,
-            },
-            phoneNumber: {
-                type: String,
-            },
-            address: {
-                type: String,
-            },
-        },
+    officeId: {
+        type: Number,
     },
-    contractContent: {
-        date: {
-            type: String,
-        },
-        term: {
-            type: String,
-        },
-    },
+    officeOwner: {type: String},
+    officeAddress: {type: String},
+    officeStructure: {type: String},
+    officeAcreage: {type: Number},
+    lessorName: {type: String},
+    lessorSSN: {type: String},
+    lessorphoneNumber: {type: String},
+    lessorAddress: {type: String},
+    lesseeName: {type: String},
+    lesseeSSN: {type: String},
+    lesseePhoneNumber: {type: String},
+    lesseeAddress: {type: String},
+    date: {type: String},
+    term: {type: String},
+    lessorSignature: {type: String},
+    lesseeSignature: {type: String},
+    // office: {
+    //     orner: {
+    //         type: String,
+    //     },
+    //     address: {
+    //         type: String,
+    //     },
+    //     struture: {
+    //         type: String,
+    //     },
+    //     acreage: {
+    //         type: Number,
+    //     },
+    // },
+    // contractParty: {
+    //     lessor: {
+    //         name: {
+    //             type: String,
+    //         },
+    //         SSN: {
+    //             type: String,
+    //         },
+    //         phoneNumber: {
+    //             type: String,
+    //         },
+    //         address: {
+    //             type: String,
+    //         },
+    //     },
+    //     lessee: {
+    //         name: {
+    //             type: String,
+    //         },
+    //         SSN: {
+    //             type: String,
+    //         },
+    //         phoneNumber: {
+    //             type: String,
+    //         },
+    //         address: {
+    //             type: String,
+    //         },
+    //     },
+    // },
+    // contractContent: {
+    //     date: {
+    //         type: String,
+    //     },
+    //     term: {
+    //         type: String,
+    //     },
+    // },
+    // lessorSignature: {
+    //     type: Boolean,
+    // },
+    // lesseeSignature: {
+    //     type: Boolean,
+    // },
 });
 
 ContractSchema.statics.findByContractName = async function(contractName) {
@@ -77,6 +105,10 @@ ContractSchema.statics.findByContractName = async function(contractName) {
 
 ContractSchema.statics.findByContractId = async function(contractId) {
     return await this.findOne({ id: contractId }).lean();
+}
+
+ContractSchema.statics.findOfficeId = async function(officeId) {
+    return await this.findOne({officeId}).lean();
 }
 
 ContractSchema.statics.Save = async function(instant) {

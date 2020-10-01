@@ -31,6 +31,9 @@ const RoomSchema = new mongoose.Schema({
     state: {
         type: Number,
     },
+    content: {
+        type: String,
+    },
     reported: [
         {
             // reportLessee: {
@@ -45,7 +48,6 @@ const RoomSchema = new mongoose.Schema({
             },
         }
     ],
-
     // 필터링용 DB
     area: {
         type: String,

@@ -18,7 +18,6 @@ const registRoomSchema = {
             'name',
             'roomType',
             'address',
-            'state',
             'monthlyPayment',
         ],
         properties: {
@@ -28,6 +27,7 @@ const registRoomSchema = {
             monthlyPayment: {type: 'integer'},
             address: {type: 'string'},
             state: {type: 'integer'},
+            content: {type: 'string'}
         },
     },
     // response: {

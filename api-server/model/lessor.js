@@ -39,7 +39,16 @@ const LessorSchema = new mongoose.Schema({
             },
             
         }
-    ]
+    ],
+    payment: [
+        {
+            tid: {type: String, index: true},
+            pgToken: {type: String},
+        },
+    ],
+    credit: {
+        type: String,
+    },
     // review: [
     //     {
     //         auth: {

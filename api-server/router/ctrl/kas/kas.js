@@ -9,12 +9,12 @@ const createAccount = async() => {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                // "X-Krn": "krn:1001:wallet:GC1:account:rp1",
                 "X-Krn": "krn:1001:wallet:126:account:default",
                 "Authorization": process.env.BASIC,
             },
             // timeout: 10,
         });
+
         return await kasFetch.json();
     } catch (e) {
         console.log(e);
@@ -79,9 +79,49 @@ const registRoomTransaction = async(_addr, _deposit, _monthly, _state, _roomType
         // });
         // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ' + BCResult);
 }
+// _oOrner,
+// _oAddr,
+// _oStructure,
+// _oAcreage,
+// _rName,
+// _eName,
+// _date,
+// _term
+const contractRoom = async (o) => {
+    const SC = new caver.klay.Contract(ABI_JSON, ADDRESS);
+    const encodeABI = SC.methods.WriteContract(
+        // o.ornerName,
+        // o.address,
+        // o.structure,
+        // o.acreage,
+        // o.lessorName,
+        // o.lesseeName,
+        // o.date,
+        // o.term
+        "asd","asd","asd","asd","asd","asd","asd","asd"
+    ).encodeABI();
+
+    let kasFetch = await fetch("https://wallet-api.klaytnapi.com/v2/tx/contract/execute", {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-chain-id": "1001",
+            "Authorization": "Basic S0FTS1Q3TEFLMUFSWEpXUjJGQVVQWUpZOllCTWJDdkZ4aFRZS2tiQVU0dkxDTnpVaUNRQ3NZNCszL0o2Q1B0NHQ=",
+        },
+        body: JSON.stringify({
+            from: "0x37f282976C5C106Ab97972ceaea2da2dbf5Eed49",
+            to: "0xa17530000339882898838003CA6FC5505fb01679",
+            value: "0x0",
+            input: encodeABI,
+            submit: true,
+        })
+    });
+    return await kasFetch.json();
+}
 
 export {
     createAccount,
     readAccount,
     registRoomTransaction,
+    contractRoom,
 };

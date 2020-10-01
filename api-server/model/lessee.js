@@ -22,7 +22,16 @@ const LesseeSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             res: "Room",
         }
-    ]
+    ],
+    payment: [
+        {
+            tid: {type: String, index: true},
+            pgToken: {type: String},
+        },
+    ],
+    credit: {
+        type: String,
+    },
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {

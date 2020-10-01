@@ -7,8 +7,9 @@ const createLessor = async (req, res) => {
 
         const newLessor = new Lessor({...req.body, address: account.result.address});
         req.session.user = {
-            name: newLessor.name,
-        };
+            user: newLessor,
+        }
+
         return await Lessor.Save(newLessor);
     } catch (e) {
         console.log(e);
@@ -39,9 +40,9 @@ const loginLessor = async (req, res) => {
             return null;
 
         req.session.user = {
-            name: lessor.name,
-        };
-        return {lessor};
+            user: lessor,
+        }
+        return lessor;
     } catch (e) {
         console.log(e);
         return e;

@@ -16,7 +16,11 @@ import fastifySession from 'fastify-session';
 import roomRouter from './router/roomRouter';
 import lessorRouter from './router/lessorRouter';
 import lesseeRouter from './router/lesseeRouter';
+import shopRouter from './router/shopRouter';
+
 import multer from 'fastify-multer';
+import fastifyWs from 'fastify-websocket';
+
 
 require('dotenv').config();
 
@@ -40,12 +44,15 @@ fastify.register(multer.contentParser);
 
 fastify.register(require('fastify-cors'), { 
   // put your options here
+  origin: true,
 });
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
   cookie: {secure: false,},
 });
+
+fastify.register(fastifyWs);
 
 // listen port
 const PORT = 8080;
@@ -68,6 +75,7 @@ db.once('open', function(){
 roomRouter.forEach(route => {fastify.route(route);});
 lessorRouter.forEach(route => {fastify.route(route);});
 lesseeRouter.forEach(route => {fastify.route(route);});
+shopRouter.forEach(route => {fastify.route(route);});
 
 // Run the server!
 const start = async () => {

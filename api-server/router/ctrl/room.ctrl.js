@@ -1,7 +1,9 @@
 import {Room} from '../../model/room';
+import {Contract} from '../../model/contract';
 import {Lessor} from '../../model/lessor';
 import { caver, ABI_JSON, ADDRESS } from '../../caver';
 import {registRoomTransaction} from './kas/kas';
+import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 
@@ -22,29 +24,6 @@ const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
  * DB를 지우고 다시 시작했을 때, 매물이 하나도 없으니 예제 3개를 만들어서
  * 등록해주는 함수
  */
-// const createRoomList = async () => {
-//     try{
-//         const one = new Room({
-//             name: 'one', roomType: 1, address: '청계산', deposit: 1000,
-//             monthlyPayment: 10, state: 1,
-//         });
-//         const two = new Room({
-//             name: 'two', roomType: 1, address: '정원', deposit: 1000,
-//             monthlyPayment: 10, state: 1,
-//         });
-//         const three = new Room({
-//             name: 'three', roomType: 1, address: '집앞', deposit: 1000,
-//             monthlyPayment: 10, state: 1,
-//         });
-//         await Room.Save(one);
-//         await Room.Save(two);
-//         await Room.Save(three);
-//         return true
-//     } catch (e) {
-//         console.log(e);
-//         return e;
-//     }
-// }
 
 /**
  * 
@@ -53,13 +32,14 @@ const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
  */
 const getRoom = async (req, res) => {
     try {
-
         // (디버그용) 등록된 매물이 없을 경우, 
         // 매물 3개를 임의 등록한다.
         // const firstId = await Room.findByRoomId(0);
         // if (firstId == undefined) {
         //     await createRoomList();
         // }
+
+
         let room = await Room.findByRoomId(req.params.id);
         
         let images = new Array();
@@ -70,6 +50,8 @@ const getRoom = async (req, res) => {
         room.images = images;
 
         return room;
+
+
         // let SC = new caver.klay.Contract(ABI_JSON, ADDRESS);
         // let result = await SC.methods.GetRoom(req.params.id).call();
         // console.log(result);
@@ -90,24 +72,31 @@ const getRoomList = async (req, res) => {
         let list = await Room.getRoomList(page);
 
         for (let i = 0; i < list.length; ++i) {
+            if (list[i].imagePath[0] == undefined) continue;
             list[i].images = fs.readFileSync(imagePath + list[i].imagePath[0]);
         }
 
         console.log(list);
-        
+    
         return list;
     } catch (e) {
-        console.log(e);
+    console.log(e);
         return e;
     }
 }
 
 const searchRoomList = async (req, res) => {
     try {
-        const roomList = await Room.searchByAddress(req.params.address);
+        let page = req.query.page;
+        const list = await Room.searchByAddress(req.params.address, page);
 
-        console.log(roomList);
-        return roomList;
+        for (let i = 0; i < list.length; ++i) {
+            if (list[i].imagePath[0] == undefined) continue;
+            list[i].images = fs.readFileSync(imagePath + list[i].imagePath[0]);
+        }
+
+        console.log(list);
+        return list;
     } catch (e) {
         console.log(e);
         return e;
@@ -125,10 +114,14 @@ const registRoom = async (req, res) => {
         //     req.body.roomType
         // );
         // return room;
+
         let pathArray = new Array();
-        for (let i = 0; i < req.files.length; ++i) {
-            pathArray.push(req.files[i].filename);
+        if(req.files != undefined) {
+            for (let i = 0; i < req.files.length; ++i) {
+                pathArray.push(req.files[i].filename);
+            }
         }
+
         const newRoom = new Room({
             ...req.body,
             imagePath: pathArray,
@@ -162,8 +155,30 @@ const reportRoom = async (req, res) => {
         let room = await Room.findByRoomId(req.params.id);
         
         if (!room) return null;
+
         room.reported.push({...req.body});
         return await Room.Save(room);
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+}
+
+const contractRoom = async (req, res) => {
+    try {
+        // const room = await Room.findByRoomId(req.params.id);
+        let contract = await Contract.findOfficeId(req.params.id);
+        console.log(contract);
+        if (contract == undefined) {
+            const newContract = new Contract({
+                ...req.body,
+            });
+            return await Contract.Save(newContract);
+        }
+        console.log(req.body);
+        contract = {...req.body};
+        return await contract.save();
+
     } catch (e) {
         console.log(e);
         return e;
@@ -178,4 +193,5 @@ export  {
     getRoomList,
     reportRoom,
     searchRoomList,
+    contractRoom,
 };
