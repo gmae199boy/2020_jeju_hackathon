@@ -9,7 +9,7 @@ class report extends React.Component{
     rooms: []
   };
   getRooms = async () => {
-    const rooms = await axios.get("/rooms");
+    const rooms = await axios.get("https://blog.nopublisher.dev/rooms");
     console.log(rooms);
     this.setState({ rooms , isLoading: false });
   };
@@ -30,10 +30,11 @@ class report extends React.Component{
             <Button variant="danger">신고</Button>
             {rooms && rooms.data.map(room => (
                 <Room
-                 name={room.name}
-                 roomType={room.roomType}
-                 address={room.address}
-                 progress={room.progress}
+                name={room.name}
+                roomType={room.roomType}
+                address={room.address}
+                state={room.state}
+                monthlyPayment={room.monthlyPayment}
                />
              ))} 
           </div>

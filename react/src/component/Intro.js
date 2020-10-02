@@ -18,14 +18,16 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function Title (){
+function Intro (){
     const classes = useStyles();
     return(
-
     <div>
-        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-            제주살아봤수꽈
-        </Typography>
+        <div style = {{marginTop: '10em'}}>
+          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+              집피스
+          </Typography>
+        </div>
+        
         {/* <Typography variant="h5" align="center" color="textSecondary" paragraph>
             어떤 집을 찾으시나요?
         </Typography> */}
@@ -47,4 +49,4 @@ function Title (){
     );
 }
 
-export default Title;
+export default Intro;
