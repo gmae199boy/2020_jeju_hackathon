@@ -31,32 +31,7 @@ class App extends Component{
   render(){
     return( 
       <div className="App">
-        {/* <button onClick={this.goback}>뒤로</button> */}
-              <CssBaseline />
-              <AppBar position="relative">
-                <Toolbar>
-                <Navbar bg="#6610f2" variant="dark">
-                      <Nav className="mr-auto">
-                       
-                        <Navbar.Brand href="/" >Home </Navbar.Brand>
-                          <Nav.Link  href="/RegisterRoom"> 등록 </Nav.Link>
-                          <Nav.Link href="/report">마이페이지</Nav.Link>                                                                        
-                      </Nav>
-                  </Navbar>
-                </Toolbar>
-              </AppBar>
-              <br /><br /><br />
-
-            <div>
-              <Route path='/' component={Home}/>
-              <Route exact path='/' component={Title}/>
-              <Route path='/Login' component={Login}/>
-              <Route path='/Signup' component={Signup}/>
-              <Route exact path='/rooms' component={rooms}/>
-              <Route path='/RegisterRoom' component={RegisterRoom}/>
-              <Route path='/report' component={report}/>
-              
-            </div>
+        <li>asdasd</li>
       </div>
       
       );

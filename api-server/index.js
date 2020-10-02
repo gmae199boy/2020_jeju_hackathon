@@ -21,6 +21,10 @@ import shopRouter from './router/shopRouter';
 import multer from 'fastify-multer';
 import fastifyWs from 'fastify-websocket';
 
+import fs from 'fs';
+import path from 'path';
+
+const html = fs.readFileSync(path.join(__dirname, '/..', '/react/build', 'index.html'));
 
 require('dotenv').config();
 
@@ -52,6 +56,10 @@ fastify.register(fastifySession, {
   cookie: {secure: false,},
 });
 
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, '/..', '/react/build'),
+})
+
 fastify.register(fastifyWs);
 
 // listen port
@@ -72,6 +80,9 @@ db.once('open', function(){
 });
 
 // 커스텀 라우터 등록
+fastify.get('/', (req, res) => {
+  res.type('text/html').send(html);
+})
 roomRouter.forEach(route => {fastify.route(route);});
 lessorRouter.forEach(route => {fastify.route(route);});
 lesseeRouter.forEach(route => {fastify.route(route);});
