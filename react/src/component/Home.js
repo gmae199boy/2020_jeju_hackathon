@@ -1,14 +1,13 @@
 import React from "react";
-import './App.css';
 import Nav from 'react-bootstrap/Nav'
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Tab, Row, Col} from "react-bootstrap";
-import Navbar from 'react-bootstrap/Navbar'
-import App from './App';
+import App from '../App';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -30,7 +29,11 @@ function Home(){
   const classes = useStyles();
     return(
       <div>
-        
+        <div style = {{marginTop: '10em'}}>
+          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+              집피스
+          </Typography>
+        </div>
       </div>
     //     <React.Fragment>
     //     <CssBaseline />
