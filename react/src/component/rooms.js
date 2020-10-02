@@ -2,23 +2,13 @@ import React from "react";
 import axios from "axios";
 import Room from "./Room";
 
-
-const RoomPage = (nav, object) => {
-  nav.navigate({
-     routeName: 'roomPage',
-     params: {
-         id: object,
-     } ,
-  });
-}
-
 class rooms extends React.Component{
   state = {
     isLoading: true,
     rooms: []
   };
   getRooms = async () => {
-    const rooms = await axios.get("http://localhost:8080/rooms");
+    const rooms = await axios.get("https://blog.nopublisher.dev/rooms");
     console.log(rooms);
     this.setState({ rooms , isLoading: false });
   };
@@ -27,7 +17,7 @@ class rooms extends React.Component{
   }
 
   render() {
-    const {isLoading, rooms, name, address, id, navigation} = this.state;
+    const {isLoading, rooms} = this.state;
     return (
         <section className="container"> 
           {isLoading ? (
@@ -41,9 +31,9 @@ class rooms extends React.Component{
                   <Room
                     name={R.name}
                     roomType={R.roomType}
-                    deposit={R.deposit}
                     address={R.address}
-                    progress={R.progress}
+                    state={R.state}
+                    monthlyPayment={R.monthlyPayment}
                   />
                   // </div>
                 ))}
