@@ -1,24 +1,23 @@
-import React,{ Component } from 'react';
+import React,{ useState } from 'react';
 import './Login.css';
 import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
 
 
 
-class Login extends Component {
+function Login() {
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
 
-    state = {
-        name: '',
-        password: '',
+
+    const onChangeName = e => {
+        setName(e.target.value);
     }
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
+    const onChangePassword = e => {
+        setPassword(e.target.value);
     }
 
-    render() {
         return(
             <Form className="login-form">
                 {/* <h1>Xestate</h1> */}
@@ -28,20 +27,16 @@ class Login extends Component {
                     <Input type="name"
                            placeholder="name"
                            name = "name"
-                           value = {this.state.name}
-                           onChange={
-                            this.handleChange
-                            }/>
+                           value = {name}
+                           onChange={onChangeName}/>
                 </FormGroup>
                 <FormGroup>
                     <Label>PASSWORD</Label>
                     <Input type="password"
                            placeholder="Password"
                            name = "password"
-                           value = {this.state.password}
-                           onChange={
-                            this.handleChange
-                            }/>
+                           value = {password}
+                           onChange={onChangePassword}/>
                 </FormGroup>
                 <Button className="btn-lg btn-dark btn-block"
                     onClick={
@@ -50,11 +45,11 @@ class Login extends Component {
                             method: 'POST',
                             url: `https://blog.nopublisher.dev/lessee/login`,
                             body: {
-                                    name:this.state.name,
-                                    password: this.state.password,
+                                    name:name,
+                                    password: password,
                                     } 
                         }).then(console.log)
-                        console.log(this.state);
+                        // console.log(this.state);
                         }
                     }
                     href = '/Home'
@@ -69,6 +64,5 @@ class Login extends Component {
             </Form>
         );
     }
-}
 
 export default Login;
