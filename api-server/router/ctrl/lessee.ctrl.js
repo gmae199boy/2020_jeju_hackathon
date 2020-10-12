@@ -3,9 +3,9 @@ import { createAccount, } from './kas/kas';
 
 const createLessee = async (req, res) => {
     try {
-        // let account = await createAccount();
+        let account = await createAccount();
 
-        const newLessee = new Lessee({...req.body});
+        const newLessee = new Lessee({...req.body, address: account.address});
 
         req.session.user = {
             user: newLessee,
@@ -54,10 +54,17 @@ const loginLessee = async (req, res) => {
     }
 }
 
+const logoutLessee = async (req, res) => {
+    if(req.session.user == undefined) return false;
+    req.session.user = undefined;
+    return true;
+}
+
 export {
     createLessee,
     readLessee,
     updateLessee,
     deleteLessee,
     loginLessee,
+    logoutLessee,
 };

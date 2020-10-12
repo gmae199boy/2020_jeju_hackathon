@@ -80,7 +80,10 @@ const RoomSchema = new mongoose.Schema({
         {
             type: String,
         }
-    ]
+    ],
+    transactionHash: {
+        type: String,
+    }
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {

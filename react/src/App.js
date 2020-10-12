@@ -36,10 +36,6 @@ class App extends Component{
   render(){
     const { classes } = this.props;
     return( 
-<<<<<<< HEAD
-      <div className="App">
-        <li>asdasd</li>
-=======
       <div>
         <Router>
         {/* <div className={styles.root}>
@@ -103,7 +99,6 @@ class App extends Component{
                 <Route path='/contract' component={Contract}/>      
               </div>
         </Router>
->>>>>>> f050e07326f748ce22b137b4208caf1b294532aa
       </div>
       
       );

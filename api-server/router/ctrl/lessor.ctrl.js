@@ -5,7 +5,7 @@ const createLessor = async (req, res) => {
     try {
         let account = await createAccount();
 
-        const newLessor = new Lessor({...req.body, address: account.result.address});
+        const newLessor = new Lessor({...req.body, address: account.address});
         req.session.user = {
             user: newLessor,
         }
@@ -49,10 +49,17 @@ const loginLessor = async (req, res) => {
     }
 }
 
+const logoutLessor = async (req, res) => {
+    if(req.session.user == undefined) return false;
+    req.session.user = undefined;
+    return true;
+}
+
 export {
     createLessor,
     readLessor,
     updateLessor,
     deleteLessor,
     loginLessor,
+    logoutLessor,
 };

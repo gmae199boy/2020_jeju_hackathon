@@ -49,6 +49,9 @@ const LessorSchema = new mongoose.Schema({
     credit: {
         type: String,
     },
+    address: {
+        type: String,
+    }
     // review: [
     //     {
     //         auth: {

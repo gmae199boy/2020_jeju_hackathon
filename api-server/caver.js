@@ -8,42 +8,130 @@ const caver = new Caver(rpcURL);
 
 const ABI = `[
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_oOrner",
-				"type": "string"
-			},
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lessors",
+		"outputs": [
 			{
-				"name": "_oAddr",
-				"type": "string"
-			},
-			{
-				"name": "_oStructure",
-				"type": "string"
-			},
-			{
-				"name": "_oAcreage",
-				"type": "string"
-			},
-			{
-				"name": "_rName",
-				"type": "string"
-			},
-			{
-				"name": "_eName",
-				"type": "string"
-			},
-			{
-				"name": "_date",
-				"type": "string"
-			},
-			{
-				"name": "_term",
+				"name": "name",
 				"type": "string"
 			}
 		],
-		"name": "WriteContract",
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rooms",
+		"outputs": [
+			{
+				"name": "registLessor",
+				"type": "address"
+			},
+			{
+				"name": "addr",
+				"type": "string"
+			},
+			{
+				"name": "deposit",
+				"type": "uint32"
+			},
+			{
+				"name": "monthlyPayment",
+				"type": "uint32"
+			},
+			{
+				"name": "state",
+				"type": "uint8"
+			},
+			{
+				"name": "roomType",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lessees",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_userType",
+				"type": "uint8"
+			},
+			{
+				"name": "_userName",
+				"type": "string"
+			}
+		],
+		"name": "Signup",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_addr",
+				"type": "string"
+			},
+			{
+				"name": "_deposit",
+				"type": "uint32"
+			},
+			{
+				"name": "_monthly",
+				"type": "uint32"
+			},
+			{
+				"name": "_state",
+				"type": "uint8"
+			},
+			{
+				"name": "_roomType",
+				"type": "uint8"
+			}
+		],
+		"name": "RegistRoom",
 		"outputs": [
 			{
 				"name": "",
@@ -58,45 +146,64 @@ const ABI = `[
 		"constant": true,
 		"inputs": [
 			{
-				"name": "_id",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "GetContract",
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_roomId",
+				"type": "uint256"
+			}
+		],
+		"name": "GetRoom",
 		"outputs": [
 			{
 				"components": [
 					{
-						"name": "orner",
-						"type": "string"
+						"name": "registLessor",
+						"type": "address"
 					},
 					{
 						"name": "addr",
 						"type": "string"
 					},
 					{
-						"name": "structure",
-						"type": "string"
+						"name": "deposit",
+						"type": "uint32"
 					},
 					{
-						"name": "acreage",
-						"type": "string"
+						"name": "monthlyPayment",
+						"type": "uint32"
 					},
 					{
-						"name": "lessorName",
-						"type": "string"
+						"name": "state",
+						"type": "uint8"
 					},
 					{
-						"name": "lesseeName",
-						"type": "string"
+						"name": "roomType",
+						"type": "uint8"
 					},
 					{
-						"name": "date",
-						"type": "string"
+						"name": "reported",
+						"type": "address[]"
 					},
 					{
-						"name": "term",
-						"type": "string"
+						"name": "reviewIndex",
+						"type": "uint256[]"
 					}
 				],
 				"name": "",
@@ -112,56 +219,43 @@ const ABI = `[
 		"inputs": [
 			{
 				"name": "",
-				"type": "address"
-			},
-			{
-				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "contracts",
+		"name": "reviews",
 		"outputs": [
 			{
-				"name": "orner",
-				"type": "string"
+				"name": "auth",
+				"type": "address"
 			},
 			{
-				"name": "addr",
-				"type": "string"
+				"name": "roomIndex",
+				"type": "uint64"
 			},
 			{
-				"name": "structure",
-				"type": "string"
-			},
-			{
-				"name": "acreage",
-				"type": "string"
-			},
-			{
-				"name": "lessorName",
-				"type": "string"
-			},
-			{
-				"name": "lesseeName",
-				"type": "string"
-			},
-			{
-				"name": "date",
-				"type": "string"
-			},
-			{
-				"name": "term",
-				"type": "string"
+				"name": "stars",
+				"type": "uint8"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_initNum",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	}
 ]`;
 
 const ABI_JSON = JSON.parse(ABI);
-const ADDRESS = "0xa17530000339882898838003CA6FC5505fb01679";
+const ADDRESS = "0x9452c097da583a45fa719c06d181733Af7aadCB7";
 export {
     caver,
     ABI_JSON,

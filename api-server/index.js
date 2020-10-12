@@ -24,8 +24,6 @@ import fastifyWs from 'fastify-websocket';
 import fs from 'fs';
 import path from 'path';
 
-const html = fs.readFileSync(path.join(__dirname, '/..', '/react/build', 'index.html'));
-
 require('dotenv').config();
 
 /**
@@ -47,18 +45,19 @@ const fastify = require('fastify')({
 fastify.register(multer.contentParser);
 
 fastify.register(require('fastify-cors'), { 
-  // put your options here
-  origin: true,
 });
+
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
   cookie: {secure: false,},
 });
 
-fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '/..', '/react/build'),
-})
+// 리액트 SPA 적용 시 필요함
+// const html = fs.readFileSync(path.join(__dirname, '/..', '/react/build', 'index.html'));
+// fastify.register(require('fastify-static'), {
+//   root: path.join(__dirname, '/..', '/react/build'),
+// })
 
 fastify.register(fastifyWs);
 
@@ -68,7 +67,7 @@ const PORT = 8080;
 const HOST = '0.0.0.0';
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(`mongodb://172.17.0.3:27017/hackathon`, { useNewUrlParser: true,  useUnifiedTopology: true  });
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true,  useUnifiedTopology: true  });
 
 var db = mongoose.connection;
 
@@ -80,9 +79,10 @@ db.once('open', function(){
 });
 
 // 커스텀 라우터 등록
-fastify.get('/', (req, res) => {
-  res.type('text/html').send(html);
-})
+// fastify.get('/', (req, res) => {
+//   res.type('text/html').send(html);
+// })
+
 roomRouter.forEach(route => {fastify.route(route);});
 lessorRouter.forEach(route => {fastify.route(route);});
 lesseeRouter.forEach(route => {fastify.route(route);});

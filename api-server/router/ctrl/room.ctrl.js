@@ -2,7 +2,10 @@ import {Room} from '../../model/room';
 import {Contract} from '../../model/contract';
 import {Lessor} from '../../model/lessor';
 import { caver, ABI_JSON, ADDRESS } from '../../caver';
-import {registRoomTransaction} from './kas/kas';
+import {
+    registRoomTransaction,
+    getRoomTransaction,
+} from './kas/kas';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
@@ -39,14 +42,55 @@ const getRoom = async (req, res) => {
         //     await createRoomList();
         // }
 
-
         let room = await Room.findByRoomId(req.params.id);
         
         let images = new Array();
         for (let i = 0; i < room.imagePath.length; ++i) {
             images.push(fs.readFileSync(imagePath + room.imagePath[i]));
         }
-        
+
+        const tran = await getRoomTransaction(0);
+        console.log(tran.result);
+
+        const tt = await caver.abi.decodeParameters([
+            {
+                "name": "registLessor",
+                "type": "address"
+            },
+            {
+                "name": "addr",
+                "type": "string"
+            },
+            {
+                "name": "deposit",
+                "type": "uint32"
+            },
+            {
+                "name": "monthlyPayment",
+                "type": "uint32"
+            },
+            {
+                "name": "state",
+                "type": "uint8"
+            },
+            {
+                "name": "roomType",
+                "type": "uint8"
+            },
+            // {
+            //     "name": "reported",
+            //     "type": "address[1]"
+            // },
+            // {
+            //     "name": "reviewIndex",
+            //     "type": "uint256[1]"
+            // }
+        ],
+        tran.result
+        );
+
+        console.log(tt);
+
         room.images = images;
 
         return room;
@@ -106,14 +150,15 @@ const searchRoomList = async (req, res) => {
 const registRoom = async (req, res) => {
     try {
         // _addr, _deposit, _monthly, _state, _roomType
-        // let room = await registRoomTransaction(
-        //     req.body.address,
-        //     req.body.deposit,
-        //     req.body.monthlyPayment,
-        //     req.body.state,
-        //     req.body.roomType
-        // );
-        // return room;
+        let room = await registRoomTransaction(
+            req.body.address,
+            0, // deposit
+            req.body.monthlyPayment,
+            req.body.state,
+            req.body.roomType,
+        );
+
+        console.log(room);
 
         let pathArray = new Array();
         if(req.files != undefined) {
@@ -125,6 +170,7 @@ const registRoom = async (req, res) => {
         const newRoom = new Room({
             ...req.body,
             imagePath: pathArray,
+            transactionHash: room.transactionHash,
         });
 
         return await Room.Save(newRoom);

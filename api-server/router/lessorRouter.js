@@ -4,6 +4,7 @@ import {
     deleteLessor,
     updateLessor,
     loginLessor,
+    logoutLessor,
 } from './ctrl/lessor.ctrl';
 import { createLessorSchema } from './schema/lessorSchema';
 
@@ -18,6 +19,11 @@ const routes = [
         method: 'POST',
         url: '/lessor/login',
         handler: loginLessor,
+    },
+    {
+        method: 'GET',
+        url: '/lessor/logout',
+        handler: logoutLessor,
     },
     {
         method: 'GET',

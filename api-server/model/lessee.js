@@ -32,6 +32,9 @@ const LesseeSchema = new mongoose.Schema({
     credit: {
         type: String,
     },
+    address: {
+        type: String,
+    }
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
