@@ -34,7 +34,10 @@ const LesseeSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-    }
+    },
+    userType: {
+        type: Number,
+    },
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
