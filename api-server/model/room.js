@@ -83,7 +83,13 @@ const RoomSchema = new mongoose.Schema({
     ],
     transactionHash: {
         type: String,
-    }
+    },
+    coordsx: {
+        type: Number,
+    },
+    coordsy: {
+        type: Number,
+    },
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {
