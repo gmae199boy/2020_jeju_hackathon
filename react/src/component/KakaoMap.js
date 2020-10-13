@@ -1,36 +1,16 @@
-/**
- * created by gmae199boy
- */
 import React, {useEffect} from "react";
 
-function KakaoMap({coords}) {
+function KakaoMap({}) {
     
     useEffect(() => {
-        const { daum } = window;
-        const mapContainer = document.getElementById('map');
+        const { kakao } = window;
+        const container = document.getElementById('map');
 
 		const options = {
-			center: coords,//new daum.maps.LatLng(x, y),
-			level: 5
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
 		};
-        const map = new daum.maps.Map(mapContainer, options);
-
-        // //주소-좌표 변환 객체를 생성
-        // let geocoder = new daum.maps.services.Geocoder();
-
-        //마커를 미리 생성
-        let marker = new daum.maps.Marker({
-            position: coords,//new daum.maps.LatLng(x, y),
-            map: map
-        });
-        
-        // 지도를 보여준다.
-        mapContainer.style.display = "block";
-        map.relayout();
-        // 지도 중심을 변경한다.
-        map.setCenter(coords);
-        // 마커를 결과값으로 받은 위치로 옮긴다.
-        marker.setPosition(coords)
+        const map = new kakao.maps.Map(container, options);
     }, []);
     return(
         <div id="map" style={{width: '340px', height: '200px',}}></div>

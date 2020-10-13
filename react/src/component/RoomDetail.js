@@ -62,9 +62,6 @@ function RoomDetail() {
     const id = (urlElements[2])
     const classes = useStyles();
 
-    // 카카오 맵
-    const [mapView, setMapView] = useState(null);
-
 
     useEffect(() => {
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
@@ -74,13 +71,6 @@ function RoomDetail() {
             let pp = new Buffer(res.data.images[0]).toString('base64');
             setB64(pp);
             setMimeType("image/png"); // e.g., image/png
-
-            const {daum} = window;
-
-            // 해당 주소에 대한 좌표를 받아서
-            const coords = new daum.maps.LatLng(res.data.coordsy, res.data.coordsx);
-
-            setMapView(<KakaoMap coords={coords}></KakaoMap>);
         }) 
     }, [])
 
@@ -100,7 +90,7 @@ function RoomDetail() {
     <br />
     <div>
         <h5> 지도 </h5>
-        {mapView && mapView}<br />
+        <KakaoMap /><br />
     </div>
         <div>
             <Button display="inline-block" variant="contained" size="large" color="primary" className={classes.margin} style={{marginLeft:'0.5em', width:'150px',left:'5px', top:'120h'}}>
