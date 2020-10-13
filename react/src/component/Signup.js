@@ -23,6 +23,7 @@ function Signup() {
         setPassword(e.target.value);
     }
     const checkUserType = (e) => {
+        console.log(userType)
         userType === 1 ? 
         axios.post('https://blog.nopublisher.dev/lessor/signup',
             {
@@ -58,34 +59,59 @@ function Signup() {
 
     const onClick1 = () => {
         setUserType(1);
-        console.log(userType) 
     }
     const onClick2 = () => {
         setUserType(2);
-        console.log(userType) 
     }
 
         return(
             <div>
-                        <Checkbox
-                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                            name="checkedI"
-                            onClick={onClick1}
-                            label="임대인"
-                        />
-                        <Checkbox
-                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                            name="checkedI"
-                            label="임차인"
-                            onClick={onClick2}
-                        />
+                <form>
+                <h3>SIGN UP</h3>
+
+                <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    name="checkedI"
+                    onClick={onClick1}
+                    label="임대인"
+                /> 임대인
+                <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    name="checkedI"
+                    label="임차인"
+                    onClick={onClick2}
+                /> 임차인
+
+                <div className="form-group">
+                    <label>Email address</label>
+                    <input type="email" className="form-control" placeholder="Enter email" onChange={onChangeName}/>
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" className="form-control" placeholder="Enter password" onChange={onChangePassword}/>
+                </div>
+
+                <div className="form-group">
+                    <div className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                    </div>
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-block" onClick={checkUserType}>Sign up</button>
+                <p className="forgot-password text-right">
+                    Forgot <a href="#">password?</a>
+                </p>
+            </form>
+
                 {/* <label = "userType">
                     <input type="checkbox" name = "userType" value="0" onclick="oneCheckbox(this)">   donor  </le><br>
                             <span class="txt1 p-b-11"><label for = "userType"><input type="checkbox" name = "userType" value="1" onclick="oneCheckbox(this)">   recipient  </label></span> */}
 
-              
+{/*               
                     <Label>Name</Label>
                     <Input 
                            placeholder="name"
@@ -101,13 +127,11 @@ function Signup() {
                 <Button className="btn-lg btn-dark btn-block"
                    onClick={checkUserType}
                     >
-                    Signup
+                    Login
                 </Button>
                 <div className="text-center">
-                    <a href="/login">Sign up</a>
-                    <span className="p-2">|</span>
-                    <a href="/forgot-password">forgot password</a>
-                </div>
+                    <a href="/signup">Sign up</a>
+                </div> */}
 
             </div>
                     
