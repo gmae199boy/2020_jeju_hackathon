@@ -5,6 +5,8 @@ const createLessor = async (req, res) => {
     try {
         let account = await createAccount();
 
+        // if(!req.body.name || !req.body.passoword) return {err: "name이나 password가 없음"};
+
         const newLessor = new Lessor({...req.body, address: account.address});
         req.session.user = {
             user: newLessor,
