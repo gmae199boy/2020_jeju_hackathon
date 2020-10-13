@@ -22,12 +22,12 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/lessor/logout',
+        url: '/user/logout',
         handler: logoutLessor,
     },
     {
         method: 'GET',
-        url: '/lessor/:name',
+        url: '/user/mypage',
         handler: readLessor,
     },
     {
