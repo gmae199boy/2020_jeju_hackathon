@@ -45,7 +45,8 @@ function RegisterRoom(){
     const [mapView, setMapView] = useState(null);
     const [address, setAddress] = useState(null);
     const [detailAddress, setDetailAddress] = useState(null);
-    const [coords, setCoords] = useState({});
+    const [coordsx, setCoordsx] = useState(null);
+    const [coordsy, setCoordsy] = useState(null);
 
     const onChangeImg = (e) => {
         setImages(e.target.files[0]);
@@ -89,7 +90,8 @@ function RegisterRoom(){
         formData.append('address', address);
         formData.append('state', state);
         formData.append('content', content);
-        formData.append('coords', coords);
+        formData.append('coordsx', coordsx);
+        formData.append('coordsy', coordsy);
         const rooms = await axios({
             method : 'POST',
             url : 'https://blog.nopublisher.dev/room/create',
@@ -129,6 +131,9 @@ function RegisterRoom(){
                     if (status === daum.maps.services.Status.OK) {
 
                         var result = results[0]; //첫번째 결과의 값을 활용
+
+                        setCoordsx(result.x);
+                        setCoordsy(result.y);
 
                         // 해당 주소에 대한 좌표를 받아서
                         var coords = new daum.maps.LatLng(result.y, result.x);
