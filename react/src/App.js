@@ -17,7 +17,7 @@ import Mypage from './component/Mypage';
   
 function App(){
     return( 
-      <div>
+      <div style={{paddingTop: '5em'}}>
         <Router>
               <div>
                 <Route path='/' component={NavBar}/>
