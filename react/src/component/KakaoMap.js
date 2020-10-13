@@ -11,7 +11,7 @@ function KakaoMap({coords}) {
 
 		const options = {
 			center: coords,//new daum.maps.LatLng(x, y),
-			level: 3
+			level: 5
 		};
         const map = new daum.maps.Map(mapContainer, options);
 
