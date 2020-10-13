@@ -6,6 +6,10 @@ import { Input } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+// 주소검색 컴포넌트
+import Postcode from './PostcodeSearch';
+
+
 // const useStyles = makeStyles((theme) => ({
 //     formControl: {
 //       margin: theme.spacing(1),
@@ -97,6 +101,38 @@ function RegisterRoom(){
         // window.location.href = `http://localhost:3000/SearchRoom`    
 
     }
+
+
+
+    // const showPostcodeSearch = () => {
+    //     const { kakao } = window;
+    //     new kakao.Postcode({
+    //         oncomplete: function(data) {
+    //             var addr = data.address; // 최종 주소 변수
+
+    //             // 주소 정보를 해당 필드에 넣는다.
+    //             document.getElementById("sample5_address").value = addr;
+    //             // 주소로 상세 정보를 검색
+    //             geocoder.addressSearch(data.address, function(results, status) {
+    //                 // 정상적으로 검색이 완료됐으면
+    //                 if (status === daum.maps.services.Status.OK) {
+
+    //                     var result = results[0]; //첫번째 결과의 값을 활용
+
+    //                     // 해당 주소에 대한 좌표를 받아서
+    //                     var coords = new daum.maps.LatLng(result.y, result.x);
+    //                     // 지도를 보여준다.
+    //                     mapContainer.style.display = "block";
+    //                     map.relayout();
+    //                     // 지도 중심을 변경한다.
+    //                     map.setCenter(coords);
+    //                     // 마커를 결과값으로 받은 위치로 옮긴다.
+    //                     marker.setPosition(coords)
+    //                 }
+    //             });
+    //         }
+    //     }).open();
+    // }
         return (
             <div>
                 <div>
@@ -116,7 +152,16 @@ function RegisterRoom(){
                             />
                     </div>
 
-                    <div as={Col} controlId="name" sm="5">
+
+
+                    {/* 주소 검색과 검색했을 때 카카오맵 표시 */ }
+                    <div>
+                        <Postcode></Postcode>
+                    </div>
+
+                    
+                    
+                    {/* <div as={Col} controlId="name" sm="5">
                         <label>주소</label>
                         <input
                                 type="text"
@@ -127,7 +172,7 @@ function RegisterRoom(){
                                     onChangeAddress
                                 }
                             />
-                    </div>
+                    </div> */}
 
                     <div as={Col} controlId="roomType" sm="5">
                         <label>방 종류</label>
@@ -241,7 +286,7 @@ function RegisterRoom(){
                     </div>
             </div>
             </div>
-                               
         );
     }
+
 export default RegisterRoom;
