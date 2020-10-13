@@ -20,7 +20,7 @@ const createLessee = async (req, res) => {
 
 const readLessee = async(req, res) => {
     try {
-        return req.session.lessee;
+        return req.session.user;
     } catch (e) {
         console.log(e);
         return e;

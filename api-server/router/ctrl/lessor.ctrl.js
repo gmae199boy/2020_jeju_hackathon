@@ -18,6 +18,7 @@ const createLessor = async (req, res) => {
 
 const readLessor = async(req, res) => {
     try {
+        if(req.session.user == undefined) return {err: "유저 세션이 없음"};
         return req.session.user;
     } catch (e) {
         console.log(e);
