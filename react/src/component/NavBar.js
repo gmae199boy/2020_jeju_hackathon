@@ -1,32 +1,20 @@
 import React from 'react';
-import { NavLink, } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import MenuIcon from '@material-ui/icons/Menu';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import AppBar from '@material-ui/core/AppBar';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import green from '@material-ui/core/colors/green';
-
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,20 +41,64 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar() {
 
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
   };
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List style={{width:'300%'}}>
+        <ListItem>
+          <NavLink to="/Home">홈</NavLink>
+        </ListItem>
+        <ListItem>
+          <NavLink to="/SearchRoom">매물 검색</NavLink>
+        </ListItem>
+        <ListItem>
+          <NavLink to="/RegisterRoom">매물 등록</NavLink>
+        </ListItem>
+        <ListItem>
+          <NavLink to="/MyPage">마이페이지</NavLink>
+        </ListItem>
+        <ListItem>
+          <NavLink to="/payment">결제</NavLink>
+        </ListItem>
+        {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))} */}
+      </List>
+      <Divider />
+      <List>
+        {/* {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))} */}
+      </List>
+    </div>
+  );
 
   return (
     <div>
@@ -74,9 +106,16 @@ export default function NavBar() {
             <AppBar position="fixed" style={{ background: '#28a745' }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                  <MenuIcon />
+                  {['Menu'].map((anchor) => (
+                  <React.Fragment key={anchor}>
+                    <Button style={{color:'white'}} onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+                    <Drawer style={{width:'200%'}} anchor={'left'} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                      {list(anchor)}
+                    </Drawer>
+                  </React.Fragment>
+                ))}
                 </IconButton>
-                <Typography variant="h6" color="inherit">
+                <Typography style={{marginLeft:'38%'}} variant="h6" color="inherit">
                   집피스
                 </Typography>
               </Toolbar>
