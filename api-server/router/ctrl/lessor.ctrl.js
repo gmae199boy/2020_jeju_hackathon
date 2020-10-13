@@ -5,6 +5,8 @@ const createLessor = async (req, res) => {
     try {
         let account = await createAccount();
 
+        // if(!req.body.name || !req.body.passoword) return {err: "name이나 password가 없음"};
+
         const newLessor = new Lessor({...req.body, address: account.address});
         req.session.user = {
             user: newLessor,
@@ -18,6 +20,7 @@ const createLessor = async (req, res) => {
 
 const readLessor = async(req, res) => {
     try {
+        if(req.session.user == undefined) return {err: "유저 세션이 없음"};
         return req.session.user;
     } catch (e) {
         console.log(e);

@@ -15,9 +15,6 @@ function KakaoMap({coords}) {
 		};
         const map = new daum.maps.Map(mapContainer, options);
 
-        // //주소-좌표 변환 객체를 생성
-        // let geocoder = new daum.maps.services.Geocoder();
-
         //마커를 미리 생성
         let marker = new daum.maps.Marker({
             position: coords,//new daum.maps.LatLng(x, y),

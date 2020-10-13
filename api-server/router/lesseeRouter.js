@@ -20,16 +20,16 @@ const routes = [
         url: '/lessee/login',
         handler: loginLessee,
     },
-    {
-        method: 'GET',
-        url: '/lessee/logout',
-        handler: logoutLessee,
-    },
-    {
-        method: 'GET',
-        url: '/lessee/:name',
-        handler: readLessee,
-    },
+    // {
+    //     method: 'GET',
+    //     url: '/lessee/logout',
+    //     handler: logoutLessee,
+    // },
+    // {
+    //     method: 'GET',
+    //     url: '/lessee/:name',
+    //     handler: readLessee,
+    // },
     {
         method: 'DELETE',
         url: '/lessee/:name',

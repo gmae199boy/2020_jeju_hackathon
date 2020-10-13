@@ -5,6 +5,8 @@ const createLessee = async (req, res) => {
     try {
         let account = await createAccount();
 
+        // if(!req.body.name || !req.body.passoword) return {err: "name이나 password가 없음"};
+
         const newLessee = new Lessee({...req.body, address: account.address});
 
         req.session.user = {
@@ -20,7 +22,7 @@ const createLessee = async (req, res) => {
 
 const readLessee = async(req, res) => {
     try {
-        return req.session.lessee;
+        return req.session.user;
     } catch (e) {
         console.log(e);
         return e;

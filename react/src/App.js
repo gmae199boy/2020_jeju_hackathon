@@ -13,6 +13,7 @@ import PaymentComplete from './component/PaymentComplete';
 import SearchRoom from './component/SearchRoom';
 import RoomDetail from './component/RoomDetail';
 import RegisterRoom from './component/RegisterRoom';
+import Mypage from './component/Mypage';
   
 function App(){
     return( 
@@ -31,7 +32,8 @@ function App(){
                 <Route path='/payment' component={Payment}/>  
                 <Route path='/paymentComplete' component={PaymentComplete}/>   
                 <Route path='/searchResult' component={SearchResult}/>  
-                <Route path='/contract' component={Contract}/>      
+                <Route path='/contract' component={Contract}/>
+                <Route path='/mypage' component={Mypage}/>
               </div>
         </Router>
       </div>
