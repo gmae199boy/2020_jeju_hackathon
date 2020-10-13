@@ -1,22 +1,23 @@
-import React,{ Component } from 'react';
+import React,{ useState } from 'react';
 import './Login.css';
-import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
+import axios from 'axios';
 
 
-class Signup extends Component {
 
-    state = {
-        name: '',
-        password: '',
+function Signup() {
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+
+
+    const onChangeName = e => {
+        setName(e.target.value);
     }
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
+    const onChangePassword = e => {
+        setPassword(e.target.value);
     }
 
-    render() {
         return(
             <Form className="login-form">
                 {/* <h1>Xestate</h1> */}
@@ -26,50 +27,42 @@ class Signup extends Component {
                     <Input type="name"
                            placeholder="name"
                            name = "name"
-                           value = {this.state.name}
-                           onChange={
-                            this.handleChange
-                            }
-                           />
+                           value = {name}
+                           onChange={onChangeName}/>
                 </FormGroup>
                 <FormGroup>
                     <Label>PASSWORD</Label>
                     <Input type="password"
                            placeholder="Password"
                            name = "password"
-                           value = {this.state.password}
-                           onChange={
-                            this.handleChange
-                            }/>
+                           value = {password}
+                           onChange={onChangePassword}/>
                 </FormGroup>
                 <Button className="btn-lg btn-dark btn-block"
-                        onClick={
-                            () => {
-                                
-                            fetch(`https://blog.nopublisher.dev/lessee/signup`,{
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({name:this.state.name,password:this.state.password})
-                            }).then(res => res.json())
-                            .then(json => {
-                                window.location.href = 'http://localhost:3000/Home'
-                            })
-                        }}
-                >
+                    onClick={
+                        () => {
+                        axios({
+                            method: 'POST',
+                            url: `https://blog.nopublisher.dev/lessee/login`,
+                            body: {
+                                    name:name,
+                                    password: password,
+                                    } 
+                        }).then(console.log)
+                        // console.log(this.state);
+                        }
+                    }
+                    href = '/Home'
+                    >
                     Signup
                 </Button>
                 <div className="text-center">
-                    <a href="/Login">Login</a>
+                    <a href="/login">Sign up</a>
                     <span className="p-2">|</span>
                     <a href="/forgot-password">forgot password</a>
                 </div>
             </Form>
         );
-        
     }
-    
-}
 
 export default Signup;

@@ -1,9 +1,8 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,53 +10,27 @@ import FormControl from '@material-ui/core/FormControl';
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
 
-class Contract extends Component {
-
-    state = {
-        officeOwner : '',
-        officeAddress: '',
-        officeStructure: '',
-        officeAcreage: '',
-        lessorName: '',
-        lessorSSN: '',
-        lessorphoneNumber: '',
-        lessorAddress: '',
-        lesseeName: '',
-        lesseeSSN: '',
-        lesseePhoneNumber: '',
-        lesseeAddress: '',
-        date: '',
-        term: '',
-    }
-
-    useStyles = makeStyles((theme) => ({
-        root: {
-          '& .MuiTextField-root': {
-            margin: theme.spacing(1),
-            width: '25ch',
-          },
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-          },
-          selectEmpty: {
-            marginTop: theme.spacing(2),
-          },
-      }));
-
-      handleChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
-    }
+function Contract() {
+    let [officeAddress, setOfficeAddress] = useState(null);
+    let [officeOwner, setOfficeOwner] = useState(null);
+    let [officeStructure, setOfficeStructure] = useState(null);
+    let [officeAcreage, setOfficeAcreage]= useState(null);
+    let [lessorName , setLessorName] = useState(null);
+    let [lessorSSN, setLessorSSN] = useState(null);
+    let [lessorphoneNumber, setLessorphoneNumber] = useState(null);
+    let [lessorAddress, setlessorAddress] = useState(null);
+    let [lesseeName, setLesseeName] = useState(null);
+    let [lesseeSSN, setLesseeSSN] = useState(null);
+    let [lesseePhoneNumber, setLesseePhoneNumber] = useState(null);
+    let [lesseeAddress, setLesseeAddress] = useState(null);
+    let [date, setDate] = useState(null);
+    let [term, setTerm] = useState(null);
 
     // function showPopup(){
     //     this.setState({  
     //         showPopup: !this.state.showPopup  
     //       }); 
     //   }
-      render(){
         return (
             <div>
             <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
@@ -65,39 +38,35 @@ class Contract extends Component {
             </Typography>
 
             <div style={{marginLeft:'4em'}}>
-                <form className={this.root} noValidate autoComplete="off">
-                    <div>
                         <TextField
                             type="text"
                             name = "officeOwner"
-                            value ={this.state.officeOwner}
+                            
                             onChange={
-                                this.handleChange
+                                setOfficeOwner
                             }
-                         id="standard-search" label="사무실 소유쥬" type="search" style={{marginLeft:'3em'}} />
+                         id="standard-search" label="사무실 소유쥬" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "officeAddress"
-                                value ={this.state.officeAddress}
+                                value ={officeAddress}
                                 onChange={
-                                    this.handleChange
-                                }
-                        required id="standard-required" label="사무실 소재지" type="search" style={{marginLeft:'3em'}} />
+                                    setOfficeAddress}
+                        required id="standard-required" label="사무실 소재지" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "officeStructure"
-                                value ={this.state.officeStructure}
+                                value ={officeStructure}
                                 onChange={
-                                    this.handleChange
+                                    setOfficeStructure
                                 }
-                        required id="standard-required" label="사무실 층 수" type="search" style={{marginLeft:'3em'}} />
+                        required id="standard-required" label="사무실 층 수" style={{marginLeft:'3em'}} />
 
-                        <FormControl label="사무실 타입" type="search" style={{marginLeft:'-10.5em', marginTop:'4em'}} type = "inline">
+                        <FormControl label="사무실 타입" style={{marginLeft:'-10.5em', marginTop:'4em'}} type = "inline">
                                 <Select
                                     // style={{marginTop :'1.7em', marginLeft:'-2em', marginBottom:'-1.5em'}}
                                     labelId="demo-simple-select-placeholder-label-label"
                                     id="demo-simple-select-placeholder-label"
-                                    value={this.age}
                                     onChange={this.handleChange}
                                     displayEmpty
                                     className={this.selectEmpty}
@@ -114,123 +83,106 @@ class Contract extends Component {
                         <TextField 
                                 type="text"
                                 name = "lessorName"
-                                value ={this.state.lessorName}
+                                value ={lessorName}
                                 onChange={
-                                    this.handleChange
+                                    setLessorName
                                 }
-                        required id="standard-required" label="임대인 이름" type="search" style={{marginLeft:'3em'}} />
+                        required id="standard-required" label="임대인 이름" style={{marginLeft:'3em'}} />
                         <TextField
                                 type="text"
                                 name = "lessorSSN"
-                                value ={this.state.lessorSSN}
+                                value ={lessorSSN}
                                 onChange={
-                                    this.handleChange
+                                    setLessorSSN
                                 }
-                        required id="standard-required" label="임대인 주민번호" type="search" style={{marginLeft:'3em'}} />
+                        required id="standard-required" label="임대인 주민번호" style={{marginLeft:'3em'}} />
                         <TextField
                                 type="text"
                                 name = "lessorphoneNumber"
-                                value ={this.state.lessorphoneNumber}
+                                value ={lessorphoneNumber}
                                 onChange={
-                                    this.handleChange
+                                    setLessorphoneNumber
                                 }
-                                required id="standard-required" label="임대인 전화번호" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임대인 전화번호" style={{marginLeft:'3em'}} />
                         <TextField
                                 type="text"
                                 name = "lessorAddress"
-                                value ={this.state.lessorAddress}
+                                value ={lessorAddress}
                                 onChange={
-                                    this.handleChange
+                                    setlessorAddress
                                 }
-                                required id="standard-required" label="임대인 주소" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임대인 주소" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "lesseeName"
-                                value ={this.state.lesseeName}
+                                value ={lesseeName}
                                 onChange={
-                                    this.handleChange
+                                    setLesseeName
                                 }
-                                required id="standard-required" label="임차인 이름" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임차인 이름" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "lesseePhoneNumber"
-                                value ={this.state.lesseePhoneNumber}
+                                value ={lesseePhoneNumber}
                                 onChange={
-                                    this.handleChange
+                                    setLesseePhoneNumber
                                 }
                         
-                                required id="standard-required" label="임차인 전화번호" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임차인 전화번호" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "lesseeSSN"
-                                value ={this.state.lesseeSSN}
+                                value ={lesseeSSN}
                                 onChange={
-                                    this.handleChange
+                                    setLesseeSSN
                                 }
-                                required id="standard-required" label="임차인 주민번호" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임차인 주민번호" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "lesseeAddress"
-                                value ={this.state.lesseeAddress}
+                                value ={lesseeAddress}
                                 onChange={
-                                    this.handleChange
+                                    setLesseeAddress
                                 }
-                                required id="standard-required" label="임차인 주소" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임차인 주소" style={{marginLeft:'3em'}} />
                         <TextField 
                                 type="text"
                                 name = "date"
-                                value ={this.state.date}
+                                value ={date}
                                 onChange={
-                                    this.handleChange
+                                    setDate
                                 }
-                                required id="standard-required" label="계약일" type="search" style={{marginLeft:'3em'}} />                    
+                                required id="standard-required" label="계약일" style={{marginLeft:'3em'}} />                    
                         <TextField 
                                 type="text"
                                 name = "term"
-                                value ={this.state.term}
+                                value ={term}
                                 onChange={
-                                    this.handleChange
+                                    setTerm
                                 }
-                                required id="standard-required" label="임대기한" type="search" style={{marginLeft:'3em'}} />
+                                required id="standard-required" label="임대기한" style={{marginLeft:'3em'}} />
                         <br />
                         <br />
                         <Button variant="contained" color="primary" type="submit" background-color="#6610f2" style = {{marginLeft : '4.5em'}} onClick={
                                async () => {
-                                    //FormData 생성
-                                    // let fd = new FormData();
-                                    // //FormData에 key, value 추가하기
-                                    // fd.append('officeOrner', this.state.officeOwner);
-                                    // fd.append('officeAddress', this.state.officeAddress);
-                                    // fd.append('officeStructure', this.state.officeStructure);
-                                    // fd.append('officeAcreage', this.state.officeAcreage);
-                                    // fd.append('lessorName', this.state.lessorName);
-                                    // fd.append('lessorSSN', this.state.lessorSSN);
-                                    // fd.append('lessorphoneNumber', this.state.lessorphoneNumber);
-                                    // fd.append('lessorAddress', this.state.lessorAddress);
-                                    // fd.append('lesseeName', this.state.lesseeName);
-                                    // fd.append('lesseeSSN', this.state.lesseeSSN);
-                                    // fd.append('lesseePhoneNumber', this.state.lesseePhoneNumber);
-                                    // fd.append('lesseeAddress', this.state.lesseeAddress);
-                                    // fd.append('date', this.state.date);
-                                    // fd.append('term', this.state.term);
                                     axios({
                                         url: `https://blog.nopublisher.dev/room/contract/${id}`,
                                             method: 'POST',
                                             body: JSON.stringify({
-                                                officeOwner: this.state.officeOwner,
-                                                officeAddress: this.state.officeAddress,
-                                                officeStructure: this.state.officeStructure,
-                                                officeAcreage: this.state.officeAcreage,
-                                                lessorName: this.state.lessorName,
-                                                lessorSSN: this.state.lessorSSN,
-                                                lessorphoneNumber: this.state.lessorphoneNumber,
-                                                lessorAddress: this.state.lessorAddress,
-                                                lesseeName: this.state.lesseeName,
-                                                lesseeSSN: this.state.lesseeSSN,
-                                                lesseePhoneNumber: this.state.lesseePhoneNumber,
-                                                lesseeAddress: this.state.lesseeAddress,
-                                                date: this.state.date,
-                                                term: this.state.term,
+                                                "officeOwner": officeOwner,
+                                                "officeAddress": officeAddress,
+                                                "officeStructure": officeStructure,
+                                                "officeAcreage": officeAcreage,
+                                                "lessorName": lessorName,
+                                                "lessorSSN": lessorSSN,
+                                                "lessorphoneNumber": lessorphoneNumber,
+                                                "lessorAddress": lessorAddress,
+                                                "lesseeName": lesseeName,
+                                                "lesseeSSN": lesseeSSN,
+                                                "lesseePhoneNumber": lesseePhoneNumber,
+                                                "lesseeAddress": lesseeAddress,
+                                                "date": date,
+                                                "term": term,
                                             }),
                                             headers: {
                                                 'Content-Type': 'application/json',
@@ -245,13 +197,9 @@ class Contract extends Component {
                                 }
                             }>계약서 작성</Button> 
 
-                    </div>
-                </form>
-            </div>
-                         
+                    </div>   
         </div>   
         );
-      }
   }
 
 export default Contract;

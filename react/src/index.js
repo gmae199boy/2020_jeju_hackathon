@@ -13,6 +13,5 @@ ReactDOM.render(
 
 export { default as Login } from './component/Login';
 export { default as Signup } from './component/Signup';
-export { default as rooms } from './component/rooms';
 export { default as RegisterRoom } from './component/RegisterRoom';
-export { default as report } from './component/report';
+// export { default as report } from './component/report';
