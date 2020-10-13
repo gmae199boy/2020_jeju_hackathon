@@ -6,7 +6,6 @@ import {
     registRoomTransaction,
     getRoomTransaction,
 } from './kas/kas';
-import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,15 +16,8 @@ const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
  * response, reply 인 res 인자는 사용하지 않습니다.
  * fastify는 옵션으로 json 스키마를 검증하는 기능을 내장하고 있습니다.
  * 따라서 스키마 검증은 따로 작성합니다.
- * 서버 사이드 랜더링은 사용하지 않습니다. 
  * return은 json형식만 반환합니다.
  * 
- */
-
-/**
- * 테스트용 코드
- * DB를 지우고 다시 시작했을 때, 매물이 하나도 없으니 예제 3개를 만들어서
- * 등록해주는 함수
  */
 
 /**
@@ -35,13 +27,6 @@ const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
  */
 const getRoom = async (req, res) => {
     try {
-        // (디버그용) 등록된 매물이 없을 경우, 
-        // 매물 3개를 임의 등록한다.
-        // const firstId = await Room.findByRoomId(0);
-        // if (firstId == undefined) {
-        //     await createRoomList();
-        // }
-
         let room = await Room.findByRoomId(req.params.id);
         
         let images = new Array();
@@ -49,47 +34,49 @@ const getRoom = async (req, res) => {
             images.push(fs.readFileSync(imagePath + room.imagePath[i]));
         }
 
-        const tran = await getRoomTransaction(0);
-        console.log(tran.result);
+        // 블록체인에서 정보 읽어오기 (function은 rlp를 먼저 decode 한 다음 decode 해야한다)
+        // 이건 그냥 public 변수를 읽어오는 것이기 때문에 그냥 하면 된다.
+        // const tran = await getRoomTransaction(0);
+        // console.log(tran.result);
 
-        const tt = await caver.abi.decodeParameters([
-            {
-                "name": "registLessor",
-                "type": "address"
-            },
-            {
-                "name": "addr",
-                "type": "string"
-            },
-            {
-                "name": "deposit",
-                "type": "uint32"
-            },
-            {
-                "name": "monthlyPayment",
-                "type": "uint32"
-            },
-            {
-                "name": "state",
-                "type": "uint8"
-            },
-            {
-                "name": "roomType",
-                "type": "uint8"
-            },
-            // {
-            //     "name": "reported",
-            //     "type": "address[1]"
-            // },
-            // {
-            //     "name": "reviewIndex",
-            //     "type": "uint256[1]"
-            // }
-        ],
-        tran.result
-        );
+        // const tt = await caver.abi.decodeParameters([
+        //     {
+        //         "name": "registLessor",
+        //         "type": "address"
+        //     },
+        //     {
+        //         "name": "addr",
+        //         "type": "string"
+        //     },
+        //     {
+        //         "name": "deposit",
+        //         "type": "uint32"
+        //     },
+        //     {
+        //         "name": "monthlyPayment",
+        //         "type": "uint32"
+        //     },
+        //     {
+        //         "name": "state",
+        //         "type": "uint8"
+        //     },
+        //     {
+        //         "name": "roomType",
+        //         "type": "uint8"
+        //     },
+        //     // {
+        //     //     "name": "reported",
+        //     //     "type": "address[1]"
+        //     // },
+        //     // {
+        //     //     "name": "reviewIndex",
+        //     //     "type": "uint256[1]"
+        //     // }
+        // ],
+        // tran.result
+        // );
 
-        console.log(tt);
+        // console.log(tt);
 
         room.images = images;
 
@@ -108,10 +95,6 @@ const getRoom = async (req, res) => {
 
 const getRoomList = async (req, res) => {
     try {
-        // const firstId = await Room.findByRoomId(0);
-        // if (firstId == undefined) {
-        //     await createRoomList();
-        // }
         let page = req.query.page;
         let list = await Room.getRoomList(page);
 

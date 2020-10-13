@@ -17,9 +17,9 @@ contract App {
 
     mapping (address => Contract[]) public contracts;
 
-    function GetContract(uint _id) public view returns(Contract memory) {
-        return contracts[msg.sender][_id];
-    }
+    // function GetContract(uint _id) public view returns(Contract memory) {
+    //     return contracts[msg.sender][_id];
+    // }
 
     function WriteContract(
         string memory _oOrner,
