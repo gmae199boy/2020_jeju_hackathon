@@ -3,8 +3,6 @@ import './Login.css';
 import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
 
-
-
 function Login() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');

@@ -115,9 +115,11 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Typography style={{marginLeft:'38%'}} variant="h6" color="inherit">
+                <Typography style={{marginLeft:'35%'}} variant="h6" color="inherit">
                   집피스
                 </Typography>
+                <Button style={{color:'white' ,marginLeft:'30%'}} href='/signup'>sign up</Button>
+                <Button style={{color:'white'}} href='/login'>login</Button>
               </Toolbar>
             </AppBar>
           </div>
