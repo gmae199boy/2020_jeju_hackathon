@@ -65,6 +65,7 @@ function RoomDetail() {
     // 카카오 맵
     const [mapView, setMapView] = useState(null);
 
+    
 
     useEffect(() => {
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
