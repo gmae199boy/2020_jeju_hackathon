@@ -115,7 +115,7 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{color:'white',marginLeft:'33%'}} href='/'>집피스</Button>
+                <Button style={{color:'white',marginLeft:'35%'}} href='/'>집피스</Button>
                 <Button style={{color:'white' ,marginLeft:'30%'}} href='/signup'>sign up</Button>
                 <Button style={{color:'white'}} href='/login'>login</Button>
               </Toolbar>

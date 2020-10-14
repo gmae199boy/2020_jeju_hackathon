@@ -82,22 +82,6 @@ function SearchRoom() {
     setAddress(e.target.value);
     console.log(rooms);
   }
-
-  // const handleChange = (e) => {
-  //   setState({
-  //       [e.target.name] : e.target.value
-  //   })
-  //   // console.log(address);
-  // }
-
-  // handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     this.props.onCreate(this.state);
-  //     this.setState({
-  //         address: '',
-  //     })
-  // }
-
   return (
     <div>
         {/* {rooms && rooms.map(r=><li>{r.name}</li>)} */}
