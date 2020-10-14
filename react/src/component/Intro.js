@@ -22,29 +22,29 @@ function Intro (){
     const classes = useStyles();
     return(
     <div>
-        <div style = {{marginTop: '10em'}}>
-          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              집피스
+          {/* <div style = {{marginTop: '10em'}}>
+            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                집피스
+            </Typography>
+          </div>
+          
+          <Typography variant="h5" align="center" color="textSecondary" paragraph>
+              어떤 집을 찾으시나요?
           </Typography>
-        </div>
-        
-        {/* <Typography variant="h5" align="center" color="textSecondary" paragraph>
-            어떤 집을 찾으시나요?
-        </Typography> */}
-        <div className={classes.heroButtons}>
-        <Grid container spacing={2} justify="center">
-            <Grid item>
-            <Button variant="contained" color="primary" href="/login">
-                로그인
-            </Button>
-            </Grid>
-            <Grid item>
-            <Button variant="outlined" color="primary" href="/signup">
-                회원가입
-            </Button>
-            </Grid>
-        </Grid>
-    </div>
+          <div className={classes.heroButtons}>
+          <Grid container spacing={2} justify="center">
+              <Grid item>
+              <Button variant="contained" color="primary" href="/login">
+                  로그인
+              </Button>
+              </Grid>
+              <Grid item>
+              <Button variant="outlined" color="primary" href="/signup">
+                  회원가입
+              </Button>
+              </Grid>
+          </Grid>
+      </div> */}
     </div>   
     );
 }

@@ -5,23 +5,23 @@ import Room from "./Room";
 const urlElements = window.location.pathname.split('/');
 const address = (urlElements[2]);
 
-class SearchResult extends Component{
-    state = {
-        isLoading:true,
-        rooms: null,
-    };
+function SearchResult(){
+    // state = {
+    //     isLoading:true,
+    //     rooms: null,
+    // };
     
 
-    getRooms = async () => {
-        const rooms = await axios.get(`https://blog.nopublisher.dev/rooms/${address}`);
-        console.log(rooms);
-        this.setState({ rooms , isLoading: false });
-        console.log(this.state.rooms);
-    };
-    componentDidMount(){
-        this.getRooms();
-    }
-    render(){
+    // getRooms = async () => {
+    //     const rooms = await axios.get(`https://blog.nopublisher.dev/rooms/${address}`);
+    //     console.log(rooms);
+    //     this.setState({ rooms , isLoading: false });
+    //     console.log(this.state.rooms);
+    // };
+    // componentDidMount(){
+    //     this.getRooms();
+    // }
+
         const {rooms} = this.state;
         return(
             <div>
@@ -57,7 +57,5 @@ class SearchResult extends Component{
             </div>
         );
     }
-    
-}
 
 export default SearchResult;
