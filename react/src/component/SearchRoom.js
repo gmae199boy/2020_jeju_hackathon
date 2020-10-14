@@ -12,16 +12,14 @@ function SearchRoom() {
   const [address, setAddress] = useState('');
 
   const getRooms = async () => {
-    const roomsData = await axios({
-      method: 'GET',
-      url: 'https://blog.nopublisher.dev/rooms',
-      // withCredentials: false,
-      headers: {
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
-    }
-    })
-
+    const roomsData = await axios.get('https://blog.nopublisher.dev/rooms',
+        {
+          headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+          }
+        }
+      )
     // console.log(roomsData.data);
     return roomsData;
     
