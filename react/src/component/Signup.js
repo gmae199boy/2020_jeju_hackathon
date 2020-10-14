@@ -34,27 +34,17 @@ function Signup() {
                 headers: {
                     "Content-Type" : "application/json"
                 }
-            }
-        ).then(console.log) 
-        // axios({
-        //     method: 'POST',
-        //     url: `https://blog.nopublisher.dev/lessor/signup`,
-        //     body: JSON.stringify({
-        //         name: name,
-        //         password: password,
-        //     })
-        // }).then(console.log) 
-        : axios.post('https://blog.nopublisher.dev/lessee/signup',
-        {
-            name: name,
-            password:password,
-        },
-        {
-            headers: {
-                "Content-Type" : "application/json"
-            }
-        }
-    ).then(console.log)
+            }).then(console.log)
+            : axios.post('https://blog.nopublisher.dev/lessee/signup',
+            {
+                name: name,
+                password:password,
+            },
+            {
+                headers: {
+                    "Content-Type" : "application/json"
+                }
+            }).then(console.log)
     }
 
     const onClick1 = () => {

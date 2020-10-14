@@ -34,12 +34,12 @@ import KakaoMap from './KakaoMap';
 function RegisterRoom(){
 
     const [isLoading, setIsLoading]  = useState('');
-    let [name, setName] = useState('');
-    let [roomType, setRoomType] = useState('');
-    let [state, setState] = useState('');
-    let [monthlyPayment, setMonthlyPayment] = useState('');
-    let [images, setImages]  = useState('');
-    let [content, setContent] = useState('');
+    const [name, setName] = useState('');
+    const [roomType, setRoomType] = useState('');
+    const [state, setState] = useState('');
+    const [monthlyPayment, setMonthlyPayment] = useState('');
+    const [images, setImages]  = useState('');
+    const [content, setContent] = useState('');
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -90,6 +90,7 @@ function RegisterRoom(){
         formData.append('address', address);
         formData.append('state', state);
         formData.append('content', content);
+        // 지도에 마커를 표시할 좌표 x, y
         formData.append('coordsx', coordsx);
         formData.append('coordsy', coordsy);
         const rooms = await axios({
@@ -103,12 +104,8 @@ function RegisterRoom(){
             }
         }).then((res) => {
             console.log(res);
-        })
-        // const res = await axios.post("https://blog.nopublisher.dev/room/create", formData);
+        });
         console.log(rooms);
-
-        // window.location.href = `http://localhost:3000/SearchRoom`    
-
     }
 
     // 카카오 주소검색 창 팝업
@@ -121,10 +118,7 @@ function RegisterRoom(){
         new daum.Postcode({
             oncomplete: function(data) {
                 setAddress(data.address);
-                // var addr = data.address; // 최종 주소 변수
-
-                // 주소 정보를 해당 필드에 넣는다.
-                // document.getElementById("sample5_address").value = addr;
+                
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면

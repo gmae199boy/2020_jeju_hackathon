@@ -7,7 +7,7 @@ const createLessee = async (req, res) => {
 
         // if(!req.body.name || !req.body.passoword) return {err: "name이나 password가 없음"};
 
-        const newLessee = new Lessee({...req.body, address: account.address});
+        const newLessee = new Lessee({...req.body, address: account.address, userType: 2});
 
         req.session.user = {
             user: newLessee,
