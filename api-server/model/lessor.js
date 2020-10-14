@@ -55,6 +55,9 @@ const LessorSchema = new mongoose.Schema({
     userType: {
         type: Number,
     },
+    token: {
+        type: Number,
+    },
     // review: [
     //     {
     //         auth: {

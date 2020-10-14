@@ -38,6 +38,9 @@ const LesseeSchema = new mongoose.Schema({
     userType: {
         type: Number,
     },
+    token: {
+        type: Number,
+    },
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
