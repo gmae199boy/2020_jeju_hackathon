@@ -47,50 +47,6 @@ function Room({id,name,roomType,address,monthlyPayment,content,images}){
             </CardContent>
           </CardActionArea>
         </Card>
-
-       {/*  <Card className={classes.root} >
-          <div aria-label='click' href={`/RoomDetail/${id}`}>
-            <CardMedia
-                component="img"
-                className={classes.cover}
-                src={`data:${mimeType};base64,${b64}`}
-            />
-            <div className="room">
-                    <CardContent className={classes.content}>
-                    <Typography align="left" component="h1" variant="subtitle1">
-                        {roomType === 1 ? "원룸" : "오피스텔"}
-                    </Typography>
-                    <Typography component="h5" variant="subtitle1" color="textSecondary">
-                        월세 {monthlyPayment} 만원
-                    </Typography>
-                    <Typography align="left" variant="subtitle1" color="textSecondary">
-                         {address}
-                    </Typography>
-                    </CardContent>
-                </div>
-                      
-          </div>
-        </Card>
-
-        <div>
-            <br/><br/>
-             <Card border="primary" style={{ width: '18rem', className :"component"}}>
-                <Card.Header>{name}</Card.Header>
-                <Card.Body>
-                    <Card.Img src = "https://images.unsplash.com/photo-1497802176320-541c8e8de98d?&w=1600&h=900&fit=crop&crop=entropy&q=300" />
-                </Card.Body>
-            </Card>
-        </div>
-            
-           
-            <div className="room">
-                <div className="room_data">
-                    <h3 className = "room_name">{name}</h3>
-                    <h5 className = "room_type">{roomType}</h5>
-                    <h5 className = "room_address">{address}</h5>
-                    <p className= "room_state">{monthlyPayment}</p>   
-                </div>
-            </div> */}
       </div>       
     );
     

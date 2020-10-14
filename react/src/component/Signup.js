@@ -2,12 +2,17 @@ import React,{ useState } from 'react';
 import './Login.css';
 import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 
 
 function Signup() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const [userType, setUserType] = useState('');
 
 
     const onChangeName = e => {
@@ -17,51 +22,119 @@ function Signup() {
     const onChangePassword = e => {
         setPassword(e.target.value);
     }
+    const checkUserType = (e) => {
+        console.log(userType)
+        userType === 1 ? 
+        axios.post('https://blog.nopublisher.dev/lessor/signup',
+            {
+                name: name,
+                password:password,
+            },
+            {
+                headers: {
+                    "Content-Type" : "application/json"
+                }
+            }
+        ).then(console.log) 
+        // axios({
+        //     method: 'POST',
+        //     url: `https://blog.nopublisher.dev/lessor/signup`,
+        //     body: JSON.stringify({
+        //         name: name,
+        //         password: password,
+        //     })
+        // }).then(console.log) 
+        : axios.post('https://blog.nopublisher.dev/lessee/signup',
+        {
+            name: name,
+            password:password,
+        },
+        {
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        }
+    ).then(console.log)
+    }
+
+    const onClick1 = () => {
+        setUserType(1);
+    }
+    const onClick2 = () => {
+        setUserType(2);
+    }
 
         return(
-            <Form className="login-form">
-                {/* <h1>Xestate</h1> */}
-                <h2 className= "text-center">WELCOME</h2>
-                <FormGroup>
+            <div>
+                <form>
+                <h3>SIGN UP</h3>
+
+                <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    name="checkedI"
+                    onClick={onClick1}
+                    label="임대인"
+                /> 임대인
+                <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    name="checkedI"
+                    label="임차인"
+                    onClick={onClick2}
+                /> 임차인
+
+                <div className="form-group">
+                    <label>Email address</label>
+                    <input type="email" className="form-control" placeholder="Enter email" onChange={onChangeName}/>
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" className="form-control" placeholder="Enter password" onChange={onChangePassword}/>
+                </div>
+
+                <div className="form-group">
+                    <div className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                    </div>
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-block" onClick={checkUserType}>Sign up</button>
+                <p className="forgot-password text-right">
+                    Forgot <a href="#">password?</a>
+                </p>
+            </form>
+
+                {/* <label = "userType">
+                    <input type="checkbox" name = "userType" value="0" onclick="oneCheckbox(this)">   donor  </le><br>
+                            <span class="txt1 p-b-11"><label for = "userType"><input type="checkbox" name = "userType" value="1" onclick="oneCheckbox(this)">   recipient  </label></span> */}
+
+{/*               
                     <Label>Name</Label>
-                    <Input type="name"
+                    <Input 
                            placeholder="name"
-                           name = "name"
-                           value = {name}
-                           onChange={onChangeName}/>
-                </FormGroup>
-                <FormGroup>
+                           onChange={onChangeName}
+                           />
+\
                     <Label>PASSWORD</Label>
-                    <Input type="password"
+                    <Input 
                            placeholder="Password"
-                           name = "password"
-                           value = {password}
-                           onChange={onChangePassword}/>
-                </FormGroup>
+                           onChange={onChangePassword}
+                           />
+
                 <Button className="btn-lg btn-dark btn-block"
-                    onClick={
-                        () => {
-                        axios({
-                            method: 'POST',
-                            url: `https://blog.nopublisher.dev/lessee/login`,
-                            body: {
-                                    name:name,
-                                    password: password,
-                                    } 
-                        }).then(console.log)
-                        // console.log(this.state);
-                        }
-                    }
-                    href = '/Home'
+                   onClick={checkUserType}
                     >
-                    Signup
+                    Login
                 </Button>
                 <div className="text-center">
-                    <a href="/login">Sign up</a>
-                    <span className="p-2">|</span>
-                    <a href="/forgot-password">forgot password</a>
-                </div>
-            </Form>
+                    <a href="/signup">Sign up</a>
+                </div> */}
+
+            </div>
+                    
         );
     }
 
