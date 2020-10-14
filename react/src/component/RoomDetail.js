@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
+import io from 'socket.io-client';
+const socket = io.connect('https://blog.nopublisher.dev');
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,6 +71,9 @@ function RoomDetail() {
 
 
     useEffect(() => {
+        socket.emit('message', {
+          qq: "qq",
+        });
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
