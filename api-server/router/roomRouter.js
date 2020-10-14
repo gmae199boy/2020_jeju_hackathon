@@ -7,6 +7,7 @@ import {
     reportRoom,
     searchRoomList,
     contractRoom,
+    chatForRoom,
 } from './ctrl/room.ctrl';
 import {     
     getRoomSchema,
@@ -49,6 +50,12 @@ const routes = [
         method: 'POST',
         url: '/room/contract/:id',
         handler: contractRoom,
+    },
+    {
+        method: 'GET',
+        url: '/room/chat/:id',
+        websocket: true,
+        handler: chatForRoom,
     },
     {
         method: 'POST',
