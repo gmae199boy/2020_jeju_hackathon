@@ -1,4 +1,5 @@
 import React,{ useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import './Login.css';
 import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
@@ -6,16 +7,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-// import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
 
-
-function Login() {
+export function Login() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState('');
+    const [session, setSession] = useState('');
 
 
+    const tempStyle={
+        margin : "0 auto",
+        marginBottom : "3%",
+        width:"300px"
+    }
     const onChangeName = e => {
         setName(e.target.value);
     }
@@ -33,9 +38,16 @@ function Login() {
             },
             {
                 headers: {
+                    'Access-Control-Allow-Origin' : 'https://blog.nopublisher.dev',
                     "Content-Type" : "application/json"
                 }
-            }).then(console.log)
+            },
+            {
+                withCredentials: true
+            }).then((res) => {
+                setSession(res)
+                console.log(res.data.name)
+            })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {
                 name: name,
@@ -45,7 +57,7 @@ function Login() {
                 headers: {
                     "Content-Type" : "application/json"
                 }
-            }).then(console.log)
+            }).then(setSession)
     }
 
     const onClick1 = () => {
@@ -56,10 +68,9 @@ function Login() {
     }
 
         return(
-            <div className="auth-wrapper" style={{paddingTop: '5em' ,backgroundColor:'white'}}>
+            <div className="auth-wrapper" style={{paddingTop: '2em' ,backgroundColor:'white'}}>
                 <div className="auth-inner" >    
                     <div>
-                        <form>
                         <h3>LOGIN</h3>
 
                         <Checkbox
@@ -98,10 +109,11 @@ function Login() {
                         <p className="forgot-password text-right">
                             Forgot <a href="#">password?</a>
                         </p>
-                    </form>
                     </div>
                 </div>
-            </div>           
+                {session && <Redirect to="/" /> }
+            </div> 
+                     
         );
     }
 

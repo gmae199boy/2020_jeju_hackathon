@@ -1,5 +1,6 @@
 import React,{ useState } from 'react';
 import './Login.css';
+import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -13,6 +14,7 @@ function Signup() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState('');
+    const [session, setSession] = useState('');
 
 
     const onChangeName = e => {
@@ -34,7 +36,7 @@ function Signup() {
                 headers: {
                     "Content-Type" : "application/json"
                 }
-            }).then(console.log)
+            }).then(setSession)
             : axios.post('https://blog.nopublisher.dev/lessee/signup',
             {
                 name: name,
@@ -44,7 +46,7 @@ function Signup() {
                 headers: {
                     "Content-Type" : "application/json"
                 }
-            }).then(console.log)
+            }).then(setSession)
     }
 
     const onClick1 = () => {
@@ -55,10 +57,9 @@ function Signup() {
     }
 
         return(
-        <div className="auth-wrapper" style={{paddingTop: '5em'}}>
+        <div className="auth-wrapper" style={{paddingTop: '2em'}}>
             <div className="auth-inner">    
                 <div>
-                    <form>
                         <h3>SIGN UP</h3>
 
                         <Checkbox
@@ -97,11 +98,12 @@ function Signup() {
                         <p className="forgot-password text-right">
                             Forgot <a href="#">password?</a>
                         </p>
-                    </form>
                 </div>
             </div>
+            {session && <Redirect to="/" /> }
         </div>           
         );
+        
     }
 
 export default Signup;

@@ -28,9 +28,9 @@ function Room({id,name,roomType,address,monthlyPayment,content,images}){
     const mimeType = "image/png" // e.g., image/png
 
     return (
-      <div style={{marginLeft:'35%', marginTop:'3%'}}>
+      <div style={{ marginLeft:'3%', marginTop:'3%'}}>
         <Card className={classes.root}>
-          <CardActionArea>
+          <CardActionArea href={`/RoomDetail/${id}`}>
             <CardMedia
               className={classes.media}
               component="img"

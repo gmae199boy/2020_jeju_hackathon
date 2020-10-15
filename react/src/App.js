@@ -16,7 +16,6 @@ import RoomDetail from './component/RoomDetail';
 import RegisterRoom from './component/RegisterRoom';
 import Mypage from './component/Mypage';
 
-  
 function App(){
     return( 
       <Router>
