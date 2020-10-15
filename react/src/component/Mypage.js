@@ -11,6 +11,7 @@ function Mypage() {
             url: `https://blog.nopublisher.dev/user/mypage`,
         });
         setUser(userFetch);
+        console.log(user);
     },[])
 
     return(

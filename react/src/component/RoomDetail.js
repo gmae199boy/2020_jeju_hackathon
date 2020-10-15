@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 // 지도 표시용
 import KakaoMap from './KakaoMap';
 import io from 'socket.io-client';
-const socket = io.connect('https://blog.nopublisher.dev');
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -70,7 +69,14 @@ function RoomDetail() {
     const [mapView, setMapView] = useState(null);
 
 
-    useEffect(() => {
+    useEffect(async () => {
+      const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
+        extraHeaders: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
+        }
+      });
+      console.log(socket);
         socket.emit('message', {
           qq: "qq",
         });
