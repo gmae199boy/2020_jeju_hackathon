@@ -45,12 +45,13 @@ const fastify = require('fastify')({
 fastify.register(multer.contentParser);
 
 fastify.register(require('fastify-cors'), { 
+  credentials: true,
 });
 
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
-  cookie: {secure: false,},
+  cookie: {secure: false,  httpOnly: false,},
 });
 
 // 리액트 SPA 적용 시 필요함

@@ -22,7 +22,7 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/user/logout',
+        url: '/lessor/logout',
         handler: logoutLessor,
     },
     {

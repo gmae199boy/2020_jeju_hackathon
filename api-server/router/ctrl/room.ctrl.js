@@ -214,11 +214,11 @@ const contractRoom = async (req, res) => {
     }
 }
 
-const chatForRoom = (req, res) => {
-    console.log(req);
-    req.socket.on('message', (message) => {
+const chatForRoom = (connection, req) => {
+    console.log(connection);
+    connection.socket.on('message', (message) => {
         console.log(message);
-        req.socket.send('test message');
+        connection.socket.send('test message');
     });
 }
 
