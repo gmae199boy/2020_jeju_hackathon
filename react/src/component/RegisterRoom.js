@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import KakaoMap from './KakaoMap';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 function RegisterRoom(){
     const classes = useStyles();
     const [isLoading, setIsLoading]  = useState('');
+    const [rooms, setRooms] = useState('');
     const [name, setName] = useState('');
     const [roomType, setRoomType] = useState('');
     const [state, setState] = useState('');
@@ -43,12 +45,12 @@ function RegisterRoom(){
     const tempStyle={
         margin : "0 auto",
         marginBottom : "3%",
-        width:"600px"
+        width:"300px"
     }
     const tempStyle1={
         margin : "0 auto",
         marginBottom : "1%",
-        width:"600px"
+        width:"300px"
     }
 
     const onChangeImg = (e) => {
@@ -96,7 +98,7 @@ function RegisterRoom(){
         // 지도에 마커를 표시할 좌표 x, y
         formData.append('coordsx', coordsx);
         formData.append('coordsy', coordsy);
-        const rooms = await axios({
+        await axios({
             method : 'POST',
             url : 'https://blog.nopublisher.dev/room/create',
             data : formData,
@@ -106,6 +108,7 @@ function RegisterRoom(){
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
             }
         }).then((res) => {
+            setRooms(res)
             console.log(res);
         });
         console.log(rooms);
@@ -184,9 +187,15 @@ function RegisterRoom(){
 
             <div style={tempStyle}>
                 <label>방 종류</label>
-
                 <div>
-                    <input
+                    <select className="browser-default custom-select" onChange={onChangeRoomType}>
+                    <option>방 종류를 입력하세요</option>
+                    <option value="1">월세</option>
+                    <option value="2">오피스텔</option>
+                </select>
+                </div>
+                <div>
+                    {/* <input
                         type="text"
                         name = "roomType"
                         placeholder = "방 종류를 입력하세요"
@@ -196,7 +205,7 @@ function RegisterRoom(){
                         onChange={
                             onChangeRoomType
                         }
-                    />
+                    /> */}
                     {/* <Select
                     style={{marginTop :'1.7em', marginLeft:'-2em', marginBottom:'-1.5em'}}
                     labelId="demo-simple-select-placeholder-label-label"
@@ -275,6 +284,7 @@ function RegisterRoom(){
                     </div>
                 </div>
             </div>
+            {rooms && <Redirect to="/SearchRoom" /> }
         </div>
     );
 }

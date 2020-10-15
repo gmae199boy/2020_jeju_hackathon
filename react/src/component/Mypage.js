@@ -3,20 +3,28 @@ import axios from 'axios';
 
 function Mypage() {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState([]);
 
     useEffect(async ()=> {
-        const userFetch = await axios({
-            method: 'GET',
-            url: `https://blog.nopublisher.dev/user/mypage`,
-        });
-        setUser(userFetch);
-    },[])
+        await axios.get('https://blog.nopublisher.dev/lessor/mypage',
+        {
+            headers: {
+              "Content-Type" : "application/json"  
+            }
+          }
+        ).then(setUser)
+    })
+
+        // const userFetch = await axios.get(`https://blog.nopublisher.dev/user/mypage`,{
+    //         method: 'GET',
+    //         url: `https://blog.nopublisher.dev/user/mypage`,
+    //     }).then(console.log(user));
+    //     setUser(userFetch);
+    // },[])
 
     return(
         <div>
-            mypage
-            {user && user.name}
+            회원 : {user.userType}
         </div>
     );
 }
