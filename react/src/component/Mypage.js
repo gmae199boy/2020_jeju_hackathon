@@ -6,12 +6,10 @@ function Mypage() {
     const [user, setUser] = useState(null);
 
     useEffect(async ()=> {
-        const userFetch = await axios({
-            method: 'GET',
-            url: `https://blog.nopublisher.dev/user/mypage`,
-        });
+        const userFetch = await axios.get(`https://blog.nopublisher.dev/user/mypage`);
+
         setUser(userFetch);
-        console.log(user);
+        console.log(userFetch);
     },[])
 
     return(
