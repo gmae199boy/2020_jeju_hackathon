@@ -22,6 +22,12 @@ function Mypage() {
     //     setUser(userFetch);
     // },[])
 
+    //     const userFetch = await axios.get(`https://blog.nopublisher.dev/user/mypage`);
+
+    //     setUser(userFetch);
+    //     console.log(userFetch);
+    // },[])
+
     return(
         <div>
             회원 : {user.userType}
