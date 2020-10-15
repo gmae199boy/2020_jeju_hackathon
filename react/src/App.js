@@ -21,7 +21,7 @@ function App(){
     return( 
       <Router>
           <div style={{paddingTop: '5em'}}>
-            <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
               <Link className="navbar-brand" to={"/sign-in"}>positronX.io</Link>
               <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -35,18 +35,13 @@ function App(){
                 </ul>
               </div>
             </div>
-          </nav>
-        
+          </nav>    */}
           <div>
             <Route path='/' component={NavBar}/>
             <Route path='/Home' component={Home}/>
             <Route exact path='/' component={Intro}/>
-            <div className="auth-wrapper" style={{paddingTop: '5em'}}>
-              <div className="auth-inner">
-                <Route path='/Login' component={Login} />
-                <Route path='/Signup' component={Signup}/>
-              </div>
-            </div>
+            <Route path='/Login' component={Login} />
+            <Route path='/Signup' component={Signup}/>
             <Route path='/RegisterRoom' component={RegisterRoom}/>
             {/* <Route path='/report' component={report}/> */}
             <Route path='/SearchRoom' component={SearchRoom}/>

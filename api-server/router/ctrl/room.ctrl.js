@@ -214,6 +214,14 @@ const contractRoom = async (req, res) => {
     }
 }
 
+const chatForRoom = (req, res) => {
+    console.log(req);
+    req.socket.on('message', (message) => {
+        console.log(message);
+        req.socket.send('test message');
+    });
+}
+
 export  {
     getRoom,
     registRoom,
@@ -223,4 +231,5 @@ export  {
     reportRoom,
     searchRoomList,
     contractRoom,
+    chatForRoom,
 };
