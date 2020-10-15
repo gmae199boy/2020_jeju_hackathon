@@ -52,6 +52,7 @@ fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
   cookie: {secure: false,  httpOnly: false,},
+  expires: 1000000000,
 });
 
 // 리액트 SPA 적용 시 필요함
