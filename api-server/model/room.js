@@ -97,7 +97,7 @@ RoomSchema.statics.findByRoomName = async function(roomName) {
 };
 
 RoomSchema.statics.findByRoomId = async function(roomId) {
-    return await this.findOne({ id: roomId }).lean();
+    return await this.findOne({ id: roomId }).populate('registLessor').lean();
 };
 
 RoomSchema.statics.getRoomList = async function( page = 1 ) {

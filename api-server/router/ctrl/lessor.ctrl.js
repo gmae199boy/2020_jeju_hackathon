@@ -20,12 +20,12 @@ const createLessor = async (req, res) => {
 
 const readLessor = async(req, res) => {
     try {
-        // const lessor = await Lessor.find();
-        // console.log(lessor);
-        // return lessor;
-        if(req.session.user == undefined) return {err: "유저 세션이 없음"};
-        console.log(req.session.user);
-        return req.session.user;
+        const lessor = await Lessor.find();
+        console.log(lessor);
+        return lessor;
+        // if(req.session.user == undefined) return {err: "유저 세션이 없음"};
+        // console.log(req.session.user);
+        // return req.session.user;
     } catch (e) {
         console.log(e);
         return e;
@@ -46,7 +46,7 @@ const loginLessor = async (req, res) => {
 
         if(lessor.name != req.body.name || lessor.password != req.body.password) 
             return null;
-            
+
         req.session.user = {
             user: lessor,
         }
