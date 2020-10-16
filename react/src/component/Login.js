@@ -39,41 +39,18 @@ export function Login() {
 
             // {
             //     headers: {
-            //         'Access-Control-Allow-Origin' : '*',
-            //         "Content-Type" : "application/json",
-                
+            //         'Access-Control-Allow-Origin' : 'http://localhost:3000',
+            //         "Content-Type" : "application/json"
             //     }
             // },
             {
                 withCredentials: true
-            }
-                
-            ).then((res) => {
+            }).then((res) => {
                 // setSession(res)
                 // console.log(res)
                 console.log(res.headers['set-cookie'])
                 console.log(res);
-                setSession(res);
-
-            {
-                headers: {
-                    'Access-Control-Allow-Origin' : 'https://blog.nopublisher.dev',
-                    "Content-Type" : "application/json"
-
-                },
-                withCredentials: true
-            }).then((res) => {
-                console.log(res.headers['set-cookie']);
-
-                }
-            },
-            {
-                withCredentials: true
-            }).then((res) => {
-                setSession(res)
-                console.log(res.data.name)
-
-
+                setSession(res); 
             })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {
@@ -83,8 +60,7 @@ export function Login() {
             // {
             //     headers: {
             //         'Access-Control-Allow-Origin' : '*',
-            //         "Content-Type" : "application/json",
-            //         "withCredentials": "true"
+            //         "Content-Type" : "application/json"
             //     }
             // },
             {
