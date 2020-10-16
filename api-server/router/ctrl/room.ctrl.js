@@ -158,16 +158,9 @@ const registRoom = async (req, res) => {
         });
         const roomInfo = await Room.Save(newRoom);
 
-        const lessor = await Lessor.findByLessorObjectId(req.body.registLessor);
-        console.log(lessor);
-        if(lessor.registRoom == undefined) {
-            lessor.registRoom = new Array();
-        }
-
-        lessor.registRoom.push(roomInfo._id);
-
-        const lessorInfo = await Lessor.Save(lessor.json());
-        console.log(lessorInfo);
+        await Lessor.updateOne({_id: req.body.registLessor}, {
+            $push: {registRoom: roomInfo._id}
+        });
 
         console.log(roomInfo);
         return roomInfo;
