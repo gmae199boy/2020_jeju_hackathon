@@ -87,7 +87,7 @@ LessorSchema.statics.findByLessorId = async function(lessorId) {
 }
 
 LessorSchema.statics.findByLessorObjectId = async function(lessor_Id) {
-    return await this.findOne({ _id: lessor_Id }).lean();
+    return await this.findOne({ _id: lessor_Id }).populate('registRoom').lean();
 }
 
 LessorSchema.statics.Save = async function(instant) {
