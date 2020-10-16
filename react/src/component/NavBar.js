@@ -17,10 +17,27 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {Image} from "react-bootstrap";
 import zip from './zip.png'
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import FolderIcon from '@material-ui/icons/Folder';
+import SearchIcon from '@material-ui/icons/Search';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Logout from './Logout';
 
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "375px",
+    position: "bottom"
+  },
+  appBar: {
+    width: "375px",
+    top: '610px',
+    bottom: 0,
+    position:'fixed',
+  },
   grow: {
     flexGrow: 1,
   },
@@ -60,7 +77,14 @@ export default function NavBar() {
     bottom: false,
     right: false,
   });
+
+  const [value, setValue] = React.useState('recents');
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const [user, setUser] = React.useState(null);
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -81,7 +105,7 @@ export default function NavBar() {
     >
       <List style={{width:'300%'}}>
         <ListItem>
-          <NavLink to="/SearchRoom">매물 검색</NavLink>
+          <NavLink to="/SearchRoom" background={{color: "#686d76"}} >매물 검색</NavLink>
         </ListItem>
         <ListItem>
           <NavLink to="/RegisterRoom">매물 등록</NavLink>
@@ -117,11 +141,20 @@ export default function NavBar() {
 
   return (
     <div>
-      <div className={classes.root}>
-            <AppBar size="responsive" position="fixed" style={{ background: '#28a745', width:"100%" }}>
+      <BottomNavigation value={value} onChange={handleChange} className={classes.appBar}>
+      <BottomNavigationAction href="/SearchRoom"label="매물검색" value="매물검색" icon={<SearchIcon />} />
+      <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+      <Button style={{marginBottom: "2%"}} type="button" href='/'>
+                   <img src ={zip} alt="zip"/>
+      </Button>
+      <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
+      <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+      </BottomNavigation>
+     <div className={classes.root}>
+            <AppBar size="responsive" position="fixed" style={{ background: '#81b214', width:"100%" }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                  {['Menu'].map((anchor) => (
+                  {['menu'].map((anchor) => (
                   <React.Fragment key={anchor}>
                     <Button style={{color:'white'}} onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                     <Drawer style={{width:'200%'}} anchor={'left'} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
@@ -130,10 +163,9 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{marginLeft:"15%"}}type="button" href='/'>
-                  <img src ={zip} alt="zip"/>
-                </Button>
                 <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
+                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
+
                 {user ? 
                   <Logout></Logout> : 
                   <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>}
@@ -141,10 +173,10 @@ export default function NavBar() {
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (
                   <Button logout={logout} style={{color:'white'}} href='/'>logout</Button>
-                )}             */}
+                )}     */}       
               </Toolbar>
             </AppBar>
-          </div>
+          </div> 
     </div>
   );
 }
