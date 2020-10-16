@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { NavLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -17,6 +17,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {Image} from "react-bootstrap";
 import zip from './zip.png'
+import Logout from './Logout';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,7 @@ export default function NavBar() {
     bottom: false,
     right: false,
   });
+  const [user, setUser] = React.useState(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -109,6 +111,10 @@ export default function NavBar() {
     </div>
   );
 
+  useEffect(()=> {
+    setUser(window.localStorage.getItem('user'));
+  });
+
   return (
     <div>
       <div className={classes.root}>
@@ -128,7 +134,9 @@ export default function NavBar() {
                   <img src ={zip} alt="zip"/>
                 </Button>
                 <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
-                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
+                {user ? 
+                  <Logout></Logout> : 
+                  <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>}
                 {/* {authenticated ? (
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (

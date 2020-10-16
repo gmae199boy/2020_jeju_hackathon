@@ -64,6 +64,7 @@ function RoomDetail() {
     let [buffer, setBuffer] = useState(null);
     let [b64, setB64] = useState(null);
     let [mimeType, setMimeType] = useState(null);
+    const [user, setUser] = useState(null);
     const urlElements = window.location.pathname.split('/');
     const id = (urlElements[2])
     const classes = useStyles();
