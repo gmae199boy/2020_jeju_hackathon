@@ -48,7 +48,7 @@ fastify.register(multer.contentParser);
 
 fastify.register(require('fastify-cors'), { 
   credentials: true,
-  origin: true,
+  origin: "http://localhost:3000",
 });
 
 // fastify.register(fastifySecureSession, { key: "akhsbasfiaouihafoifaoiafoiheafoiuiosioesiofeaoiee" });
@@ -67,7 +67,7 @@ fastify.register(require('fastify-cors'), {
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
-  cookie: {secure: false,  httpOnly: true,},
+  cookie: {secure: false,  httpOnly: false,},
   saveUninitialized: false,
   resave: false,
   credentials: true,
