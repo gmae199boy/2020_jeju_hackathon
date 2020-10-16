@@ -34,8 +34,11 @@ function Login() {
             {
                 headers: {
                     "Content-Type" : "application/json"
-                }
-            }).then(console.log)
+                },
+                withCredentials: true
+            }).then((res) => {
+                console.log(res.headers['set-cookie']);
+            })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {
                 name: name,

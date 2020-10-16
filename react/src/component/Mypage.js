@@ -6,7 +6,9 @@ function Mypage() {
     const [user, setUser] = useState(null);
 
     useEffect(async ()=> {
-        const userFetch = await axios.get(`https://blog.nopublisher.dev/user/mypage`);
+        const userFetch = await axios.get(`https://blog.nopublisher.dev/user/mypage`,{
+            withCredentials: true
+        });
 
         setUser(userFetch);
         console.log(userFetch);
