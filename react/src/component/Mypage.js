@@ -90,7 +90,7 @@ function Mypage() {
     const [user, setUser] = useState('');
 
     const getUser = async () => {
-        const userData = await axios.get('https://blog.nopublisher.dev/lessor/mypage',
+        const userData = await axios.get('https://blog.nopublisher.dev/user/mypage',
         {
             headers: {
               "Content-Type" : "application/json"  
