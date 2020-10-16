@@ -7,9 +7,16 @@ import Input from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
 
 
+
 function SearchRoom() {
   const [rooms, setRooms] = useState(null);
   const [address, setAddress] = useState('');
+
+  const tempStyle={
+    margin : "0 auto",
+    marginLeft : "7%",
+    marginBottom : "3%"
+  }
 
   const getRooms = async () => {
     const roomsData = await axios.get('https://blog.nopublisher.dev/rooms',
@@ -84,8 +91,9 @@ function SearchRoom() {
   }
   return (
     <div>
+      <div style = {tempStyle}>
         {/* {rooms && rooms.map(r=><li>{r.name}</li>)} */}
-      <SearchIcon style={{marginLeft:'35%',marginRight:'3%'}} />
+      <SearchIcon style={tempStyle, {marginRight:'3%'}} />
       <Input
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search', 'length': '80% '}}
@@ -95,10 +103,12 @@ function SearchRoom() {
             changeAddress
           }
           name="address"
-    />    
-      <Button variant="contained" type="submit" href={`/searchResult/${address}`}
+    />
+    <Button variant="contained" type="submit" href={`/searchResult/${address}`}
               > 검색하기 </Button>
-
+    </div>   
+      
+    <div style={{marginRight:""}}>
       {rooms && rooms.map(R => ( 
       // <div onPress={()=>{roomPage(navigation, id);}} className="unstyled-button" >
       <Room
@@ -109,9 +119,9 @@ function SearchRoom() {
         state={R.state}
         monthlyPayment={R.monthlyPayment}
         images={R.images}
-      />
-      // </div>
+      />   
     ))}
+    </div>
     </div>
   );
 }

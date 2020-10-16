@@ -30,7 +30,7 @@ function KakaoMap({coords}) {
         marker.setPosition(coords)
     }, []);
     return(
-        <div id="map" style={{width: '340px', height: '200px',}}></div>
+        <div id="map" style={{width: '300px', height: '200px',}}></div>
     );
 }
 

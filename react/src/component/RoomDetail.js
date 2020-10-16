@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
+
+// import io from 'socket.io-client';
+// const socket = io.connect('https://blog.nopublisher.dev');
 import io from 'socket.io-client';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,18 +71,29 @@ function RoomDetail() {
     // 카카오 맵 컴포넌트 
     const [mapView, setMapView] = useState(null);
 
+    const tempStyle={
+      margin : "0 auto",
+      marginBottom : "3%",
+      width:"300px"
+    }
+
+    // useEffect(() => {
+    //     // socket.emit('message', {
+    //     //   qq: "qq",
+    //     // });
 
     useEffect(async () => {
-      const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
-        extraHeaders: {
-          'Access-Control-Allow-Origin' : '*',
-          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
-        }
-      });
-      console.log(socket);
-        socket.emit('message', {
-          qq: "qq",
-        });
+      // const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
+      //   extraHeaders: {
+      //     'Access-Control-Allow-Origin' : '*',
+      //     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
+      //   }
+      // });
+      // console.log(socket);
+      //   socket.emit('message', {
+      //     qq: "qq",
+       
+
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
@@ -96,10 +110,10 @@ function RoomDetail() {
             setMapView(<KakaoMap coords={coords}></KakaoMap>);
         }) 
     }, [])
-
+  
     return(
-        <div style={{marginLeft:'1em'}}>
-          <h1>{room && room.address} </h1>
+        <div style={tempStyle,{marginLeft:'1em'}}>
+          <h3>{room && room.address} </h3>
           <h5>월세 {room && room.monthlyPayment} 만원 </h5>
           <Card className={classes.root} style={{marginLeft:'0.5em'}} >
             <CardHeader />
