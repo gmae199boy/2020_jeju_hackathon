@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+// var passport = require('passport');
+import fastifyPassport from "fastify-passport";
+var LocalStrategy = require('passport-local').Strategy; /* this should be after passport*/
 
 const LessorSchema = new mongoose.Schema({
     id: {
@@ -108,4 +111,46 @@ LessorSchema.methods.generateToken = function() {
 }
 
 const Lessor = mongoose.model('Lessor', LessorSchema);
+// fastifyPassport.use('local', new LocalStrategy(
+//     function(username, password, done) {
+//         Lessor.findOne({ name: username }, function(err, user) {
+//         if (err) { return done(err); }
+//         if (!user) {
+//           return done(null, false, { message: 'Incorrect username.' });
+//         }
+//         if (!user.validPassword(password)) {
+//           return done(null, false, { message: 'Incorrect password.' });
+//         }
+//         return done(null, user);
+//       });
+//     }
+// ));
+
+// fastifyPassport.use('local', new LocalStrategy({
+//     usernameField : 'name',
+//     passwordField : 'password',
+//     session: true,
+// },
+// function(username, password, done) {
+//     Lessor.findOne({ name: username }, function(err, user) {
+//         console.log(user);
+//         if (err) { return done(err); }
+//         if (!user) {
+//           return done(null, false, { message: 'Incorrect username.' });
+//         }
+//         return done(null, user);
+//       });
+//     // Lessor.authenticate(username, password, function(err, user) {
+//     //     if (err) {
+//     //         return done(err);
+//     //     }
+
+//     //     if(!user) {
+//     //         return done(null, false, {message: 'Invalid username or password'});
+//     //     }
+
+//     //     return done(null, user);
+//     // })
+// }))
+
 export {Lessor};

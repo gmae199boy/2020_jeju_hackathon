@@ -7,6 +7,12 @@ import {
     logoutLessor,
 } from './ctrl/lessor.ctrl';
 import { createLessorSchema } from './schema/lessorSchema';
+import fastifyPassport from "fastify-passport";
+// import Lessor from '../model/lessor';
+
+// fastifyPassport.use(Lessor.createStrategy());
+// fastifyPassport.serializeUser(Lessor.serializeUser());
+// fastifyPassport.deserializeUser(Lessor.deserializeUser());
 
 const routes = [
     {
@@ -19,6 +25,7 @@ const routes = [
         method: 'POST',
         url: '/lessor/login',
         handler: loginLessor,
+        // preValidation: fastifyPassport.authenticate("local", { authInfo: false }),
     },
     {
         method: 'GET',
@@ -27,7 +34,7 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/lessor/mypage',
+        url: '/user/mypage',
         handler: readLessor,
     },
     {

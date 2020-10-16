@@ -11,6 +11,8 @@
 import mongoose from 'mongoose';
 import fastifyCookie from 'fastify-cookie';
 import fastifySession from 'fastify-session';
+import fastifyPassport from "fastify-passport";
+import fastifySecureSession from "fastify-secure-session";
 
 // 커스텀 라우터 선언
 import roomRouter from './router/roomRouter';
@@ -46,13 +48,30 @@ fastify.register(multer.contentParser);
 
 fastify.register(require('fastify-cors'), { 
   credentials: true,
+  origin: true,
 });
+
+// fastify.register(fastifySecureSession, { key: "akhsbasfiaouihafoifaoiafoiheafoiuiosioesiofeaoiee" });
+// fastify.register(fastifyPassport.initialize());
+// fastify.register(fastifyPassport.secureSession());
+
+
+// fastifyPassport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
+
+// fastifyPassport.deserializeUser(function(user, done) {
+// done(null, user);
+// });
 
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
-  cookie: {secure: false,  httpOnly: false,},
-  expires: 1000000000,
+  cookie: {secure: false,  httpOnly: true,},
+  saveUninitialized: false,
+  resave: false,
+  credentials: true,
+  // expires: 1000000000,
 });
 
 // 리액트 SPA 적용 시 필요함
