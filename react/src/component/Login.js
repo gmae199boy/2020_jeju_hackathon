@@ -39,16 +39,13 @@ export function Login() {
 
             // {
             //     headers: {
-            //         'Access-Control-Allow-Origin' : '*',
-            //         "Content-Type" : "application/json",
-                
+            //         'Access-Control-Allow-Origin' : 'http://localhost:3000',
+            //         "Content-Type" : "application/json"
             //     }
             // },
             {
                 withCredentials: true
-            }
-                
-            ).then((res) => {
+            }).then((res) => {
                 // setSession(res)
                 // console.log(res)
                 console.log(res.headers['set-cookie'])
@@ -83,8 +80,7 @@ export function Login() {
             // {
             //     headers: {
             //         'Access-Control-Allow-Origin' : '*',
-            //         "Content-Type" : "application/json",
-            //         "withCredentials": "true"
+            //         "Content-Type" : "application/json"
             //     }
             // },
             {
@@ -93,7 +89,7 @@ export function Login() {
                 // setSession(res)
                 // console.log(res)
                 console.log(res.headers['set-cookie'])
-                console.log(res);
+                
                 setSession(res);
             })
     }
