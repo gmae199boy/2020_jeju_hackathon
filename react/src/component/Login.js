@@ -50,27 +50,7 @@ export function Login() {
                 // console.log(res)
                 console.log(res.headers['set-cookie'])
                 console.log(res);
-                setSession(res);
-
-            {
-                headers: {
-                    'Access-Control-Allow-Origin' : 'https://blog.nopublisher.dev',
-                    "Content-Type" : "application/json"
-
-                },
-                withCredentials: true
-            }).then((res) => {
-                console.log(res.headers['set-cookie']);
-
-                }
-            },
-            {
-                withCredentials: true
-            }).then((res) => {
-                setSession(res)
-                console.log(res.data.name)
-
-
+                setSession(res); 
             })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {
@@ -89,7 +69,7 @@ export function Login() {
                 // setSession(res)
                 // console.log(res)
                 console.log(res.headers['set-cookie'])
-                
+                console.log(res);
                 setSession(res);
             })
     }
