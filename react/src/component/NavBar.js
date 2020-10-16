@@ -67,7 +67,7 @@ export default function NavBar() {
     >
       <List style={{width:'300%'}}>
         <ListItem>
-          <NavLink to="/Home">홈</NavLink>
+          <NavLink to="/" >홈</NavLink>
         </ListItem>
         <ListItem>
           <NavLink to="/SearchRoom">매물 검색</NavLink>
@@ -103,7 +103,7 @@ export default function NavBar() {
   return (
     <div>
       <div className={classes.root}>
-            <AppBar position="fixed" style={{ background: '#28a745' }}>
+            <AppBar size="responsive" position="fixed" style={{ background: '#28a745', width:"100%" }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                   {['Menu'].map((anchor) => (
@@ -115,9 +115,13 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{color:'white',marginLeft:'35%'}} href='/'>집피스</Button>
-                <Button style={{color:'white' ,marginLeft:'30%'}} href='/signup'>sign up</Button>
-                <Button style={{color:'white'}} href='/login'>login</Button>
+                <Button style={{color:'white',Left:'40%'}} href='/'>집피스</Button>
+                <Button style={{color:'white' ,Left:'80%'}} href='/signup'>sign up</Button>
+                {/* {authenticated ? (
+                  <Button style={{color:'white'}} href='/login'>login</Button>
+                ) : (
+                  <Button logout={logout} style={{color:'white'}} href='/'>logout</Button>
+                )}             */}
               </Toolbar>
             </AppBar>
           </div>
