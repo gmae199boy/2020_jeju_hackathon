@@ -1,12 +1,22 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, {useState} from 'react';
+import { withRouter, Redirect } from 'react-router-dom';
 
-function LogoutButton({ logout, history }) {
+function LogoutButton({}) {
+  const [logout, setLogout] = useState(null);
   const handleClick = () => {
-    logout();
-    history.push('/');
+    window.localStorage.removeItem('user');
+
+    setLogout(1);
+
+    // logout();
+    // history.push('/');
   }
-  return <button onClick={handleClick}>Logout</button>;
+  return (
+    <div>
+      <button onClick={handleClick}>Logout</button>
+      {logout && <Redirect to="/signup" /> }
+    </div>
+  );
 }
 
 export default withRouter(LogoutButton);

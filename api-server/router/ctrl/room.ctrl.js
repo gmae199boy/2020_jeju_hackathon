@@ -28,6 +28,7 @@ const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
 const getRoom = async (req, res) => {
     try {
         let room = await Room.findByRoomId(req.params.id);
+        console.log(room);
         
         let images = new Array();
         for (let i = 0; i < room.imagePath.length; ++i) {
@@ -155,8 +156,21 @@ const registRoom = async (req, res) => {
             imagePath: pathArray,
             transactionHash: room.transactionHash,
         });
+        const roomInfo = await Room.Save(newRoom);
 
-        return await Room.Save(newRoom);
+        const lessor = await Lessor.findByLessorObjectId(req.body.registLessor);
+        console.log(lessor);
+        if(lessor.registRoom == undefined) {
+            lessor.registRoom = new Array();
+        }
+
+        lessor.registRoom.push(roomInfo._id);
+
+        const lessorInfo = await Lessor.Save(lessor.json());
+        console.log(lessorInfo);
+
+        console.log(roomInfo);
+        return roomInfo;
     } catch (e) {
         console.log(e);
         return e;

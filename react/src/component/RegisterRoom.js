@@ -87,6 +87,7 @@ function RegisterRoom(){
     }
 
     const onClick = async () => {
+        let userId = JSON.parse(window.localStorage.getItem('user'))._id;
         const formData = new FormData();
         formData.append('images', images);
         formData.append('name', name);
@@ -95,6 +96,9 @@ function RegisterRoom(){
         formData.append('address', address);
         formData.append('state', state);
         formData.append('content', content);
+
+        //유저 ObjectId
+        formData.append('registLessor', userId);
         // 지도에 마커를 표시할 좌표 x, y
         formData.append('coordsx', coordsx);
         formData.append('coordsy', coordsy);
@@ -190,7 +194,7 @@ function RegisterRoom(){
                 <div>
                     <select className="browser-default custom-select" onChange={onChangeRoomType}>
                     <option>방 종류를 입력하세요</option>
-                    <option value="1">월세</option>
+                    <option value="1">원룸</option>
                     <option value="2">오피스텔</option>
                 </select>
                 </div>

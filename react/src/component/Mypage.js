@@ -89,21 +89,22 @@ function Mypage() {
 
     const [user, setUser] = useState('');
 
-    const getUser = async () => {
-        const userData = await axios.get('https://blog.nopublisher.dev/user/mypage',
-        {
-            headers: {
-              "Content-Type" : "application/json"  
-            }
-          }
-        )
-        return userData;
-    }
+    // const getUser = async () => {
+    //     const userData = await axios.get('https://blog.nopublisher.dev/user/mypage',
+    //     {
+    //         headers: {
+    //           "Content-Type" : "application/json"  
+    //         }
+    //       }
+    //     )
+    //     return userData;
+    // }
 
-    useEffect(async () => {
-            var data = await getUser()
-            let user = JSON.parse(window.localStorage.getItem('user'));
-            console.log(user);
+    useEffect( () => {
+            // var data = await getUser()
+            let userInfo = JSON.parse(window.localStorage.getItem('user'));
+            setUser(userInfo)
+            console.log(userInfo);
     },[''])
 
    

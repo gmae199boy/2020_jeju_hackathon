@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { NavLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -20,9 +20,11 @@ import zip from './zip.png'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FolderIcon from '@material-ui/icons/Folder';
+import SearchIcon from '@material-ui/icons/Search';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Logout from './Logout';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,10 +77,14 @@ export default function NavBar() {
     bottom: false,
     right: false,
   });
+
   const [value, setValue] = React.useState('recents');
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const [user, setUser] = React.useState(null);
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -129,12 +135,16 @@ export default function NavBar() {
     </div>
   );
 
+  useEffect(()=> {
+    setUser(window.localStorage.getItem('user'));
+  });
+
   return (
     <div>
       <BottomNavigation value={value} onChange={handleChange} className={classes.appBar}>
-      <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
+      <BottomNavigationAction href="/SearchRoom"label="매물검색" value="매물검색" icon={<SearchIcon />} />
       <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-      <Button type="button" href='/'>
+      <Button style={{marginBottom: "2%"}} type="button" href='/'>
                    <img src ={zip} alt="zip"/>
       </Button>
       <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
@@ -155,7 +165,10 @@ export default function NavBar() {
                 </IconButton>
                 <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
                 <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
-                
+
+                {user ? 
+                  <Logout></Logout> : 
+                  <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>}
                 {/* {authenticated ? (
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (

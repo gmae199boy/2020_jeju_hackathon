@@ -68,9 +68,9 @@ fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
   cookie: {
-    // secure: false,
+    secure: false,
     httpOnly: false, 
-    // sameSite: 'None'
+    sameSite: 'None',
   },
   saveUninitialized: false,
   resave: false,

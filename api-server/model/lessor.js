@@ -10,6 +10,7 @@ const LessorSchema = new mongoose.Schema({
     },
     name: {
         type: String,
+        unique: true,
     },
     password: {
         type: String,
@@ -83,6 +84,10 @@ LessorSchema.statics.findByLessorName = async function(lessorName) {
 
 LessorSchema.statics.findByLessorId = async function(lessorId) {
     return await this.findOne({ id: lessorId }).lean();
+}
+
+LessorSchema.statics.findByLessorObjectId = async function(lessor_Id) {
+    return await this.findOne({ _id: lessor_Id }).lean();
 }
 
 LessorSchema.statics.Save = async function(instant) {
