@@ -67,7 +67,11 @@ fastify.register(require('fastify-cors'), {
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: 'asdasdasdasdasdasdasdasdasdasdvsdsvsbdsbsbddsdsdas',
-  cookie: {secure: false,  httpOnly: false,},
+  cookie: {
+    // secure: false,
+    httpOnly: false, 
+    // sameSite: 'None'
+  },
   saveUninitialized: false,
   resave: false,
   credentials: true,

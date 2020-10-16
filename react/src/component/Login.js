@@ -48,9 +48,11 @@ export function Login() {
             }).then((res) => {
                 // setSession(res)
                 // console.log(res)
-                console.log(res.headers['set-cookie'])
-                console.log(res);
+                // console.log(res.headers['set-cookie'])
+                // console.log(res);
                 setSession(res); 
+                console.log(res.data);
+                window.localStorage.setItem('user', JSON.stringify(res.data));
             })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {

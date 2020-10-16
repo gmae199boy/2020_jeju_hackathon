@@ -102,8 +102,8 @@ function Mypage() {
 
     useEffect(async () => {
             var data = await getUser()
-            setUser(data)
-            console.log(data)
+            let user = JSON.parse(window.localStorage.getItem('user'));
+            console.log(user);
     },[''])
 
    
