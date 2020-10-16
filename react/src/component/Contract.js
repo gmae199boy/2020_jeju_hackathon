@@ -46,7 +46,7 @@ function Contract() {
 
             <div style={tempStyle}>
             <div style={tempStyle}>
-                    <Input
+                    <input
                         type="text"
                         name = "officeOwner"
                         placeholder="사무실 소유주"

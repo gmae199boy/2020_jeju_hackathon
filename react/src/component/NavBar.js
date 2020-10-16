@@ -79,9 +79,6 @@ export default function NavBar() {
     >
       <List style={{width:'300%'}}>
         <ListItem>
-          <NavLink to="/" >홈</NavLink>
-        </ListItem>
-        <ListItem>
           <NavLink to="/SearchRoom">매물 검색</NavLink>
         </ListItem>
         <ListItem>

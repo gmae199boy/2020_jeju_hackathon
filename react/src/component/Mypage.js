@@ -102,8 +102,8 @@ function Mypage() {
 
     useEffect(async () => {
             var data = await getUser()
-            setUser(data.data[0])
-            console.log(data.data[0])
+            setUser(data)
+            console.log(data)
     },[''])
 
    
