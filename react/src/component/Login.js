@@ -36,16 +36,35 @@ export function Login() {
                 name: name,
                 password:password,
             },
+
+            // {
+            //     headers: {
+            //         'Access-Control-Allow-Origin' : '*',
+            //         "Content-Type" : "application/json",
+                
+            //     }
+            // },
+            {
+                withCredentials: true
+            }
+                
+            ).then((res) => {
+                // setSession(res)
+                // console.log(res)
+                console.log(res.headers['set-cookie'])
+                console.log(res);
+                setSession(res);
+
             {
                 headers: {
                     'Access-Control-Allow-Origin' : 'https://blog.nopublisher.dev',
                     "Content-Type" : "application/json"
-<<<<<<< HEAD
+
                 },
                 withCredentials: true
             }).then((res) => {
                 console.log(res.headers['set-cookie']);
-=======
+
                 }
             },
             {
@@ -53,18 +72,30 @@ export function Login() {
             }).then((res) => {
                 setSession(res)
                 console.log(res.data.name)
->>>>>>> 3aa47a96b85d5aff54639513b1dfc90930a7a7bf
+
+
             })
             : axios.post('https://blog.nopublisher.dev/lessee/login',
             {
                 name: name,
                 password:password,
             },
+            // {
+            //     headers: {
+            //         'Access-Control-Allow-Origin' : '*',
+            //         "Content-Type" : "application/json",
+            //         "withCredentials": "true"
+            //     }
+            // },
             {
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            }).then(setSession)
+                withCredentials: true
+            }).then((res) => {
+                // setSession(res)
+                // console.log(res)
+                console.log(res.headers['set-cookie'])
+                console.log(res);
+                setSession(res);
+            })
     }
 
     const onClick1 = () => {

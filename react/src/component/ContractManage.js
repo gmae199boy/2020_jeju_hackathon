@@ -1,18 +1,15 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { Button } from "@material-ui/core";
 
-function Home(){
+function ContractManage(){
     return(
-      <div>
         <div style = {{marginTop: '10em'}}>
-          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              집피스
-          </Typography>
+          <Button>계약서 등록</Button>
         </div>
-      </div>
     )
 }
 
 
-export default Home;
+export default ContractManage;

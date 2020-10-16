@@ -36,7 +36,7 @@ function Signup() {
                 headers: {
                     "Content-Type" : "application/json"
                 }
-            }).then(setSession)
+            }).then(console.log)
             : axios.post('https://blog.nopublisher.dev/lessee/signup',
             {
                 name: name,
