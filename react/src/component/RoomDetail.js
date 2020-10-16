@@ -112,9 +112,9 @@ function RoomDetail() {
     }, [])
   
     return(
-        <div style={tempStyle,{marginLeft:'1em'}}>
-          <h3>{room && room.address} </h3>
-          <h5>월세 {room && room.monthlyPayment} 만원 </h5>
+        <div style={tempStyle}>
+          <h5>{room && room.address} </h5>
+          <h7>월세 {room && room.monthlyPayment} 만원 </h7>
           <Card className={classes.root} style={{marginLeft:'0.5em'}} >
             <CardHeader />
             {b64 ? <CardMedia
@@ -130,16 +130,13 @@ function RoomDetail() {
             {mapView && mapView}<br />
           </div>
           <div>
-              <Button display="inline-block" variant="contained" size="large" color="primary" className={classes.margin} style={{marginLeft:'0.5em', width:'150px',left:'5px', top:'120h'}}>
+              <Button display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
                   채팅하기
-              </Button>
-              <Button display="inline-block" variant="contained" size="large" color="primary" className={classes.margin} style={{marginLeft:'0.5em',width:'150px',left:'10px', top:'120h'}}>
-                  수정하기
               </Button>
           </div>
           
           <br /> 
-          <Button variant="contained" size="large" color="primary" className={classes.margin} style={{ width:'300px', height:'40px' , left:'20px', top:'100h'}}
+          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
                   href = {`/contract/${id}`}>
                       계약하기
           </Button>

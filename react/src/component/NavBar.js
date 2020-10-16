@@ -15,6 +15,8 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {Image} from "react-bootstrap";
+import zip from './zip.png'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +36,16 @@ const useStyles = makeStyles((theme) => ({
     },
     fullList: {
       width: 'auto',
+    },
+  },
+  signup: {
+    position: 'relative',
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+      color:'white'
     },
   },
 }));
@@ -115,8 +127,11 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{color:'white',Left:'40%'}} href='/'>집피스</Button>
-                <Button style={{color:'white' ,Left:'80%'}} href='/signup'>sign up</Button>
+                <Button style={{marginLeft:"15%"}}type="button" href='/'>
+                  <img src ={zip} alt="zip"/>
+                </Button>
+                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
+                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
                 {/* {authenticated ? (
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (
