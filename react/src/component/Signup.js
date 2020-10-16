@@ -100,7 +100,7 @@ function Signup() {
                         </p>
                 </div>
             </div>
-            {session && <Redirect to="/" /> }
+            {session && <Redirect to="/mypage" /> }
         </div>           
         );
         
