@@ -18,9 +18,17 @@ const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
     },
+
+    formWrapper: {
+      padding: '1.0rem 0',
+      borderBottom: '1px solid #eeeeee ',
+      maxWidth: 360,
+    },
+    
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
+      borderBottom: '1px solid #22b8cf;'
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -112,37 +120,45 @@ function RoomDetail() {
         }) 
     }, [])
   
-    return(
-        <div style={tempStyle}>
-          <h5>{room && room.address} </h5>
-          <h7>월세 {room && room.monthlyPayment} 만원 </h7>
-          <Card className={classes.root} style={{marginLeft:'0.5em'}} >
-            <CardHeader />
-            {b64 ? <CardMedia
+  return(
+  <div>
+    {b64 ? <Card className={classes.root} style={{marginTop:'-3em',maxWidth:'376px'}} >
+             <CardMedia
                 component="img"
                 className={classes.cover}
                 src={`data:${mimeType};base64,${b64}`}
-            /> : "loading"}
-          </Card><br/>
-          <h5>{room && room.content}</h5>
-          <br />
-          <div>
-            <h5> 지도 </h5>
-            {mapView && mapView}<br />
-          </div>
-          <div>
-              <Button display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
-                  채팅하기
-              </Button>
-          </div>
-          
-          <br /> 
+            /> 
+          </Card>  : ""}
+          {b64 ? 
+          <div style={tempStyle}>
+              <br/>
+              <h5>{room && room.address} </h5>
+              <div>
+              <div class={classes.formWrapper}>
+                  <h7>월세 {room && room.monthlyPayment} 만원 </h7>
+                  <br></br>
+              </div>
+              <br/>
+              <div class={classes.formWrapper}>
+                  <h5>{room && room.content}</h5>
+              <div/>
+              </div>
+                <br></br>
+                <h5> 지도 </h5>
+                {mapView && mapView}<br />
+                  <Button display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
+                      채팅하기
+                  </Button>
+              </div>
           <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
                   href = {`/contract/${id}`}>
                       계약하기
           </Button>
           <br />
-      </div>
+          <br />
+          <br />
+      </div>  : ""}
+    </div>
     );
 }
 

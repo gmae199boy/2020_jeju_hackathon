@@ -108,7 +108,7 @@ function SearchRoom() {
               > 검색하기 </Button>
     </div>   
       
-    <div style={{marginRight:""}}>
+    <div style={{ margin : "0 auto"}}>
       {rooms && rooms.map(R => ( 
       // <div onPress={()=>{roomPage(navigation, id);}} className="unstyled-button" >
       <Room

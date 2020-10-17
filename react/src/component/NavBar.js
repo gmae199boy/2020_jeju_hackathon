@@ -151,7 +151,7 @@ export default function NavBar() {
       <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
       </BottomNavigation>
      <div className={classes.root}>
-            <AppBar size="responsive" position="fixed" style={{ background: '#81b214', width:"100%" }}>
+            {/* <AppBar size="responsive" position="fixed" style={{ background: 'white', width:"100%" }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                   {['menu'].map((anchor) => (
@@ -163,8 +163,8 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
-                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
+                <Button style={{fontSize:'0.5rem',color:'black', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
+                <Button style={{fontSize:'0.5rem',color:'black', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
 
                 {user ? 
                   <Logout></Logout> : 
@@ -173,9 +173,9 @@ export default function NavBar() {
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (
                   <Button logout={logout} style={{color:'white'}} href='/'>logout</Button>
-                )}     */}       
+                )}           
               </Toolbar>
-            </AppBar>
+            </AppBar> */}
           </div> 
     </div>
   );
