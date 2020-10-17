@@ -151,7 +151,7 @@ export default function NavBar() {
       <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
       </BottomNavigation>
      <div className={classes.root}>
-            <AppBar size="responsive" position="fixed" style={{ background: 'white', width:"100%" }}>
+            {/* <AppBar size="responsive" position="fixed" style={{ background: 'white', width:"100%" }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                   {['menu'].map((anchor) => (
@@ -173,9 +173,9 @@ export default function NavBar() {
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (
                   <Button logout={logout} style={{color:'white'}} href='/'>logout</Button>
-                )}     */}       
+                )}           
               </Toolbar>
-            </AppBar>
+            </AppBar> */}
           </div> 
     </div>
   );

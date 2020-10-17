@@ -19,7 +19,7 @@ import Mypage from './component/Mypage';
 function App(){
     return( 
       <Router>
-          <div style={{paddingTop: '5em'}}>
+          <div style={{paddingTop: '2em'}}>
           {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
               <Link className="navbar-brand" to={"/sign-in"}>positronX.io</Link>
