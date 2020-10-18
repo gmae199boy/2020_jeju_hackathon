@@ -84,7 +84,7 @@ function Mypage() {
         marginBottom : "3%",
         display:"inline-block",
         position:"absolute",
-        top:"90px"
+        top:"40px"
     }
 
     const [user, setUser] = useState('');
@@ -115,7 +115,7 @@ function Mypage() {
                 <Avatar src="/broken-image.jpg" />         
             </div>
             <div style={tempStyle1}>
-                <div style={{top:"20px", left:"20px"}}>{user && user.name} 님 환영합니다</div>   
+                <div>{user && user.name} 님 환영합니다</div>   
             </div>
             <div className={classes.root}>
                 <div className={classes.demo1}>
