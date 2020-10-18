@@ -3,8 +3,8 @@ import {useEffect, useState} from "react";
 import Typography from '@material-ui/core/Typography';
 
 function PaymentComplete(){
-    let [amount, setAmount] = useState('');
-    let [result, setResult] = useState('');
+    // let [amount, setAmount] = useState('');
+    // let [result, setResult] = useState('');
 
     useEffect(() => {
         // axios.get(`https://blog.nopublisher.dev/payment`)

@@ -1,14 +1,11 @@
-import React , {useEffect, useState} from 'react';
+import React , {useState} from 'react';
 import './RegisterRoom.css';
-import {Col, Row} from "react-bootstrap";
 import axios from 'axios';
 import { Input } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // 주소검색 컴포넌트
 // import Postcode from './PostcodeSearch';
 import KakaoMap from './KakaoMap';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 
@@ -27,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RegisterRoom(){
-    const classes = useStyles();
-    const [isLoading, setIsLoading]  = useState('');
     const [rooms, setRooms] = useState('');
     const [name, setName] = useState('');
     const [roomType, setRoomType] = useState('');
@@ -80,14 +75,7 @@ function RegisterRoom(){
     const onChangeContent = e => {
         setContent(e.target.value);
     }
-
-    const onClick1 = () => {
-        setRoomType(roomType == 1);
-    }
-    const onClick2 = () => {
-        setRoomType(roomType == 2);
-    }
-
+    
     const onClick = async () => {
         let userId = JSON.parse(window.localStorage.getItem('user'))._id;
         const formData = new FormData();

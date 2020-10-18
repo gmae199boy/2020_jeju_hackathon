@@ -39,14 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: '10px',
-    // paddingBottom: '2px',
     transition: theme.transitions.create('width'),
     width: '100%',
-    // [theme.breakpoints.up('md')]: {
-    //   width: '20ch',
-    // }
   },
 }));
 
@@ -70,20 +65,11 @@ function SearchRoom() {
           }
         }
       )
-    // console.log(roomsData.data);
-    return roomsData;
-    
-    // setState({ rooms });
-  };
 
-  // const useFunc =()=>{
-  //     const data = await getRooms();
-  //     console.log(data.data[0]);
-  //     setRooms(data.data)
-    
-  // }
+    return roomsData;
+
+  };
   useEffect (async () => {
-    // useFunc()
     var data = await getRooms()
     setRooms(data.data)
   },['']);
@@ -96,17 +82,10 @@ function SearchRoom() {
   return (
     <div>
       <div style = {tempStyle}>
-        {/* {rooms && rooms.map(r=><li>{r.name}</li>)} */}
         <div>
             <div>
               <SearchIcon style={{marginTop:'6px', float:'left'}}/>
             </div>
-            {/* <InputBase
-            className={classes.margin}
-            placeholder="Search…"
-            defaultValue="Naked input"
-            inputProps={{ 'aria-label': 'naked' }}
-          /> */}
             <InputBase 
               style={{float:'left'}}
               placeholder="Search…"
@@ -116,38 +95,26 @@ function SearchRoom() {
               }}
               inputProps={{ 'aria-label': 'search' , 'length': '80% '}}
               style={{marginRight:'1em', paddingBottom:'1em',marginLeft:'10px'}}
+              onChange={changeAddress}
              
             />
             <Button style={{float:'right', paddingLeft: '0px'}} type="submit" href={`/searchResult/${address}`}
               > 검색 
             </Button>
           </div>
-      {/* <SearchIcon style={tempStyle, {marginRight:'3%'}} /> */}
-      {/* <Input
-          placeholder="Search…"
-          inputProps={{ 'aria-label': 'search', 'length': '80% '}}
-          style={{marginRight:'2em'}}
-          // value={address}
-          onChange={
-            changeAddress
-          }
-          name="address"
-    /> */}
-
     </div>   
       
     <div>
       {rooms && rooms.map(R => ( 
-      // <div onPress={()=>{roomPage(navigation, id);}} className="unstyled-button" >
-      <Room
-        id={R.id}
-        name={R.name}
-        roomType={R.roomType}
-        address={R.address}
-        state={R.state}
-        monthlyPayment={R.monthlyPayment}
-        images={R.images}
-      />   
+        <Room
+          id={R.id}
+          name={R.name}
+          roomType={R.roomType}
+          address={R.address}
+          state={R.state}
+          monthlyPayment={R.monthlyPayment}
+          images={R.images}
+        />   
     ))}
     </div>
     </div>

@@ -1,15 +1,13 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 function Home(){
     return(
       <div>
-        <div style = {{marginTop: '10em'}}>
+        {/* <div style = {{marginTop: '10em'}}>
           <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               집피스
           </Typography>
-        </div>
+        </div> */}
       </div>
     )
 }

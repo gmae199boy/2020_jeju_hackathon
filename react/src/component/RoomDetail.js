@@ -2,12 +2,10 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import ChatIcon from '@material-ui/icons/Chat';
 
 // 지도 표시용
@@ -15,7 +13,7 @@ import KakaoMap from './KakaoMap';
 
 // import io from 'socket.io-client';
 // const socket = io.connect('https://blog.nopublisher.dev');
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,10 +77,10 @@ const useStyles = makeStyles((theme) => ({
 
 function RoomDetail() {
     let [room, setRoom] = useState(null);
-    let [buffer, setBuffer] = useState(null);
+    // let [buffer, setBuffer] = useState(null);
     let [b64, setB64] = useState(null);
     let [mimeType, setMimeType] = useState(null);
-    const [user, setUser] = useState(null);
+    // const [user, setUser] = useState(null);
     const urlElements = window.location.pathname.split('/');
     const id = (urlElements[2])
     const classes = useStyles();
@@ -167,9 +165,6 @@ function RoomDetail() {
                   href = {`/contract/${id}`}>
                       계약하기
           </Button>
-          <br />
-          <br />
-          <br />
       </div>  : ""}
     </div>
     );
