@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: '60',
   },
+  
 }));
 
 function RegisterRoom(){
@@ -278,8 +280,6 @@ function RegisterRoom(){
                                 }
                             />
                 </div>
-
-                
                 <div container spacing={1} justify="center">
                     <div style={tempStyle}> 
                         <Button variant="contained" color="green" background-color="#03AE43" style={tempStyle}

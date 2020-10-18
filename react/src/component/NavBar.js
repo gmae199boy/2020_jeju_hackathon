@@ -24,6 +24,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PersonIcon from '@material-ui/icons/Person';
 import Logout from './Logout';
 
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     top: '610px',
     bottom: 0,
     position:'fixed',
+    zIndex: '5',
   },
   grow: {
     flexGrow: 1,
@@ -148,7 +150,7 @@ export default function NavBar() {
                    <img src ={zip} alt="zip"/>
       </Button>
       <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-      <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+      <BottomNavigationAction href="/mypage" label="mypage" value="mypage" icon={<PersonIcon />} />
       </BottomNavigation>
      <div className={classes.root}>
             {/* <AppBar size="responsive" position="fixed" style={{ background: 'white', width:"100%" }}>

@@ -6,6 +6,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import ChatIcon from '@material-ui/icons/Chat';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
@@ -17,6 +20,13 @@ import io from 'socket.io-client';
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
+    },
+
+    fab: {
+      position: 'fixed',
+      bottom: '5em',
+      right: '1em',
+      zIndex: '4',
     },
 
     formWrapper: {
@@ -83,7 +93,8 @@ function RoomDetail() {
     const tempStyle={
       margin : "0 auto",
       marginBottom : "3%",
-      width:"300px"
+      width:"300px",
+      zIndex: '2',
     }
 
     // useEffect(() => {
@@ -133,7 +144,7 @@ function RoomDetail() {
           <div style={tempStyle}>
               <br/>
               <h5>{room && room.address} </h5>
-              <div>
+              <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
                   <h7>월세 {room && room.monthlyPayment} 만원 </h7>
                   <br></br>
@@ -141,14 +152,16 @@ function RoomDetail() {
               <br/>
               <div class={classes.formWrapper}>
                   <h5>{room && room.content}</h5>
-              <div/>
               </div>
                 <br></br>
                 <h5> 지도 </h5>
-                {mapView && mapView}<br />
-                  <Button display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
-                      채팅하기
-                  </Button>
+                <div style={{zIndex: '1'}}>
+                   {mapView && mapView}<br />
+                </div>
+                  <Fab  color="primary" className={classes.fab}>
+                    <ChatIcon />
+                  </Fab>
+                  <br />
               </div>
           <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
                   href = {`/contract/${id}`}>
