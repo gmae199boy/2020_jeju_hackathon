@@ -1,16 +1,14 @@
-import React , {useEffect, useState} from 'react';
+import React , {useState} from 'react';
 import './RegisterRoom.css';
-import {Col, Row} from "react-bootstrap";
 import axios from 'axios';
 import { Input } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // 주소검색 컴포넌트
 // import Postcode from './PostcodeSearch';
 import KakaoMap from './KakaoMap';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: '60',
   },
+  
 }));
 
 function RegisterRoom(){
-    const classes = useStyles();
-    const [isLoading, setIsLoading]  = useState('');
     const [rooms, setRooms] = useState('');
     const [name, setName] = useState('');
     const [roomType, setRoomType] = useState('');
@@ -34,6 +31,8 @@ function RegisterRoom(){
     const [monthlyPayment, setMonthlyPayment] = useState('');
     const [images, setImages]  = useState('');
     const [content, setContent] = useState('');
+    const [officeStructure, setOfficeStructure] = useState('');
+    const [officeAcreage, setOfficeAcreage]= useState('');
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -78,12 +77,11 @@ function RegisterRoom(){
     const onChangeContent = e => {
         setContent(e.target.value);
     }
-
-    const onClick1 = () => {
-        setRoomType(roomType == 1);
+    const onChangeOfficeAcreage = e => {
+        setOfficeAcreage(e.target.value);
     }
-    const onClick2 = () => {
-        setRoomType(roomType == 2);
+    const onChangeOfficeStructure = e => {   
+        setOfficeStructure(e.target.value);
     }
 
     const onClick = async () => {
@@ -96,6 +94,8 @@ function RegisterRoom(){
         formData.append('address', address);
         formData.append('state', state);
         formData.append('content', content);
+        formData.append('structure', officeStructure);
+        formData.append('acreage', officeAcreage);
 
         //유저 ObjectId
         formData.append('registLessor', userId);
@@ -278,8 +278,34 @@ function RegisterRoom(){
                                 }
                             />
                 </div>
-
-                
+                <div style={tempStyle}>
+                    <label>구조</label>
+                        <input
+                                type="text"
+                                name = ""
+                                placeholder = "방 구조를 입력하세요"
+                                value ={officeStructure}
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onChangeOfficeStructure
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>평수</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "방 평수를 입력하세요"
+                                value ={officeAcreage}
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onChangeOfficeAcreage
+                                }
+                            />
+                </div>
                 <div container spacing={1} justify="center">
                     <div style={tempStyle}> 
                         <Button variant="contained" color="green" background-color="#03AE43" style={tempStyle}

@@ -5,19 +5,18 @@ const ContractSchema = new mongoose.Schema({
         type: Number,
         unique: true,
     },
-    // room: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Room',
-    // },
-    // lessor: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Lessor',
-    // },
-    // lessee: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Lessee',
-    // },
-    officeId: {type: Number,},
+    room: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Room',
+    },
+    lessor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Lessor',
+    },
+    lessee: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Lessee',
+    },
     officeOwner: {type: String,},
     officeAddress: {type: String,},
     officeStructure: {type: String,},
@@ -32,71 +31,8 @@ const ContractSchema = new mongoose.Schema({
     lesseeAddress: {type: String,},
     date: {type: String,},
     term: {type: String,},
-    lessorSignature: {type: String,},
-    lesseeSignature: {type: String,},
-    // office: {
-    //     orner: {
-    //         type: String,
-    //     },
-    //     address: {
-    //         type: String,
-    //     },
-    //     struture: {
-    //         type: String,
-    //     },
-    //     acreage: {
-    //         type: Number,
-    //     },
-    // },
-    // contractParty: {
-    //     lessor: {
-    //         name: {
-    //             type: String,
-    //         },
-    //         SSN: {
-    //             type: String,
-    //         },
-    //         phoneNumber: {
-    //             type: String,
-    //         },
-    //         address: {
-    //             type: String,
-    //         },
-    //     },
-    //     lessee: {
-    //         name: {
-    //             type: String,
-    //         },
-    //         SSN: {
-    //             type: String,
-    //         },
-    //         phoneNumber: {
-    //             type: String,
-    //         },
-    //         address: {
-    //             type: String,
-    //         },
-    //     },
-    // },
-    // contractContent: {
-    //     date: {
-    //         type: String,
-    //     },
-    //     term: {
-    //         type: String,
-    //     },
-    // },
-    // lessorSignature: {
-    //     type: Boolean,
-    // },
-    // lesseeSignature: {
-    //     type: Boolean,
-    // },
+    state: {type: Number,},
 });
-
-ContractSchema.statics.findByContractName = async function(contractName) {
-    return await this.findOne({ name: contractName }).lean();
-}
 
 ContractSchema.statics.findByContractId = async function(contractId) {
     return await this.findOne({ id: contractId }).lean();

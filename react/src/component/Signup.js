@@ -1,9 +1,7 @@
 import React,{ useState } from 'react';
 import './Login.css';
 import { Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input}from 'reactstrap';
 import axios from 'axios';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -100,7 +98,7 @@ function Signup() {
                         </p>
                 </div>
             </div>
-            {session && <Redirect to="/mypage" /> }
+            {session && <Redirect to="/SearchRoom" /> }
         </div>           
         );
         

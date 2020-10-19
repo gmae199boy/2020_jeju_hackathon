@@ -1,51 +1,192 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+// import Select from '@material-ui/core/Select';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import FormControl from '@material-ui/core/FormControl';
+// import { Input } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import { Input } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
 
+const useStyles = makeStyles((theme) => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+  }));
+
 function Contract() {
-    let [officeAddress, setOfficeAddress] = useState(null);
-    let [officeOwner, setOfficeOwner] = useState(null);
-    let [officeStructure, setOfficeStructure] = useState(null);
-    let [officeAcreage, setOfficeAcreage]= useState(null);
-    let [lessorName , setLessorName] = useState(null);
-    let [lessorSSN, setLessorSSN] = useState(null);
-    let [lessorphoneNumber, setLessorphoneNumber] = useState(null);
-    let [lessorAddress, setlessorAddress] = useState(null);
-    let [lesseeName, setLesseeName] = useState(null);
-    let [lesseeSSN, setLesseeSSN] = useState(null);
-    let [lesseePhoneNumber, setLesseePhoneNumber] = useState(null);
-    let [lesseeAddress, setLesseeAddress] = useState(null);
-    let [date, setDate] = useState(null);
-    let [term, setTerm] = useState(null);
+    const classes = useStyles();
+    const [officeAddress, setOfficeAddress] = useState(null);
+    const [officeOwner, setOfficeOwner] = useState(null);
+    const [officeStructure, setOfficeStructure] = useState(null);
+    const [officeAcreage, setOfficeAcreage]= useState(null);
+    const [lessorName , setLessorName] = useState(null);
+    const [lessorSSN, setLessorSSN] = useState(null);
+    const [lessorphoneNumber, setLessorphoneNumber] = useState(null);
+    const [lessorAddress, setlessorAddress] = useState(null);
+    const [lesseeName, setLesseeName] = useState(null);
+    const [lesseeSSN, setLesseeSSN] = useState(null);
+    const [lesseePhoneNumber, setLesseePhoneNumber] = useState(null);
+    const [lesseeAddress, setLesseeAddress] = useState(null);
+    const [date, setDate] = useState(null);
+    const [term, setTerm] = useState(null);
+    const [user, setUser] = useState(null);
+    const [room, setRoom] = useState(null);
+
+    const getRoom = async () => {
+        await axios.get(`https://blog.nopublisher.dev/room/${id}`,
+            {
+              headers: {
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+              }
+            }
+          ).then((res) => {
+            setRoom(res.data);
+            console.log(res.data);
+          },[])
+      };
+      useEffect (async () => {
+        const userParse = JSON.parse(window.localStorage.getItem('user'));
+        setUser(userParse);
+        getRoom();
+        console.log(userParse)
+      },[]);
 
     const tempStyle={
         margin : "0 auto",
         marginBottom : "3%",
-        width:"300px"
+        width:"300px",
+        marginLeft:'2em'
     }
-
+    
+    const defaultProps = {
+        bgcolor: 'background.paper',
+        m: 1,
+        border: 1,
+        style: { marginLeft: '1.5em', width: '330px', height: '8rem' },
+      }
     // function showPopup(){
     //     this.setState({  
     //         showPopup: !this.state.showPopup  
     //       }); 
     //   }
+
+    const onChangeAddress = e => {
+        setAddress(e.target.value);
+    }
+
+    const onChangePhoneNumber = e => {
+        setPhoneNumber(e.target.value);
+    }
+
+    const onChangeSSN = e => {
+        setSSN(e.target.value);
+    }
+    const onChangeDate = e => {
+        setDate(e.target.value);
+    }
         return (
             <div>
             <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
             </Typography>
+            <br />
+            <div>
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 소유주 : {room && room.name}
+                    </div> 
+                    
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 소재지 : {room && room.address}
+                    </div>
+                    {/* {user.data.address} */}
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 구조 : {room && room.structure} 층
+                    </div>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 평수 : {room && room.acreage} m^2
+                    </div>
+                </Box>
+                <br />
 
-            <div style={tempStyle}>
-            <div style={tempStyle}>
+                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
+                    계약 당사자 본인 인증
+                </div>              
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    {user && user.userType === 1 ? <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        <bold>임대인</bold></div>
+                     : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
+                        임차인
+                    </div>}  
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                            전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
+                    <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
+                    <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} />
+                    </div>
+                    
+                </Box>
+                <br />
+                
+                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
+                    계약 내용
+                </div>
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                     <div style={{float:'left', textAlign:'left', fontSize: '0.8rem', marginTop: '2em', marginLeft:'1.9em'}}>
+                        계약일
+                    </div>
+                    <div style={{float:'left', marginTop: '1em', marginLeft:'1em'}}>
+                        <form className={classes.container} noValidate>
+                                <TextField  
+                                    id="date"
+                                    type="date"
+                                    defaultValue="2020-10-19"
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                />
+                            </form>
+                    </div>
+                    
+                    <div style={{float:'left', textAlign:'left', fontSize: '0.8rem', marginTop: '2em', marginLeft:'1em'}}>
+                        임대기한
+                    </div>
+                    <div style={{float:'left', marginTop: '1em', marginLeft:'1em'}}>
+                        <form className={classes.container} noValidate>
+                                <TextField  
+                                    id="date"
+                                    type="date"
+                                    defaultValue="2020-10-19"
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                    onChange={onChangeDate}
+                                />
+                            </form>
+                    </div>
+                </Box>
+                <div style={{textAlign:'left', fontSize: '0.6rem', marginTop: '0.5em', marginLeft:'5em'}}>
+                        위 사무실 소유 물건 및 그 정착물, 부속물 모두 {}부터 본인의 임차합니다. <br/>
+                        따라서 아래 조항을 굳게 지켜 추호도 위배글이 없을 것을 확인합니다.
+                </div>
+            {/* <div style={tempStyle}>
                     <input
                         type="text"
                         name = "officeOwner"
@@ -106,7 +247,7 @@ function Contract() {
                         <br /> */}
                       
                      
-                    <div style={tempStyle}>
+                    {/* <div style={tempStyle}>
                         <input 
                                 type="text"
                                 name = "lessorName"
@@ -221,8 +362,9 @@ function Contract() {
 
 </div>
 
-                        <br />
-                        <Button variant="contained" type="submit" background-color="#6610f2" style = {tempStyle} onClick={
+                        <br /> */}
+                         <br />
+                        <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2" onClick={
                                async () => {
                                     axios({
                                         url: `https://blog.nopublisher.dev/room/contract/${id}`,
@@ -254,7 +396,7 @@ function Contract() {
                                     // })
                                     // console.log(room);
                                 }
-                            }>계약서 작성</Button> 
+                            }>동의 및 제출</Button> 
 
                     </div>   
         </div>   

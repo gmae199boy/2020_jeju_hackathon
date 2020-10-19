@@ -1,15 +1,21 @@
 import {Room} from '../../model/room';
 import {Contract} from '../../model/contract';
 import {Lessor} from '../../model/lessor';
+import {Lessee} from '../../model/lessee';
 import { caver, ABI_JSON, ADDRESS } from '../../caver';
 import {
     registRoomTransaction,
     getRoomTransaction,
+    confirmContractTransaction,
 } from './kas/kas';
 import fs from 'fs';
 import path from 'path';
 
 const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
+
+const CONTRACT_NONE = 1;
+const CONTRACT_ING = 2;
+const CONTRACT_DONE = 4;
 
 /**
  * 
@@ -82,12 +88,6 @@ const getRoom = async (req, res) => {
         room.images = images;
 
         return room;
-
-
-        // let SC = new caver.klay.Contract(ABI_JSON, ADDRESS);
-        // let result = await SC.methods.GetRoom(req.params.id).call();
-        // console.log(result);
-        // return result;
     } catch (e) {
         console.log(e);
         return e;
@@ -200,21 +200,67 @@ const reportRoom = async (req, res) => {
     }
 }
 
-const contractRoom = async (req, res) => {
+const createLessorContractRoom = async (req, res) => {
     try {
-        // const room = await Room.findByRoomId(req.params.id);
-        let contract = await Contract.findOfficeId(req.params.id);
-        console.log(contract);
-        if (contract == undefined) {
-            const newContract = new Contract({
-                ...req.body,
-            });
-            return await Contract.Save(newContract);
-        }
-        console.log(req.body);
-        contract = {...req.body};
-        return await contract.save();
+        const room = await Room.findByRoomId(req.params.roomId);
+        const lessor = await Lessor.findByLessorId(req.body.lessorId);
+        const contract = await Contract.updateOne({room: room._id, state: CONTRACT_ING}, {
+            ...req.body,
+            lessor: lessor._id,
+        });
 
+        console.log(contract);
+
+        return contract;
+
+        // let contract = await Contract.findOfficeId(req.params.id);
+        // console.log(contract);
+        // if (contract == undefined) {
+        //     const newContract = new Contract({
+        //         ...req.body,
+        //     });
+        //     return await Contract.Save(newContract);
+        // }
+        // console.log(req.body);
+        // contract = {...req.body};
+        // return await contract.save();
+
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+}
+
+const createLesseeContractRoom = async (req, res) => {
+    try {
+        const room = await Room.findByRoomId(req.params.roomId);
+        const lessee = await Lessee.findByLesseeId(req.body.lesseeId);
+        const contract = new Contract({...req.body, room: room._id, lessee: lessee._id, state: CONTRACT_ING});
+
+        return await Contract.Save(contract);
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+}
+
+const confirmContract = async (req, res) => {
+    try {
+        const room = await Room.findByRoomId(req.body.roomId);
+        const lessor = await Lessor.findByLessorId(req.body.lessorId);
+        const lessee = await Lessee.findByLesseeId(req.body.lesseeId);
+        const contract = await Contract.findOneAndUpdate({
+            room: room._id,
+            lessor: lessor._id,
+            lessee: lessee._id,
+        }, {
+            state: CONTRACT_DONE,
+        });
+        const contractTransaction = await confirmContractTransaction(contract);
+
+        console.log(contractTransaction);
+
+        return contractTransaction;
     } catch (e) {
         console.log(e);
         return e;
@@ -237,6 +283,8 @@ export  {
     getRoomList,
     reportRoom,
     searchRoomList,
-    contractRoom,
+    createLessorContractRoom,
+    createLesseeContractRoom,
+    confirmContract,
     chatForRoom,
 };
