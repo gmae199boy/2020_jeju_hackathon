@@ -98,7 +98,7 @@ function Signup() {
                         </p>
                 </div>
             </div>
-            {session && <Redirect to="/mypage" /> }
+            {session && <Redirect to="/SearchRoom" /> }
         </div>           
         );
         

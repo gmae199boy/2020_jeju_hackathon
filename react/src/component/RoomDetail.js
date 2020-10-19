@@ -144,7 +144,9 @@ function RoomDetail() {
               <h5>{room && room.address} </h5>
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
-                  <h7>월세 {room && room.monthlyPayment} 만원 </h7>
+                  <h6>월세 {room && room.monthlyPayment} 만원 </h6>
+                  <h6>평수 {room && room.acreage} m^2 </h6>
+                  <h6>층수 {room && room.structure} 층 </h6>
                   <br></br>
               </div>
               <br/>
