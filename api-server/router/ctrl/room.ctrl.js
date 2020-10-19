@@ -202,8 +202,8 @@ const reportRoom = async (req, res) => {
 
 const createLessorContractRoom = async (req, res) => {
     try {
-        const room = await Room.findByRoomId(req.params.roomId);
-        const lessor = await Lessor.findByLessorId(req.body.lessorId);
+        const room = await Room.findByRoomId(req.params.id);
+        const lessor = await Lessor.findByLessorId(body.lessorId);
         const contract = await Contract.updateOne({room: room._id, state: CONTRACT_ING}, {
             ...req.body,
             lessor: lessor._id,
@@ -233,7 +233,7 @@ const createLessorContractRoom = async (req, res) => {
 
 const createLesseeContractRoom = async (req, res) => {
     try {
-        const room = await Room.findByRoomId(req.params.roomId);
+        const room = await Room.findByRoomId(req.params.id);
         const lessee = await Lessee.findByLesseeId(req.body.lesseeId);
         const contract = new Contract({...req.body, room: room._id, lessee: lessee._id, state: CONTRACT_ING});
 
