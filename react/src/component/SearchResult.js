@@ -1,56 +1,48 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Room from "./Room";
 
-const urlElements = window.location.pathname.split('/');
-const address = (urlElements[2]);
 
 function SearchResult(){
-    // state = {
-    //     isLoading:true,
-    //     rooms: null,
-    // };
-    
+  const [rooms, setRooms] = useState(null);
 
-    // getRooms = async () => {
-    //     const rooms = await axios.get(`https://blog.nopublisher.dev/rooms/${address}`);
-    //     console.log(rooms);
-    //     this.setState({ rooms , isLoading: false });
-    //     console.log(this.state.rooms);
-    // };
-    // componentDidMount(){
-    //     this.getRooms();
-    // }
+  const urlElements = window.location.pathname.split('/');
+  const address = urlElements[2];
 
-        const {rooms} = this.state;
+    const getRooms = async () => {
+      const roomsData = await axios.get(`https://blog.nopublisher.dev/rooms/${address}`,
+          {
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+            }
+          }
+        )
+      return roomsData;
+  
+    };
+
+    useEffect (async () => {
+      // useFunc()
+      var data = await getRooms()
+      setRooms(data.data)
+    },['']);
+
         return(
             <div>
                 <section className="container"> 
                 <div className="rooms">
-                {/* {rooms && rooms.data[0].name} */}
-                {/* //forEach(R => (
-                  // <div onPress={()=>{roomPage(navigation, id);}} className="unstyled-button" >
-                //   <Room */}
-                {/* //     id={R.id}
-                //     name={R.name}
-                //     roomType={R.roomType}
-                //     address={R.address}
-                //     // state={R.state}
-                //     monthlyPayment={R.monthlyPayment}
-                //     // images={R.images}
-                //   />
-                //   // </div>
-                // ))} */}
                 
-                {rooms && rooms.data.map(R => (
+                {rooms && rooms.map(R => ( 
                   <Room
+                    id={R.id}
                     name={R.name}
                     roomType={R.roomType}
-                    deposit={R.deposit}
                     address={R.address}
-                    progress={R.progress}
+                    state={R.state}
+                    monthlyPayment={R.monthlyPayment}
                     images={R.images}
-                  />
+                  />   
                 ))}
               </div>
                 </section>

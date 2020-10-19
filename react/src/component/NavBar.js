@@ -5,26 +5,14 @@ import clsx from 'clsx';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import {Image} from "react-bootstrap";
 import zip from './zip.png'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FolderIcon from '@material-ui/icons/Folder';
 import SearchIcon from '@material-ui/icons/Search';
-import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import Logout from './Logout';
+import PersonIcon from '@material-ui/icons/Person';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     top: '610px',
     bottom: 0,
     position:'fixed',
+    zIndex: '5',
   },
   grow: {
     flexGrow: 1,
@@ -148,10 +137,10 @@ export default function NavBar() {
                    <img src ={zip} alt="zip"/>
       </Button>
       <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-      <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+      <BottomNavigationAction href="/mypage" label="mypage" value="mypage" icon={<PersonIcon />} />
       </BottomNavigation>
      <div className={classes.root}>
-            <AppBar size="responsive" position="fixed" style={{ background: '#81b214', width:"100%" }}>
+            {/* <AppBar size="responsive" position="fixed" style={{ background: 'white', width:"100%" }}>
               <Toolbar variant="dense">
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                   {['menu'].map((anchor) => (
@@ -163,8 +152,8 @@ export default function NavBar() {
                   </React.Fragment>
                 ))}
                 </IconButton>
-                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
-                <Button style={{fontSize:'0.5rem',color:'white', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
+                <Button style={{fontSize:'0.5rem',color:'black', marginLeft:"13%", paddingRight:"-3%"}} edge="end" href='/signup'>sign up</Button>
+                <Button style={{fontSize:'0.5rem',color:'black', marginLeft:"-5%"}} edge="end" href='/login'>login</Button>
 
                 {user ? 
                   <Logout></Logout> : 
@@ -173,9 +162,9 @@ export default function NavBar() {
                   <Button style={{color:'white'}} href='/login'>login</Button>
                 ) : (
                   <Button logout={logout} style={{color:'white'}} href='/'>logout</Button>
-                )}     */}       
+                )}           
               </Toolbar>
-            </AppBar>
+            </AppBar> */}
           </div> 
     </div>
   );

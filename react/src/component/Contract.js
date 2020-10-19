@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import { Input } from '@material-ui/core';
+// import TextField from '@material-ui/core/TextField';
+// import Select from '@material-ui/core/Select';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import FormControl from '@material-ui/core/FormControl';
+// import { Input } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -30,8 +31,16 @@ function Contract() {
     const tempStyle={
         margin : "0 auto",
         marginBottom : "3%",
-        width:"300px"
+        width:"300px",
+        marginLeft:'2em'
     }
+    
+    const defaultProps = {
+        bgcolor: 'background.paper',
+        m: 1,
+        border: 1,
+        style: { marginLeft: '1.5em', width: '330px', height: '7rem' },
+      }
 
     // function showPopup(){
     //     this.setState({  
@@ -43,9 +52,45 @@ function Contract() {
             <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
             </Typography>
+            <br />
+            <div>
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 소유주
+                    </div>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 소재지
+                    </div>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 구조
+                    </div>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        사무실 평수
+                    </div>
+                </Box>
+                <br />
 
-            <div style={tempStyle}>
-            <div style={tempStyle}>
+                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
+                    계약 당사자 본인 인증
+                </div>              
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        임대인
+                    </div>
+                    <br />
+                    <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        임차인
+                    </div>
+                </Box>
+                <br />
+                
+                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
+                    계약 내용
+                </div>
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    
+                </Box>
+            {/* <div style={tempStyle}>
                     <input
                         type="text"
                         name = "officeOwner"
@@ -106,7 +151,7 @@ function Contract() {
                         <br /> */}
                       
                      
-                    <div style={tempStyle}>
+                    {/* <div style={tempStyle}>
                         <input 
                                 type="text"
                                 name = "lessorName"
@@ -221,8 +266,9 @@ function Contract() {
 
 </div>
 
-                        <br />
-                        <Button variant="contained" type="submit" background-color="#6610f2" style = {tempStyle} onClick={
+                        <br /> */}
+                         <br />
+                        <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2" onClick={
                                async () => {
                                     axios({
                                         url: `https://blog.nopublisher.dev/room/contract/${id}`,

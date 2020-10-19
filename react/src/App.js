@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React from "react";
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./component/Home"
 import Login from "./component/Login";
 import Signup from "./component/Signup";
@@ -19,7 +19,7 @@ import Mypage from './component/Mypage';
 function App(){
     return( 
       <Router>
-          <div style={{paddingTop: '5em'}}>
+          <div style={{paddingTop: '2em'}}>
           {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
               <Link className="navbar-brand" to={"/sign-in"}>positronX.io</Link>
@@ -51,7 +51,9 @@ function App(){
             <Route path='/contract' component={Contract}/>
             <Route path='/mypage' component={Mypage}/>
           </div>
-        
+        <br />
+        <br />
+        <br />
       </div>
       </Router>  
       );

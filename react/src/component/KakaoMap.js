@@ -11,7 +11,8 @@ function KakaoMap({coords}) {
 
 		const options = {
 			center: coords,//new daum.maps.LatLng(x, y),
-			level: 5
+            level: 5,
+            zIndex: '1',
 		};
         const map = new daum.maps.Map(mapContainer, options);
 
@@ -30,7 +31,7 @@ function KakaoMap({coords}) {
         marker.setPosition(coords)
     }, []);
     return(
-        <div id="map" style={{width: '300px', height: '200px',}}></div>
+        <div id="map" style={{width: '300px', height: '200px',zIndex: '4'}}></div>
     );
 }
 
