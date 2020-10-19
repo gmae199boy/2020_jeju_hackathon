@@ -9,10 +9,8 @@ import Button from '@material-ui/core/Button';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
-
-// import io from 'socket.io-client';
-// const socket = io.connect('https://blog.nopublisher.dev');
-import io from 'socket.io-client';
+// 채팅
+import Chat from './Chat';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,17 +82,6 @@ function RoomDetail() {
     //     // });
 
     useEffect(async () => {
-      // const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
-      //   extraHeaders: {
-      //     'Access-Control-Allow-Origin' : '*',
-      //     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
-      //   }
-      // });
-      // console.log(socket);
-      //   socket.emit('message', {
-      //     qq: "qq",
-       
-
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
@@ -131,7 +118,7 @@ function RoomDetail() {
             {mapView && mapView}<br />
           </div>
           <div>
-              <Button display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
+              <Button href='/chat' display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
                   채팅하기
               </Button>
           </div>

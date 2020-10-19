@@ -15,6 +15,7 @@ import SearchRoom from './component/SearchRoom';
 import RoomDetail from './component/RoomDetail';
 import RegisterRoom from './component/RegisterRoom';
 import Mypage from './component/Mypage';
+import Chat from './component/Chat';
 
 function App(){
     return( 
@@ -50,6 +51,7 @@ function App(){
             <Route path='/searchResult' component={SearchResult}/>  
             <Route path='/contract' component={Contract}/>
             <Route path='/mypage' component={Mypage}/>
+            <Route path='/chat' component={Chat}/>
           </div>
         
       </div>
