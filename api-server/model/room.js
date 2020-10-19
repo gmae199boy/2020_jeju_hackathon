@@ -90,6 +90,14 @@ const RoomSchema = new mongoose.Schema({
     coordsy: {
         type: Number,
     },
+    contract: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Contract',
+        }
+    ],
+    structure: {type: String,},
+    acreage: {type: Number,},
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {
@@ -102,7 +110,7 @@ RoomSchema.statics.findByRoomId = async function(roomId) {
 
 RoomSchema.statics.getRoomList = async function( page = 1 ) {
     return await this.find({}, { 
-        _id: 0, 
+        _id: 1, 
         id: 1,
         name: 1,
         roomType: 1,
@@ -116,15 +124,11 @@ RoomSchema.statics.getRoomList = async function( page = 1 ) {
     .skip((page - 1) * perPage)
     .limit(perPage)
     .lean();
-    // .exec((err, result) => {
-    //     if (err) {console.log(err);return null;}
-    //     return result;
-    // });
 }
 
 RoomSchema.statics.searchByAddress = async function(address, page = 1) {
     return await this.find({address: { $regex: address }}, { 
-        _id: 0, 
+        _id: 1, 
         id: 1,
         name: 1,
         roomType: 1,
