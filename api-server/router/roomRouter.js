@@ -6,7 +6,9 @@ import {
     getRoomList,
     reportRoom,
     searchRoomList,
-    contractRoom,
+    createLessorContractRoom,
+    createLesseeContractRoom,
+    confirmContract,
     chatForRoom,
 } from './ctrl/room.ctrl';
 import {     
@@ -48,8 +50,18 @@ const routes = [
     },
     {
         method: 'POST',
-        url: '/room/contract/:id',
-        handler: contractRoom,
+        url: '/room/lessor_contract/:id',
+        handler: createLessorContractRoom,
+    },
+    {
+        method: 'POST',
+        url: '/room/lessee_contract/:id',
+        handler: createLesseeContractRoom,
+    },
+    {
+        method: 'POST',
+        url: '/room/confirm_contract/:id',
+        handler: confirmContract,
     },
     {
         method: 'GET',
