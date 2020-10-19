@@ -38,8 +38,8 @@ function App(){
           <div>
             <Route path='/' component={NavBar}/>
             <Route path='/Home' component={Home}/>
-            <Route exact path='/' component={Intro}/>
-            <Route path='/Login' component={Login} />
+            <Route exact path='/Intro' component={Intro}/>
+            <Route exact path='/' component={Login} />
             <Route path='/Signup' component={Signup}/>
             <Route path='/RegisterRoom' component={RegisterRoom}/>
             {/* <Route path='/report' component={report}/> */}

@@ -52,7 +52,7 @@ function SearchRoom() {
 
   const tempStyle={
     margin : "0 auto",
-    marginLeft : "7%",
+    marginLeft : "4%",
     marginBottom : "3%"
   }
 

@@ -31,6 +31,8 @@ function RegisterRoom(){
     const [monthlyPayment, setMonthlyPayment] = useState('');
     const [images, setImages]  = useState('');
     const [content, setContent] = useState('');
+    const [officeStructure, setOfficeStructure] = useState('');
+    const [officeAcreage, setOfficeAcreage]= useState('');
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -75,7 +77,13 @@ function RegisterRoom(){
     const onChangeContent = e => {
         setContent(e.target.value);
     }
-    
+    const onChangeOfficeAcreage = e => {
+        setOfficeAcreage(e.target.value);
+    }
+    const onChangeOfficeStructure = e => {   
+        setOfficeStructure(e.target.value);
+    }
+
     const onClick = async () => {
         let userId = JSON.parse(window.localStorage.getItem('user'))._id;
         const formData = new FormData();
@@ -86,6 +94,8 @@ function RegisterRoom(){
         formData.append('address', address);
         formData.append('state', state);
         formData.append('content', content);
+        formData.append('structure', officeStructure);
+        formData.append('acreage', officeAcreage);
 
         //유저 ObjectId
         formData.append('registLessor', userId);
@@ -265,6 +275,34 @@ function RegisterRoom(){
                                 id="formGroupExampleInput"
                                 onChange={
                                     onChangeContent
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>구조</label>
+                        <input
+                                type="text"
+                                name = ""
+                                placeholder = "방 구조를 입력하세요"
+                                value ={officeStructure}
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onChangeOfficeStructure
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>평수</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "방 평수를 입력하세요"
+                                value ={officeAcreage}
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onChangeOfficeAcreage
                                 }
                             />
                 </div>
