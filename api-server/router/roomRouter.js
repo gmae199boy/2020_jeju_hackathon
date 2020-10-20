@@ -33,6 +33,12 @@ const upload = multer({ storage: storage });
 const routes = [
     {
         method: 'GET',
+        url: '/room/chat/:id',
+        websocket: true,
+        handler: chatForRoom,
+    },
+    {
+        method: 'GET',
         url: '/rooms',
         handler: getRoomList,
     },
@@ -62,12 +68,6 @@ const routes = [
         method: 'POST',
         url: '/room/confirm_contract/:id',
         handler: confirmContract,
-    },
-    {
-        method: 'GET',
-        url: '/room/chat/:id',
-        websocket: true,
-        handler: chatForRoom,
     },
     {
         method: 'POST',
