@@ -94,7 +94,7 @@ export function Login() {
             }).then((res) => {
                 // setSession(res)
                 // console.log(res)
-                console.log(res.headers['set-cookie'])
+                window.localStorage.setItem('user', JSON.stringify(res.data));
                 console.log(res);
                 setSession(res);
             })
