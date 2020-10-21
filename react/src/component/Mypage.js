@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import Room from './Room';
 import { Avatar, Typography, Tab, Tabs } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ContractManage from "./ContractManage"
+import Button from '@material-ui/core/Button';
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
 // import Typography from '@material-ui/core/Typography';
@@ -68,6 +70,28 @@ const useStyles = makeStyles((theme) => ({
 function Mypage() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [rooms, setRooms] = useState(null);
+    const [address, setAddress] = useState('');
+  
+    const getRooms = async () => {
+      const roomsData = await axios.get('https://blog.nopublisher.dev/rooms',
+          {
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+            }
+          }
+        ).then((res)=> {
+            setRooms(res.data)
+        })
+  
+      return roomsData;
+  
+    };
+
+    useEffect (async () => {
+      getRooms()
+    },['']);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -120,11 +144,28 @@ function Mypage() {
             <div className={classes.root}>
                 <div className={classes.demo1}>
                     <AntTabs style={{marginLeft:"7%"}} value={value} onChange={handleChange} aria-label="ant example">
-                        <AntTab label="나의 매물" />
+                        <AntTab label="나의 매물">
+                        
+                        </AntTab>
                         <AntTab label="최근 본 매물" />
                         <AntTab label="계약서 관리" />
                     </AntTabs>
                     <Typography className={classes.padding} />
+                    <Button style={{marginTop: "-2em", marginLeft:"10em"}} variant="contained" size="large"  className={classes.margin} 
+                    href = "/RegisterRoom">
+                      방 등록
+                    </Button>
+                    {rooms && rooms.map(R => ( 
+                        <Room
+                        id={R.id}
+                        name={R.name}
+                        roomType={R.roomType}
+                        address={R.address}
+                        state={R.state}
+                        monthlyPayment={R.monthlyPayment}
+                        images={R.images}
+                        />   
+                        ))}
                 </div>
             </div>
         </div>

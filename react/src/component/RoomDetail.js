@@ -6,19 +6,39 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import ChatIcon from '@material-ui/icons/Chat';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
-// 채팅
-import Chat from './Chat';
+
+// import io from 'socket.io-client';
+// const socket = io.connect('https://blog.nopublisher.dev');
+import io from 'socket.io-client';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
     },
+
+    fab: {
+      position: 'fixed',
+      bottom: '5em',
+      right: '1em',
+      zIndex: '4',
+    },
+
+    formWrapper: {
+      padding: '1.0rem 0',
+      borderBottom: '1px solid #eeeeee ',
+      maxWidth: 360,
+    },
+    
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
+      borderBottom: '1px solid #22b8cf;'
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -73,7 +93,8 @@ function RoomDetail() {
     const tempStyle={
       margin : "0 auto",
       marginBottom : "3%",
-      width:"300px"
+      width:"300px",
+      zIndex: '2',
     }
 
     // useEffect(() => {
@@ -82,6 +103,17 @@ function RoomDetail() {
     //     // });
 
     useEffect(async () => {
+      // const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
+      //   extraHeaders: {
+      //     'Access-Control-Allow-Origin' : '*',
+      //     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
+      //   }
+      // });
+      // console.log(socket);
+      //   socket.emit('message', {
+      //     qq: "qq",
+       
+
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
@@ -99,37 +131,47 @@ function RoomDetail() {
         }) 
     }, [])
   
-    return(
-        <div style={tempStyle}>
-          <h5>{room && room.address} </h5>
-          <h7>월세 {room && room.monthlyPayment} 만원 </h7>
-          <Card className={classes.root} style={{marginLeft:'0.5em'}} >
-            <CardHeader />
-            {b64 ? <CardMedia
+  return(
+  <div>
+    {b64 ? <Card className={classes.root} style={{marginTop:'-3em',maxWidth:'376px'}} >
+             <CardMedia
                 component="img"
                 className={classes.cover}
                 src={`data:${mimeType};base64,${b64}`}
-            /> : "loading"}
-          </Card><br/>
-          <h5>{room && room.content}</h5>
-          <br />
-          <div>
-            <h5> 지도 </h5>
-            {mapView && mapView}<br />
-          </div>
-          <div>
-              <Button href='/chat' display="inline-block" variant="contained" size="large"  className={classes.margin} style={tempStyle}>
-                  채팅하기
-              </Button>
-          </div>
-          
-          <br /> 
+            /> 
+          </Card>  : ""}
+          {b64 ? 
+          <div style={tempStyle}>
+              <br/>
+              <h5>{room && room.address} </h5>
+              <div style={{zIndex: '1'}}>
+              <div class={classes.formWrapper}>
+                  <h7>월세 {room && room.monthlyPayment} 만원 </h7>
+                  <br></br>
+              </div>
+              <br/>
+              <div class={classes.formWrapper}>
+                  <h5>{room && room.content}</h5>
+              </div>
+                <br></br>
+                <h5> 지도 </h5>
+                <div style={{zIndex: '1'}}>
+                   {mapView && mapView}<br />
+                </div>
+                  <Fab href="/chat" color="primary" className={classes.fab}>
+                    <ChatIcon href="/chat" />
+                  </Fab>
+                  <br />
+              </div>
           <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
                   href = {`/contract/${id}`}>
                       계약하기
           </Button>
           <br />
-      </div>
+          <br />
+          <br />
+      </div>  : ""}
+    </div>
     );
 }
 

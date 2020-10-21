@@ -94,7 +94,7 @@ export function Login() {
             }).then((res) => {
                 // setSession(res)
                 // console.log(res)
-                console.log(res.headers['set-cookie'])
+                window.localStorage.setItem('user', JSON.stringify(res.data));
                 console.log(res);
                 setSession(res);
             })
@@ -167,7 +167,9 @@ export function Login() {
                         </div>
 
                         <Button variant="contained" size = "large" type="submit" className="btn btn-primary btn-block" onClick={checkUserType}>로그인</Button>
-                       
+                        <p className="forgot-password text-right">
+                            <a textAlign="center" href="./signup">sign up</a>
+                        </p>
                     </div>
                 </div>
                 {session && <Redirect to="/SearchRoom" /> }
