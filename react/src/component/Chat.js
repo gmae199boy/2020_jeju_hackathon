@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Button from '@material-ui/core/Button';
 import { Input } from '@material-ui/core';
 import ChatContent from './ChatContent';
@@ -10,21 +10,57 @@ function Chat() {
     const [content, setContent] = useState(new Array());
     const [b, setB] = useState(null);
 
-    useEffect(async () => {
-        console.log(content);
-        socket.onmessage = async function (event) {
-            console.log(event);
-            const json = JSON.parse(event.data);
-            console.log(json);
-            let data = content;
-            data.push(json);
-            console.log(data);
-            setContent(data);
-        }
-        socket.onopen = function(e) {
-            console.log(e);
-        }
-    },[content])
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+      
+        // Remember the latest callback.
+        useEffect(() => {
+          savedCallback.current = callback;
+        }, [callback]);
+      
+        // Set up the interval.
+        useEffect(() => {
+            socket.onmessage = async function (event) {
+                console.log(event);
+                const json = JSON.parse(event.data);
+                console.log(json);
+                let data = content;
+                data.push(json);
+                console.log(data);
+                setContent(data);
+            }
+            socket.onopen = function(e) {
+                console.log(e);
+            }
+            function tick() {
+                savedCallback.current();
+            }
+            if (delay !== null) {
+                let id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
+        }, [delay]);
+    }
+
+    useInterval(() => {
+        setB( b + 1);
+        console.log(b);
+    }, 1000);
+
+    // useEffect(async () => {
+    //     socket.onmessage = async function (event) {
+    //         console.log(event);
+    //         const json = JSON.parse(event.data);
+    //         console.log(json);
+    //         let data = content;
+    //         data.push(json);
+    //         console.log(data);
+    //         setContent(data);
+    //     }
+    //     socket.onopen = function(e) {
+    //         console.log(e);
+    //     }
+    // },[content])
 
     const click = async () => {
         socket.send(JSON.stringify({type:"message", content: text, userName: user.name}));
