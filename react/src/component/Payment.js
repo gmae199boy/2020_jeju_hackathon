@@ -2,6 +2,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 function Payment(){
     let [amount, setAmount] = useState('');
@@ -21,11 +22,10 @@ function Payment(){
                     결제하기
             </Typography>
         <br />
-        <input style={{marginLeft:'3em'}} width = '15px' placeholder="결제할 금액을 적어주세요" onChange={(e) => {
-            setAmount(e.target.value);
-        }} />
+        <TextField style={{marginLeft:'4em', marginTop:'7em'}} id="standard-basic" label="결제할 금액을 적어주세요" onChange={(e) => {
+            setAmount(e.target.value); }}/>
         
-        <Button style={{marginLeft:'1em'}} variant="contained" color="primary" onClick={() =>{
+        <Button style={{marginLeft:'1em', marginTop:'9em'}} variant="contained" onClick={() =>{
             console.log(amount);
             let string = {
                 amount: amount,

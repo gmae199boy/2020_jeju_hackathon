@@ -52,7 +52,7 @@ function SearchRoom() {
 
   const tempStyle={
     margin : "0 auto",
-    marginLeft : "4%",
+    marginLeft : "1%",
     marginBottom : "3%"
   }
 
@@ -82,7 +82,7 @@ function SearchRoom() {
   return (
     <div>
       <div style = {tempStyle}>
-        <div>
+        <div style={{margin: "0% 3% 0% 9%"}}>
             <div>
               <SearchIcon style={{marginTop:'6px', float:'left'}}/>
             </div>
