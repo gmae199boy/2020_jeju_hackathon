@@ -17,6 +17,7 @@ import DatePicker from 'react-date-picker';
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
 
+
 const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -42,6 +43,7 @@ function Contract() {
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const getRoom = async () => {
+        
         await axios.get(`https://blog.nopublisher.dev/room/${id}`,
             {
               headers: {
@@ -230,7 +232,7 @@ function Contract() {
                 </div>
                          <br />
                         <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
-                        onClick={onClick}>동의 및 제출</Button>
+                        onClick={onClick} href="/">동의 및 제출</Button>
                     </div>  
         </div>    
         );

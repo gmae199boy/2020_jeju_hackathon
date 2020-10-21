@@ -30,7 +30,8 @@ const ContractSchema = new mongoose.Schema({
     lesseePhoneNumber: {type: String,},
     lesseeAddress: {type: String,},
     date: {type: String,},
-    term: {type: String,},
+    startDate: {type: String,},
+    endDate: {type: String,},
     state: {type: Number,},
 });
 

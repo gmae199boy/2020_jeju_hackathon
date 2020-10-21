@@ -84,7 +84,23 @@ fastify.register(fastifySession, {
 //   root: path.join(__dirname, '/..', '/react/build'),
 // })
 
-fastify.register(fastifyWs);
+function handle (conn) {
+  console.log('qweqwe');
+  conn.pipe(conn) // creates an echo server
+}
+
+fastify.register(fastifyWs, {
+  handle,
+  options: {
+    maxPayload: 1048576, // we set the maximum allowed messages size to 1 MiB (1024 bytes * 1024 bytes)
+    path: '/room/chat/', // we accept only connections matching this path e.g.: ws://localhost:3000/fastify
+    // verifyClient: function (info, next) {
+    //   next(true) // the connection is allowed
+    // }
+  }
+})
+
+
 
 // listen port
 const PORT = 8080;
@@ -112,6 +128,13 @@ roomRouter.forEach(route => {fastify.route(route);});
 lessorRouter.forEach(route => {fastify.route(route);});
 lesseeRouter.forEach(route => {fastify.route(route);});
 shopRouter.forEach(route => {fastify.route(route);});
+
+// const CLIENT = new Array();
+// fastify.websocketServer.on('connection', function connection(ws) {
+//   CLIENT.push(ws);
+//   console.log(CLIENT.length);
+//   console.log(this.websocketServer.clients)
+// });
 
 // Run the server!
 const start = async () => {

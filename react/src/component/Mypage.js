@@ -4,6 +4,7 @@ import Room from './Room';
 import { Avatar, Typography, Tab, Tabs } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ContractManage from "./ContractManage"
+import Button from '@material-ui/core/Button';
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
 // import Typography from '@material-ui/core/Typography';
@@ -150,6 +151,10 @@ function Mypage() {
                         <AntTab label="계약서 관리" />
                     </AntTabs>
                     <Typography className={classes.padding} />
+                    <Button style={{marginTop: "-2em", marginLeft:"10em"}} variant="contained" size="large"  className={classes.margin} 
+                    href = "/RegisterRoom">
+                      방 등록
+                    </Button>
                     {rooms && rooms.map(R => ( 
                         <Room
                         id={R.id}
