@@ -86,15 +86,15 @@ function Contract() {
     //   }
 
     const onChangeAddress = e => {
-        setAddress(e.target.value);
+        // setAddress(e.target.value);
     }
 
     const onChangePhoneNumber = e => {
-        setPhoneNumber(e.target.value);
+        // setPhoneNumber(e.target.value);
     }
 
     const onChangeSSN = e => {
-        setSSN(e.target.value);
+        // setSSN(e.target.value);
     }
     const onChangeDate = e => { 
         setDate(e.target.value);

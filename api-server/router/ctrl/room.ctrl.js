@@ -10,6 +10,7 @@ import {
 } from './kas/kas';
 import fs from 'fs';
 import path from 'path';
+import { on } from 'process';
 
 const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
 
@@ -237,6 +238,8 @@ const createLesseeContractRoom = async (req, res) => {
         const lessee = await Lessee.findByLesseeId(req.body.lesseeId);
         const contract = new Contract({...req.body, room: room._id, lessee: lessee._id, state: CONTRACT_ING});
 
+        console.log(contract);
+
         return await Contract.Save(contract);
     } catch (e) {
         console.log(e);
@@ -267,12 +270,86 @@ const confirmContract = async (req, res) => {
     }
 }
 
-const chatForRoom = (connection, req) => {
-    console.log(connection);
+
+const CLIENT = new Array();
+async function chatForRoom (connection, req)  {
+    function sendAll (message) {
+        for (var i=0; i<CLIENT.length; i++) {
+            CLIENT[i].send("Message: " + message);
+        }
+    }
+
     connection.socket.on('message', (message) => {
-        console.log(message);
-        connection.socket.send('test message');
-    });
+        this.websocketServer.clients.forEach(function each(client) {
+            if (client.readyState === 1) {
+                client.send(JSON.stringify({type:'message', name: "kim"}));
+            }
+        })
+    })
+
+
+    // connection.socket.on('message', message => {
+    //     console.log(message);
+    //     connection.socket.send(message);
+    // })
+    // this.websocketServer.on('connection', function connection(ws) {
+    //     // CLIENT.push(ws);
+    //     // console.log(CLIENT.length);
+    //     // this.clients.forEach(function (client, i) {
+    //     //     ww.push(client);
+    //     //     if(ww[i] == client) delete ww[i];
+    //     // })
+
+    //     CLIENT.push(connection.socket);
+        
+    //     ws.on('message', function incoming(message) {
+    //         console.log('received: %s', message);
+
+    //         const json = JSON.parse(message);
+            
+    //         CLIENT.forEach(function each(client) {
+    //             // Logger.info('Sending message', data);
+    //             console.log("메세지 보냄");
+    //             console.log(CLIENT);
+    //             client.send(JSON.stringify(json));
+    //         });
+    //     });
+
+        
+    //     // ws.broadcast = function broadcast(message) {
+    //     //     ws.clients.forEach(function each(client) {
+    //     //         // Logger.info('Sending message', data);
+    //     //         client.send(JSON.stringify(message));
+    //     //     });
+    //     // };
+    // });
+    // connection.socket.on('message', (message) => {
+
+
+
+    //     // this.websocketServer.broadcast = function broadcast(data) {
+    //     //     this.websocketServer.clients.forEach(function each(client) {
+    //     //         // Logger.info('Sending message', data);
+    //     //         client.send(JSON.stringify(data));
+    //     //     });
+    //     // };
+        
+    //     console.log(message + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    //     connection.socket.broadcast = function(){
+    //         console.log("sdgkjbadfbnjlsadfjlnsadvgnjl");
+    //     }
+    //     // this.websocketServer.broadcast = function broadcast(data) {
+    //     //     this.websocketServer.clients.forEach(function each(client) {
+    //     //         // Logger.info('Sending message', data);
+    //     //         console.log("asdasdasd");
+    //     //         client.send(JSON.stringify(data));
+    //     //     });
+    //     // };
+    //     // connection.socket.clients.forEach(function each(client) {
+    //     //     client.send({type: "message", content: "asd"});
+    //     //  });
+    //     // connection.socket.emit('message', JSON.stringify({content: "asd"}));
+    // });
 }
 
 export  {
