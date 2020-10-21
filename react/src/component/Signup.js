@@ -55,7 +55,7 @@ export function Signup() {
     const checkUserType = (e) => {
         console.log(userType)
         userType === 1 ? 
-        axios.post('https://blog.nopublisher.dev/lessor/login',
+        axios.post('https://blog.nopublisher.dev/lessor/signup',
             {
                 name: name,
                 password:password,
@@ -78,7 +78,7 @@ export function Signup() {
                 console.log(res.data);
                 window.localStorage.setItem('user', JSON.stringify(res.data));
             })
-            : axios.post('https://blog.nopublisher.dev/lessee/login',
+            : axios.post('https://blog.nopublisher.dev/lessee/signup',
             {
                 name: name,
                 password:password,

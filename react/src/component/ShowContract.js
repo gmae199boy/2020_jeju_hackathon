@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
+import Paper from '@material-ui/core/Paper';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -46,6 +47,7 @@ function ShowContract() {
     const [startDate, setStartDate] = useState(new Date());
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [contract, setContract] = useState(null);
     const getRoom = async () => {
         
         await axios.get(`https://blog.nopublisher.dev/room/${id}`,
@@ -62,19 +64,16 @@ function ShowContract() {
       };
 
     const getContract = async() => {
-            user.userType===1 ?
-            await axios.get(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+            await axios.get(`https://blog.nopublisher.dev/room/get_contract/${id}`,
                         {
                             'Content-Type': 'application/json',
                         },
-                    ).then(console.log)
-            : 
-            await axios.get(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
-                {
-                    'Content-Type': 'application/json',
-                },
-            ).then(console.log)
+                    ).then((res) => {
+                        setContract(res);
+            })
     }
+    
+    
 
       useEffect (async () => {
         const userParse = JSON.parse(window.localStorage.getItem('user'));
@@ -155,6 +154,7 @@ function ShowContract() {
 //}
 
         return (
+            <Box style={{width:"40%", height:"40%"}}>
             <div>
              <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
@@ -183,23 +183,23 @@ function ShowContract() {
                     계약 당사자 본인 인증
                 </div>              
                 <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
-                    {user && user.userType === 1 ?
-                     <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                        <bold>임대인</bold>
-                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                                전화번호 : {}
-                        <br/>    주소 : {}
-                        <br/>    주민번호 : {}
-                        </div>
-                        </div>
-                     : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
-                        <bold>임차인</bold>
-                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
-                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
-                        <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} />
-                        </div>
-                    </div>}  
+                    {/* {user && user.userType === 1 ?
+                    //  <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                    //     <bold>임대인</bold>
+                    //     <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                    //             전화번호 : {contract.lessorPhoneNumber}
+                    //     <br/>    주소 : {contract.lessorAddress}
+                    //     <br/>    주민번호 : {contract.lessorSSN}
+                    //     </div>
+                    //     </div>
+                    //  : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
+                    //     <bold>임차인</bold>
+                    //     <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                    //             전화번호 : {contract.lesseePhoneNumber}
+                    //     <br/>    주소 : {contract.lesseeAddress}
+                    //     <br/>    주민번호 : {contract.lesseeSSN}
+                    //     </div>
+                    </div>}   */}
                     
                      
                 </Box>
@@ -230,14 +230,12 @@ function ShowContract() {
                         value={startDate1}
                         format="y-MM-dd"
                         onChange={e => setStartDate1(e)}
-                        
                         />
                     
                         <DatePicker
                         value={endDate}
                         onChange={e => setEndDate(e)}
                         format="y-MM-dd"
-
                         />
                     </div>
                 
@@ -251,11 +249,12 @@ function ShowContract() {
                         따라서 아래 조항을 굳게 지켜 추호도 위배글이 없을 것을 확인합니다.
                 </div>
                          <br />
-                        <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
-                        onClick={onClick} href="/Payment">동의 및 제출</Button>
+                        {/* <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
+                        onClick={onClick} href="/Payment">동의 및 제출</Button> */}
                     </div>  
-        </div>    
+        </div> 
+        </Box>   
         );
   }
 
-export default Contract;
+export default ShowContract;
