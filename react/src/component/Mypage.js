@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import Room from './Room';
-import { Avatar, Typography, Tab, Tabs } from '@material-ui/core';
+import MyRoom from './MyRoom';
+import { Avatar} from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ContractManage from "./ContractManage"
 import Button from '@material-ui/core/Button';
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
-// import Typography from '@material-ui/core/Typography';
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+import Badge from 'react-bootstrap/Badge'
+
+import Typography from '@material-ui/core/Typography';
 
 const AntTabs = withStyles({
     root: {
@@ -64,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
     demo2: {
       backgroundColor: '#2e1534',
     },
+    formWrapper: {
+        padding: '1.0rem 0',
+        borderBottom: '1px solid #eeeeee ',
+        maxWidth: 360,
+      },
   }));
 
 
@@ -104,6 +112,7 @@ function Mypage() {
     }
     const tempStyle1={
         margin : "0 auto",
+        marginTop : "-3%",
         marginLeft : "7%",
         marginBottom : "3%",
         display:"inline-block",
@@ -139,24 +148,23 @@ function Mypage() {
                 <Avatar src="/broken-image.jpg" />         
             </div>
             <div style={tempStyle1}>
+                <Badge variant="secondary">{user.userType ===1 ? "임대인" : "임차인"}</Badge>{' '}
                 <div>{user && user.name} 님 환영합니다</div>   
             </div>
             <div className={classes.root}>
-                <div className={classes.demo1}>
-                    <AntTabs style={{marginLeft:"7%"}} value={value} onChange={handleChange} aria-label="ant example">
-                        <AntTab label="나의 매물">
-                        
-                        </AntTab>
-                        <AntTab label="최근 본 매물" />
-                        <AntTab label="계약서 관리" />
-                    </AntTabs>
-                    <Typography className={classes.padding} />
-                    <Button style={{marginTop: "-2em", marginLeft:"10em"}} variant="contained" size="large"  className={classes.margin} 
-                    href = "/RegisterRoom">
-                      방 등록
-                    </Button>
-                    {rooms && rooms.map(R => ( 
-                        <Room
+                <div className={classes.demo1} style={{marginTop:"2em"}}>
+                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                {user.userType ===1 ?
+                <Tab eventKey="home" title="나의 매물">
+                    <div class={classes.formWrapper}>
+                   
+                        <Button style={{marginTop: "0.5em",marginBotton: "4em", marginLeft:"0.5em"}} size="large"  className={classes.margin} 
+                            href = "/RegisterRoom">
+                            방 등록하기
+                        </Button>
+                    </div> 
+                     {rooms && rooms.map(R => ( 
+                        <MyRoom
                         id={R.id}
                         name={R.name}
                         roomType={R.roomType}
@@ -166,6 +174,24 @@ function Mypage() {
                         images={R.images}
                         />   
                         ))}
+                </Tab>
+                : ""}
+                <Tab eventKey="profile" title="최근 본 매물">
+                    
+                </Tab>
+                <Tab eventKey="contact" title="계약서 관리">
+                    
+                </Tab>
+                </Tabs>
+                    {/* <AntTabs style={{marginLeft:"7%"}} value={value} onChange={handleChange} aria-label="ant example">
+                        <AntTab label="나의 매물">
+                        
+                        </AntTab>
+                        <AntTab label="최근 본 매물" />
+                        <AntTab label="계약서 관리" />
+                    </AntTabs>
+                    <Typography className={classes.padding} /> */}
+                   
                 </div>
             </div>
         </div>

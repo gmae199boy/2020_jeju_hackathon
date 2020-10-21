@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
-function Contract() {
+function ShowContract() {
     const classes = useStyles();
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [SSN, setSSN] = useState(null);
@@ -60,10 +60,27 @@ function Contract() {
             console.log(res.data);
           },[])
       };
+
+    const getContract = async() => {
+            user.userType===1 ?
+            await axios.get(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+                        {
+                            'Content-Type': 'application/json',
+                        },
+                    ).then(console.log)
+            : 
+            await axios.get(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
+                {
+                    'Content-Type': 'application/json',
+                },
+            ).then(console.log)
+    }
+
       useEffect (async () => {
         const userParse = JSON.parse(window.localStorage.getItem('user'));
         setUser(userParse);
         await getRoom();
+        await getContract();
         console.log(userParse)
       },[]);
 
@@ -85,57 +102,57 @@ function Contract() {
     //       }); 
     //   }
 
-    const onChangeAddress = e => {
-        // setAddress(e.target.value);
-    }
+    // const onChangeAddress = e => {
+    //     setAddress(e.target.value);
+    // }
 
-    const onChangePhoneNumber = e => {
-        // setPhoneNumber(e.target.value);
-    }
+    // const onChangePhoneNumber = e => {
+    //     setPhoneNumber(e.target.value);
+    // }
 
-    const onChangeSSN = e => {
-        // setSSN(e.target.value);
-    }
-    const onChangeDate = e => { 
-        setDate(e.target.value);
-    }
-    const onChangeTerm = e => {
-        setTerm(e.target.value);
-    }
-    const onClick = async (e) => {
-        console.log(user);
-        console.log(user.id);
-        user.userType===1 ?
-        await axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
-                    {
-                        "lessorId": user.id,
-                        "lessorSSN": SSN,
-                        "lessorphoneNumber": phoneNumber,
-                        "lessorAddress": Address,
-                        "date": startDate,
-                        "startDate": startDate1,
-                        "endDate": endDate,
-                    },
-                    {
-                        'Content-Type': 'application/json',
-                    },
-                )
-        : 
-        await axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
-            {
-                "lesseeId": user.id,
-                "lesseeSSN": SSN,
-                "lesseephoneNumber": phoneNumber,
-                "lesseeAddress": Address,
-                "date": startDate,
-                "startDate": startDate1,
-                "endDate": endDate,
-            },
-            {
-                'Content-Type': 'application/json',
-            },
-        ).then(console.log)
-}
+    // const onChangeSSN = e => {
+    //     setSSN(e.target.value);
+    // }
+    // const onChangeDate = e => { 
+    //     setDate(e.target.value);
+    // }
+    // const onChangeTerm = e => {
+    //     setTerm(e.target.value);
+    // }
+    // const onClick = async (e) => {
+    //     console.log(user);
+    //     console.log(user.id);
+    //     user.userType===1 ?
+    //     await axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+    //                 {
+    //                     "lessorId": user.id,
+    //                     "lessorSSN": SSN,
+    //                     "lessorphoneNumber": phoneNumber,
+    //                     "lessorAddress": Address,
+    //                     "date": startDate,
+    //                     "startDate": startDate1,
+    //                     "endDate": endDate,
+    //                 },
+    //                 {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //             )
+    //     : 
+    //     await axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
+    //         {
+    //             "lesseeId": user.id,
+    //             "lesseeSSN": SSN,
+    //             "lesseephoneNumber": phoneNumber,
+    //             "lesseeAddress": Address,
+    //             "date": startDate,
+    //             "startDate": startDate1,
+    //             "endDate": endDate,
+    //         },
+    //         {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     ).then(console.log)
+//}
 
         return (
             <div>
@@ -170,9 +187,9 @@ function Contract() {
                      <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
                         <bold>임대인</bold>
                         <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
-                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
-                        <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} />
+                                전화번호 : {}
+                        <br/>    주소 : {}
+                        <br/>    주민번호 : {}
                         </div>
                         </div>
                      : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
