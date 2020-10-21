@@ -2,16 +2,11 @@ import React, {Fragment, useState, useEffect} from "react";
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-// import Select from '@material-ui/core/Select';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import FormControl from '@material-ui/core/FormControl';
-// import { Input } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
+import { Redirect } from 'react-router-dom';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -46,6 +41,8 @@ function Contract() {
     const [startDate, setStartDate] = useState(new Date());
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [contract, setContract]= useState(null);
+
     const getRoom = async () => {
         
         await axios.get(`https://blog.nopublisher.dev/room/${id}`,
@@ -86,15 +83,15 @@ function Contract() {
     //   }
 
     const onChangeAddress = e => {
-        setAddress(e.target.value);
+        // setAddress(e.target.value);
     }
 
     const onChangePhoneNumber = e => {
-        setPhoneNumber(e.target.value);
+        // setPhoneNumber(e.target.value);
     }
 
     const onChangeSSN = e => {
-        setSSN(e.target.value);
+        // setSSN(e.target.value);
     }
     const onChangeDate = e => { 
         setDate(e.target.value);
@@ -105,9 +102,10 @@ function Contract() {
     const onClick = async (e) => {
         console.log(user);
         console.log(user.id);
-        user.userType===1 ?
+        user.userType === 1 ?
         await axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
-                    {
+                    { 
+                        "roomId" : id,
                         "lessorId": user.id,
                         "lessorSSN": SSN,
                         "lessorphoneNumber": phoneNumber,
@@ -119,10 +117,13 @@ function Contract() {
                     {
                         'Content-Type': 'application/json',
                     },
-                )
+                ).then((res) => {
+                    setContract(res);
+                })
         : 
         await axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
             {
+                "roomId" : id,
                 "lesseeId": user.id,
                 "lesseeSSN": SSN,
                 "lesseephoneNumber": phoneNumber,
@@ -134,7 +135,9 @@ function Contract() {
             {
                 'Content-Type': 'application/json',
             },
-        ).then(console.log)
+        ).then((res) => {
+            setContract(res);
+        })
 }
 
         return (
@@ -185,8 +188,8 @@ function Contract() {
                     </div>}  
                     
                      
-                </Box>
-
+                </Box> 
+ {/* 본인인증과 계약 내용 순서바꾸기 */}
                 <br />
                 <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
                     계약 내용
@@ -235,8 +238,9 @@ function Contract() {
                 </div>
                          <br />
                         <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
-                        onClick={onClick} href="/Payment">동의 및 제출</Button>
+                        onClick={onClick}>동의 및 제출</Button>
                     </div>  
+                    {contract && <Redirect to="/Payment" /> }
         </div>    
         );
   }
