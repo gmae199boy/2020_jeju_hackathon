@@ -8,10 +8,18 @@ function Chat() {
     const [user, setUser] = useState(window.localStorage.getItem('user'));
     const [text, setText] = useState(null);
     const [content, setContent] = useState(new Array());
+    const [b, setB] = useState(null);
 
     useEffect(async () => {
+        console.log(content);
         socket.onmessage = async function (event) {
             console.log(event);
+            const json = JSON.parse(event.data);
+            console.log(json);
+            let data = content;
+            data.push(json);
+            console.log(data);
+            setContent(data);
         }
         socket.onopen = function(e) {
             console.log(e);
@@ -28,7 +36,12 @@ function Chat() {
 
     return (
         <div>
-            <ChatContent content={text}/>
+            <div>
+                {/* {content[0] && content} */}
+                {content[0] && content.map(con => {
+                    return (<div>{con.name}</div>);
+                })}
+            </div>
             <Input placeholder="채팅을 입력해" onChange={setContents}/>
             <Button onClick={click} variant="contained" />
         </div>
