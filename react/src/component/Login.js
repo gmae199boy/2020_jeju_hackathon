@@ -172,7 +172,7 @@ export function Login() {
                         </p>
                     </div>
                 </div>
-                {session && <Redirect to="/SearchRoom" /> }
+                {session && <Redirect to="/Mypage" /> }
             </div> 
                      
         );
