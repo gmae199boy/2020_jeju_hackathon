@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
         borderBottom: '1px solid #eeeeee ',
         maxWidth: 360,
         margin:"0% 0% 0% 5%",
-        padding: "5% 0 20% 2%",
+        padding: "5% 0 10% 2%",
         fontSize: "0.8rem"
       },
   }));
@@ -137,12 +137,15 @@ function Mypage() {
                 {user && user.userType ===1 ?
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="나의 정보">
-                        <div class={classes.formWrapper1} style={{paddingBottom:"30px"}}>
+                        <div class={classes.formWrapper1} >
                             지갑 주소
-                            {user.address}
+                            <div style={{paddingTop:"20px"}}>   
+                                {user.address}
+                            </div>
+                            
                         </div> 
-                        <div class={classes.formWrapper1} style={{paddingBottom:"30px"}}>
-                            밸런스
+                        <div class={classes.formWrapper1} >
+                            잔여 토큰
                         </div> 
                         <div class={classes.formWrapper}>
                             <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
@@ -188,43 +191,78 @@ function Mypage() {
                     </Tab>
                 </Tabs>
                 : 
-                
-                <div style={{fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"0.5em"}} size="large"  className={classes.margin} >
-                    <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"7em"}}>
-                        나의 정보
-                    </div>
-                    <div class={classes.formWrapper1}>
+                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                    <Tab eventKey="home" title="나의 정보">
+                        <div class={classes.formWrapper1} >
                             지갑 주소
+                            <div style={{paddingTop:"20px", }}>   
+                                {user.address}
+                            </div>
+                            
                         </div> 
-                        <div class={classes.formWrapper1}>
-                            밸런스
-                        </div> 
-                        <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "5em",marginBotton: "4em", marginLeft:"7em"}}>
-                        계약서 관리
-                            {user && user.contracts.map(C => (
-                                <ShowContract 
-                                    id={C.roomId}
-                                    userId={C.lesseeId}
-                                    address={C.lesseeAddress}
-                                    phoneNumber={C.lesseephoneNumber}
-                                    date = {C.date}
-                                    startDate = {C.startDate}
-                                    endDate={C.endDate}
-                                />
-                            ))}
-                        </div>
-                        <div class={classes.formWrapper1}>
-                        
+                        <div class={classes.formWrapper1} style={{paddingBottom:"30px"}}>
+                            잔여 토큰
                         </div> 
                         <div class={classes.formWrapper}>
                             <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
                                     onClick={logout}>
                                     <bold>로그아웃</bold>
-                                    
+                                    {tmp && <Redirect to="/" /> }
                             </Button>
                             
                         </div>
-                </div>
+                    </Tab>
+                    <Tab eventKey="contact" title="계약서 관리">
+                        {user && user.contracts.map(C => (
+                            <ShowContract 
+                                id={C.roomId}
+                                userId={C.lessorId}
+                                address={C.lessorAddress}
+                                phoneNumber={C.lessorphoneNumber}
+                                date = {C.date}
+                                startDate = {C.startDate}
+                                endDate={C.endDate}
+                            />
+                        ))}
+                    </Tab>
+                </Tabs>
+                // <div style={{fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"0.5em"}} size="large"  className={classes.margin} >
+                //     <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"7em"}}>
+                //         나의 정보
+                //     </div>
+                //     <div class={classes.formWrapper1}>
+                //             지갑 주소
+                //             {user.address}
+                //         </div> 
+                //         <div class={classes.formWrapper1}>
+                //             밸런스
+                //         </div> 
+                //         <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "5em",marginBotton: "4em", marginLeft:"7em"}}>
+                //         계약서 관리
+                //             {user && user.contracts.map(C => (
+                //                 <ShowContract 
+                //                     id={C.roomId}
+                //                     userId={C.lesseeId}
+                //                     address={C.lesseeAddress}
+                //                     phoneNumber={C.lesseephoneNumber}
+                //                     date = {C.date}
+                //                     startDate = {C.startDate}
+                //                     endDate={C.endDate}
+                //                 />
+                //             ))}
+                //         </div>
+                //         <div class={classes.formWrapper1}>
+                        
+                //         </div> 
+                //         <div class={classes.formWrapper}>
+                //             <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
+                //                     onClick={logout}>
+                //                     <bold>로그아웃</bold>
+                                    
+                //             </Button>
+                            
+                //         </div>
+                // </div>
                 
                 }
                 
