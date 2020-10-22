@@ -121,6 +121,7 @@ function Contract() {
                         'Content-Type': 'application/json',
                     },
                 ).then((res) => {
+                    console.log(res);
                     setContract(1);
                 })
         : 
@@ -139,6 +140,7 @@ function Contract() {
                 'Content-Type': 'application/json',
             },
         ).then((res) => {
+            console.log(res);
             setContract(1);
         })
 }

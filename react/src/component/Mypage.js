@@ -53,7 +53,7 @@ function Mypage() {
     const [user, setUser] = useState('');
 
     const getRooms = async () => {
-      const roomsData = await axios.get('https://blog.nopublisher.dev/rooms',
+      await axios.get('https://blog.nopublisher.dev/rooms',
           {
             headers: {
               'Access-Control-Allow-Origin' : '*',
@@ -63,14 +63,12 @@ function Mypage() {
         ).then((res)=> {
             setRooms(res.data)
         })
-  
-      return roomsData;
-  
     };
 
     const getUser = async () => {
-        user.userType === 1 ?
-        await axios.get(`https://blog.nopublisher.dev/lessor/${user.id}`,
+        let userInfo = JSON.parse(window.localStorage.getItem('user'));
+        userInfo.userType === 1 ?
+        await axios.get(`https://blog.nopublisher.dev/lessor/mypage/${userInfo.id}`,
             {
                 headers: {
                     'Access-Control-Allow-Origin' : '*',
@@ -78,11 +76,11 @@ function Mypage() {
                 }
             }
         ).then((res)=> {
-            window.localStorage.setItem('user', JSON.stringify(res.date));
+            window.localStorage.setItem('user', JSON.stringify(res.data));
             setUser(res.data);
         })
         :
-        await axios.get(`https://blog.nopublisher.dev/lessee/${user.id}`,
+        await axios.get(`https://blog.nopublisher.dev/lessee/mypage/${userInfo.id}`,
         {
             headers: {
             'Access-Control-Allow-Origin' : '*',
@@ -90,16 +88,14 @@ function Mypage() {
             }
         }
         ).then((res)=> {
-            window.localStorage.setItem('user', JSON.stringify(res.date));
+            console.log(res);
+            window.localStorage.setItem('user', JSON.stringify(res.data));
             setUser(res.data);
         })
     }
 
     useEffect (async () => {
       getRooms()
-      let userInfo = JSON.parse(window.localStorage.getItem('user'));
-      setUser(userInfo)
-      console.log(userInfo);
       await getUser();
     },['']);
 
