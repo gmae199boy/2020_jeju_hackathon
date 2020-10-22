@@ -88,7 +88,7 @@ function SearchRoom() {
             </div>
             <InputBase 
               style={{float:'left'}}
-              placeholder="Search…"
+              placeholder="주소로 검색"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,

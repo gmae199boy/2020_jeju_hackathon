@@ -147,8 +147,8 @@ function RoomDetail() {
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
                   <h6>월세 {room && room.monthlyPayment} 만원 </h6>
-                  <h6> {room && room.structure} 층 </h6>
-                  <h6> {room && room.acreage} m^2 </h6>
+                  <h6>층수 {room && room.structure} 층 </h6>
+                  <h6>전용 면적 {room && room.acreage} m^2 </h6>
                   <br></br>
               </div>
               <br/>
@@ -169,7 +169,6 @@ function RoomDetail() {
                   href = {`/contract/${id}`}>
                       계약하기
           </Button>
-          <br />
           <br />
           <br />
       </div>  : ""}

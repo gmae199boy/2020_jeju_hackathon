@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
 import Paper from '@material-ui/core/Paper';
+import Figure from 'react-bootstrap/Figure'
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -154,7 +155,14 @@ function ShowContract() {
 //}
 
         return (
-            <Box style={{width:"40%", height:"40%"}}>
+            // <Figure>
+            //     <Figure.Image
+            //         width={171}
+            //         height={180}
+            //         alt="171x180"
+            //         src="holder.js/171x180"
+            //     />              
+            <Figure width={171} height={180} >
             <div>
              <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
@@ -253,7 +261,7 @@ function ShowContract() {
                         onClick={onClick} href="/Payment">동의 및 제출</Button> */}
                     </div>  
         </div> 
-        </Box>   
+        </Figure>  
         );
   }
 

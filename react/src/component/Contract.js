@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
 import { Redirect } from 'react-router-dom';
+import Clock from 'react-live-clock';
+import moment from 'moment-timezone';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -163,32 +165,8 @@ function Contract() {
                         사무실 평수 : {room && room.acreage} m^2
                     </div>
                 </Box>
-                <br />
+             
 
-                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
-                    계약 당사자 본인 인증
-                </div>              
-                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
-                    {user && user.userType === 1 ?
-                     <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                        <bold>임대인</bold>
-                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
-                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
-                        <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} />
-                        </div>
-                        </div>
-                     : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
-                        <bold>임차인</bold>
-                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
-                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
-                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
-                        <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} />
-                        </div>
-                    </div>}  
-                    
-                     
-                </Box> 
  {/* 본인인증과 계약 내용 순서바꾸기 */}
                 <br />
                 <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
@@ -199,13 +177,14 @@ function Contract() {
                         계약일
                     </div>
                     <div style={{float:'left', marginTop: '1.3em', marginLeft:'1em'}}> 
-                        <DatePicker
-                        selected={startDate}
+                        <Clock format={'YYYY년 MM 월 DD 일'}/>
+                        {/* <DatePicker
                         value={startDate}
                         format="y-MM-dd"
                         onChange={e => setStartDate(e)}
 
-                        /><br />
+                        /> */}
+                        <br />
                 </div>   
                     <br />
                     <div style={{ float:'left',textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em', marginRight:'0.5em'}}>
@@ -232,6 +211,34 @@ function Contract() {
                     
                 </div>
                 </Box>
+
+                <br />
+                <div style={{textAlign:'left' ,marginLeft:'1.5em'}}>
+                    계약 당사자 본인 인증
+                </div>              
+                <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
+                    {user && user.userType === 1 ?
+                     <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                        <bold>임대인</bold>
+                        <br/> <br/>
+                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
+                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
+                        {/* <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} /> */}
+                        </div>
+                        </div>
+                     : <div style={{textAlign:'center',fontWeight:'bold', fontSize: '0.8rem', marginTop: '1em', marginLeft:'1em'}}>
+                        <bold>임차인</bold>
+                        <br/> <br/>
+                        <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
+                                전화번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangePhoneNumber}/>
+                        <br/>    주소 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '1.7rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeAddress}/>
+                        {/* <br/>    주민번호 : <Input style={{marginTop:'-0.5rem', marginBottom:'0.3rem',marginLeft: '0.3rem', fontSize:'0.8rem'}} placeholder="입력하세요" inputProps={{ 'aria-label': 'description' }} onChange={onChangeSSN} /> */}
+                        </div>
+                    </div>}  
+                     
+                </Box> 
+                <br />
                 <div style={{textAlign:'left', fontSize: '0.6rem', marginTop: '0.5em', marginLeft:'5em'}}>
                         위 사무실 소유 물건 및 그 정착물, 부속물 모두 {}부터 본인의 임차합니다. <br/>
                         따라서 아래 조항을 굳게 지켜 추호도 위배글이 없을 것을 확인합니다.
