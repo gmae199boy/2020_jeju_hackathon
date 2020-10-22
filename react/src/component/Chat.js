@@ -75,11 +75,14 @@ function Chat() {
             <div>
                 {/* {content[0] && content} */}
                 {content[0] && content.map(con => {
-                    return (<div>{con.name} : {con.content}</div>);
+                    return (
+                    user.name === con.name ? 
+                    <div style={{textAlign: "right", mariginRight:"10px"}}>{con.name} : {con.content}</div>: 
+                    <div style={{textAlign: "left", mariginLeft:"10px"}}>{con.name} : {con.content}</div>);
                 })}
             </div>
-            <Input placeholder="채팅을 입력해" onChange={setContents}/>
-            <Button onClick={click} variant="contained" />
+            <Input placeholder="채팅을 입력해주세요" onChange={setContents} style={{width: "70%" ,margin:"31em 0.5em 0em 1.5em"}}/>
+            <Button onClick={click} type="submit" variant="contained">전송</Button>
         </div>
     );
 }

@@ -15,6 +15,7 @@ import DatePicker from 'react-date-picker';
 import Paper from '@material-ui/core/Paper';
 import Figure from 'react-bootstrap/Figure';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge'
 
 // const urlElements = window.location.pathname.split('/');
 // const id = (urlElements[2]);
@@ -42,11 +43,16 @@ const useStyles = makeStyles((theme) => ({
 function ShowContract({id,userId,address,phoneNumber,date,startDate,endDate}) {
     const classes = useStyles();
         return (
-            <div>
-                <Card style={{ width: '18rem' }}>  
+            <div  style={{margin:"20px 10px 0px 45px"}}>
+                <Card style={{ width: '18rem'}}>  
                     <Card.Body>
                         <Card.Title>계약서 {userId}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{date}</Card.Subtitle>
+                        <Badge pill variant="secondary">
+                            계약중
+                        </Badge>
+                        <br/>
+                        <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
+                        
                         <Card.Text>
                             {address}
                         </Card.Text>
