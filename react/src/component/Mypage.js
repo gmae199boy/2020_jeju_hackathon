@@ -48,7 +48,7 @@ function Mypage() {
     const [rooms, setRooms] = useState(null);
     const [address, setAddress] = useState('');
     const [tmp, setTmp] = useState(null);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState('');
 
     const getRooms = async () => {
       await axios.get('https://blog.nopublisher.dev/rooms',
@@ -98,9 +98,6 @@ function Mypage() {
       await getUser();
     },['']);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
     const tempStyle={
         margin : "0 auto",
         marginLeft : "7%",
@@ -131,7 +128,7 @@ function Mypage() {
                 <Avatar src="/broken-image.jpg" />         
             </div>
             <div style={tempStyle1}>
-                <Badge variant="secondary">{user && user.userType ===1 ? "임대인" : "임차인"}</Badge>{' '}
+                <Badge variant="secondary">{user.userType ===1 ? "임대인" : "임차인"}</Badge>{' '}
                 <div>{user && user.name} 님 환영합니다</div>   
             </div>
             <div className={classes.root}>
