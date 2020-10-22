@@ -43,8 +43,9 @@ function Contract() {
     const [startDate, setStartDate] = useState(new Date());
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [contract, setContract]= useState(null);
     const currentdate = new Date();
+
+    const [ff, setFF] = useState(null);
 
     const getRoom = async () => {
         
@@ -105,8 +106,9 @@ function Contract() {
     const onClick = async (e) => {
         console.log(user);
         console.log(user.id);
-        user.userType === 1 ?
-        axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+        if(user.userType == 1) {
+            const contract_info = await axios.post(
+                `https://blog.nopublisher.dev/room/lessor_contract/${id}`,
                     { 
                         "roomId" : id,
                         "lessorId": user.id,
@@ -120,29 +122,48 @@ function Contract() {
                     {
                         'Content-Type': 'application/json',
                     },
-                ).then((res) => {
-                    console.log(res);
-                    setContract(1);
-                })
-        : 
-        axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
-            {
-                "roomId" : id,
-                "lesseeId": user.id,
-                "lesseeSSN": SSN,
-                "lesseephoneNumber": phoneNumber,
-                "lesseeAddress": Address,
-                "date": startDate,
-                "startDate": startDate1,
-                "endDate": endDate,
-            },
-            {
-                'Content-Type': 'application/json',
-            },
-        ).then((res) => {
-            console.log(res);
-            setContract(1);
-        })
+            )
+            console.log(contract_info);
+            setFF(contract_info);
+        }
+        // user.userType === 1 ?
+        // axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+        //             { 
+        //                 "roomId" : id,
+        //                 "lessorId": user.id,
+        //                 "lessorSSN": SSN,
+        //                 "lessorphoneNumber": phoneNumber,
+        //                 "lessorAddress": Address,
+        //                 "date": startDate,
+        //                 "startDate": startDate1,
+        //                 "endDate": endDate,
+        //             },
+        //             {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //         ).then((res) => {
+        //             console.log(res);
+        //             setContract(res);
+        //         })
+        // : 
+        // axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
+        //     {
+        //         "roomId" : id,
+        //         "lesseeId": user.id,
+        //         "lesseeSSN": SSN,
+        //         "lesseephoneNumber": phoneNumber,
+        //         "lesseeAddress": Address,
+        //         "date": startDate,
+        //         "startDate": startDate1,
+        //         "endDate": endDate,
+        //     },
+        //     {
+        //         'Content-Type': 'application/json',
+        //     },
+        // ).then((res) => {
+        //     console.log(res);
+        //     // setContract(res);
+        // })
 }
 
         return (
@@ -244,7 +265,7 @@ function Contract() {
                         <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
                         onClick={onClick}>동의 및 제출</Button>
                     </div>  
-                    {contract && <Redirect to="/Payment" /> }
+                    {ff && <Redirect to="/Payment" /> }
         </div>    
         );
   }

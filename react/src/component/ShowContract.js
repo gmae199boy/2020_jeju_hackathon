@@ -20,6 +20,8 @@ const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
 
 
+
+
 const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -37,19 +39,21 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
-function ShowContract() {
+//   const onClick 
+
+function ShowContract(id,userId,address,phoneNumber,date,startDate,endDate) {
     const classes = useStyles();
-    const [phoneNumber, setPhoneNumber] = useState(null);
-    const [SSN, setSSN] = useState(null);
-    const [Address, setAddress] = useState(null);
-    const [date, setDate] = useState(null);
-    const [term, setTerm] = useState(null);
-    const [user, setUser] = useState(null);
-    const [room, setRoom] = useState(null);
-    const [startDate, setStartDate] = useState(new Date());
-    const [startDate1, setStartDate1] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [contract, setContract] = useState(null);
+    // const [phoneNumber, setPhoneNumber] = useState(null);
+    // const [SSN, setSSN] = useState(null);
+    // const [Address, setAddress] = useState(null);
+    // const [date, setDate] = useState(null);
+    // const [term, setTerm] = useState(null);
+    // const [user, setUser] = useState(null);
+    // const [room, setRoom] = useState(null);
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [startDate1, setStartDate1] = useState(new Date());
+    // const [endDate, setEndDate] = useState(new Date());
+    // const [contract, setContract] = useState(null);
     // const getRoom = async () => {
         
     //     await axios.get(`https://blog.nopublisher.dev/room/${id}`,
@@ -80,10 +84,10 @@ function ShowContract() {
     //   useEffect (async () => {
     //     const userParse = JSON.parse(window.localStorage.getItem('user'));
     //     setUser(userParse);
-    //     await getRoom();
-    //     await getContract();
-    //     console.log(userParse)
-    //     console.log(contract);
+    //     // await getRoom();
+    //     // await getContract();
+    //     // console.log(userParse)
+    //     // console.log(contract);
     //   },[]);
 
     // const tempStyle={
@@ -158,31 +162,18 @@ function ShowContract() {
 
         return (
             <div>
-        {user.userType ===1 ? 
             <Card style={{ width: '18rem' }}>  
                 <Card.Body>
-                    <Card.Title>계약서 {contract.lessorId}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{contract.date}</Card.Subtitle>
+                    <Card.Title>계약서 {userId}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{date}</Card.Subtitle>
                     <Card.Text>
-                        {contract.lessorAddress}
+                        {address}
                     </Card.Text>
                     <Card.Link href="#">Card Link</Card.Link>
                     <Card.Link href="#">Another Link</Card.Link>
                 </Card.Body>
             </Card>
-            : 
-            <Card style={{ width: '18rem' }}>  
-                <Card.Body>
-                    <Card.Title>계약서 {contract.lesseeId}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{contract.date}</Card.Subtitle>
-                    <Card.Text>
-                        {contract.lesseeAddress}
-                    </Card.Text>
-                    <Card.Link href="#">Card Link</Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
-                </Card.Body>
-            </Card>
-           }
+
 
 
 
