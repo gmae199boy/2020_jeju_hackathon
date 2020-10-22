@@ -13,7 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
 import Paper from '@material-ui/core/Paper';
-import Figure from 'react-bootstrap/Figure'
+import Figure from 'react-bootstrap/Figure';
+import Card from 'react-bootstrap/Card';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -82,6 +83,7 @@ function ShowContract() {
         await getRoom();
         await getContract();
         console.log(userParse)
+        console.log(contract);
       },[]);
 
     const tempStyle={
@@ -155,15 +157,21 @@ function ShowContract() {
 //}
 
         return (
-            // <Figure>
-            //     <Figure.Image
-            //         width={171}
-            //         height={180}
-            //         alt="171x180"
-            //         src="holder.js/171x180"
-            //     />              
-            <Figure width={171} height={180} >
             <div>
+            <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Card.Title>계약서 {id}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{contract.date}</Card.Subtitle>
+                    <Card.Text>
+                        {contract.address}
+                    </Card.Text>
+                    <Card.Link href="#">Card Link</Card.Link>
+                    <Card.Link href="#">Another Link</Card.Link>
+                </Card.Body>
+            </Card>
+
+
+
              <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
             </Typography>
@@ -261,7 +269,6 @@ function ShowContract() {
                         onClick={onClick} href="/Payment">동의 및 제출</Button> */}
                     </div>  
         </div> 
-        </Figure>  
         );
   }
 

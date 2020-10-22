@@ -172,7 +172,7 @@ export function Signup() {
                         </p>
                     </div>
                 </div>
-                {session && <Redirect to="/SearchRoom" /> }
+                {session && <Redirect to="/mypage" /> }
             </div> 
                      
         );
