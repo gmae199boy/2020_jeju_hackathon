@@ -50,54 +50,54 @@ function ShowContract() {
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [contract, setContract] = useState(null);
-    const getRoom = async () => {
+    // const getRoom = async () => {
         
-        await axios.get(`https://blog.nopublisher.dev/room/${id}`,
-            {
-              headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
-              }
-            }
-          ).then((res) => {
-            setRoom(res.data);
-            console.log(res.data);
-          },[])
-      };
+    //     await axios.get(`https://blog.nopublisher.dev/room/${id}`,
+    //         {
+    //           headers: {
+    //             'Access-Control-Allow-Origin' : '*',
+    //             'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+    //           }
+    //         }
+    //       ).then((res) => {
+    //         setRoom(res.data);
+    //         console.log(res.data);
+    //       },[])
+    //   };
 
-    const getContract = async() => {
-            await axios.get(`https://blog.nopublisher.dev/room/get_contract/${id}`,
-                        {
-                            'Content-Type': 'application/json',
-                        },
-                    ).then((res) => {
-                        setContract(res);
-            })
-    }
+    // const getContract = async() => {
+    //         await axios.get(`https://blog.nopublisher.dev/room/get_contract/${id}`,
+    //                     {
+    //                         'Content-Type': 'application/json',
+    //                     },
+    //                 ).then((res) => {
+    //                     setContract(res);
+    //         })
+    // }
     
     
 
-      useEffect (async () => {
-        const userParse = JSON.parse(window.localStorage.getItem('user'));
-        setUser(userParse);
-        await getRoom();
-        await getContract();
-        console.log(userParse)
-        console.log(contract);
-      },[]);
+    //   useEffect (async () => {
+    //     const userParse = JSON.parse(window.localStorage.getItem('user'));
+    //     setUser(userParse);
+    //     await getRoom();
+    //     await getContract();
+    //     console.log(userParse)
+    //     console.log(contract);
+    //   },[]);
 
-    const tempStyle={
-        margin : "0 auto",
-        marginBottom : "3%",
-        width:"300px",
-        marginLeft:'2em'
-    }    
-    const defaultProps = {
-        bgcolor: 'background.paper',
-        m: 1,
-        border: 1,
-        style: { marginLeft: '1.5em', width: '330px', height: '8rem' },
-      }
+    // const tempStyle={
+    //     margin : "0 auto",
+    //     marginBottom : "3%",
+    //     width:"300px",
+    //     marginLeft:'2em'
+    // }    
+    // const defaultProps = {
+    //     bgcolor: 'background.paper',
+    //     m: 1,
+    //     border: 1,
+    //     style: { marginLeft: '1.5em', width: '330px', height: '8rem' },
+    //   }
     // function showPopup(){
     //     this.setState({  
     //          showPopup: !this.state.showPopup  
@@ -158,21 +158,35 @@ function ShowContract() {
 
         return (
             <div>
-            <Card style={{ width: '18rem' }}>
+        {user.userType ===1 ? 
+            <Card style={{ width: '18rem' }}>  
                 <Card.Body>
-                    <Card.Title>계약서 {id}</Card.Title>
+                    <Card.Title>계약서 {contract.lessorId}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{contract.date}</Card.Subtitle>
                     <Card.Text>
-                        {contract.address}
+                        {contract.lessorAddress}
                     </Card.Text>
                     <Card.Link href="#">Card Link</Card.Link>
                     <Card.Link href="#">Another Link</Card.Link>
                 </Card.Body>
             </Card>
+            : 
+            <Card style={{ width: '18rem' }}>  
+                <Card.Body>
+                    <Card.Title>계약서 {contract.lesseeId}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{contract.date}</Card.Subtitle>
+                    <Card.Text>
+                        {contract.lesseeAddress}
+                    </Card.Text>
+                    <Card.Link href="#">Card Link</Card.Link>
+                    <Card.Link href="#">Another Link</Card.Link>
+                </Card.Body>
+            </Card>
+           }
 
 
 
-             <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
+             {/* <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
                     임대차 계약서
             </Typography>
             <br />
@@ -185,7 +199,7 @@ function ShowContract() {
                     <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
                         사무실 소재지 : {room && room.address}
                     </div>
-                    {/* {user.data.address} */}
+                    {/* {user.data.address} 
                      <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
                         사무실 구조 : {room && room.structure} 층
                     </div>
@@ -199,7 +213,7 @@ function ShowContract() {
                     계약 당사자 본인 인증
                 </div>              
                 <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
-                    {/* {user && user.userType === 1 ?
+                    {user && user.userType === 1 ?
                     //  <div textAlign="center" style={{ textAlign:'center',fontWeight:'bold',  fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
                     //     <bold>임대인</bold>
                     //     <div style={{textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em'}}>
@@ -215,7 +229,7 @@ function ShowContract() {
                     //     <br/>    주소 : {contract.lesseeAddress}
                     //     <br/>    주민번호 : {contract.lesseeSSN}
                     //     </div>
-                    </div>}   */}
+                    </div>}   
                     
                      
                 </Box>
@@ -265,9 +279,10 @@ function ShowContract() {
                         따라서 아래 조항을 굳게 지켜 추호도 위배글이 없을 것을 확인합니다.
                 </div>
                          <br />
-                        {/* <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
-                        onClick={onClick} href="/Payment">동의 및 제출</Button> */}
-                    </div>  
+                    <Button style={tempStyle} variant="contained" size="large" type="submit" background-color="#6610f2"
+                        onClick={onClick} href="/Payment">동의 및 제출</Button> 
+                    </div> */}
+                  
         </div> 
         );
   }

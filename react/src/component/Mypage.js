@@ -177,13 +177,12 @@ function Mypage() {
                             />   
                             ))}
                     </Tab>
-                    {/* <Tab eventKey="contact" title="계약서 관리">
-                        {user && user.map(C => (
-                            <ShowContract />
-                        ))}
-            
-                        <ShowContract href={`/`}/> 
-                    </Tab> */}
+                    <Tab eventKey="contact" title="계약서 관리">
+                        {/* {user && user.map(C => (
+                            <ShowContract 
+                            />
+                        ))} */}
+                    </Tab>
                 </Tabs>
                 : 
                 
