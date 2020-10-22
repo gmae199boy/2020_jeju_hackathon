@@ -16,6 +16,7 @@ import RoomDetail from './component/RoomDetail';
 import RegisterRoom from './component/RegisterRoom';
 import Mypage from './component/Mypage';
 import Chat from './component/Chat';
+import Logout from "./component/Logout";
 
 function App(){
     return( 
@@ -42,6 +43,7 @@ function App(){
             <Route exact path='/Intro' component={Intro}/>
             <Route exact path='/' component={Login} />
             <Route path='/Signup' component={Signup}/>
+            <Route path='/logout' component={Logout}/>
             <Route path='/RegisterRoom' component={RegisterRoom}/>
             {/* <Route path='/report' component={report}/> */}
             <Route path='/SearchRoom' component={SearchRoom}/>

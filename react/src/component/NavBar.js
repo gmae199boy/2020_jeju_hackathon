@@ -132,11 +132,11 @@ export default function NavBar() {
     <div>
       <BottomNavigation value={value} onChange={handleChange} className={classes.appBar}>
       <BottomNavigationAction href="/SearchRoom"label="매물검색" value="매물검색" icon={<SearchIcon />} />
-      <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+      {/* <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} /> */}
       <Button style={{marginBottom: "2%"}} type="button" href='/'>
                    <img src ={zip} alt="zip"/>
       </Button>
-      <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
+      {/* <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} /> */}
       <BottomNavigationAction href="/mypage" label="mypage" value="mypage" icon={<PersonIcon />} />
       </BottomNavigation>
      <div className={classes.root}>

@@ -11,6 +11,7 @@ import Tab from 'react-bootstrap/Tab'
 import Badge from 'react-bootstrap/Badge'
 import ShowContract from './ShowContract';
 import Typography from '@material-ui/core/Typography';
+import { Redirect } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
         padding: '1.0rem 0',
         borderBottom: '1px solid #eeeeee ',
         maxWidth: 360,
+        marginLeft:"5%",
+      },
+      formWrapper1: {
+        padding: '1.0rem 0',
+        borderBottom: '1px solid #eeeeee ',
+        maxWidth: 360,
+        margin:"0% 0% 0% 5%",
+        padding: "5% 0 20% 2%",
+        fontSize: "0.8rem"
       },
   }));
 
@@ -39,7 +49,9 @@ function Mypage() {
     const [value, setValue] = React.useState(0);
     const [rooms, setRooms] = useState(null);
     const [address, setAddress] = useState('');
-  
+    const [tmp, setTmp] = useState(null);
+    const [user, setUser] = useState('');
+
     const getRooms = async () => {
       const roomsData = await axios.get('https://blog.nopublisher.dev/rooms',
           {
@@ -58,6 +70,9 @@ function Mypage() {
 
     useEffect (async () => {
       getRooms()
+      let userInfo = JSON.parse(window.localStorage.getItem('user'));
+      setUser(userInfo)
+      console.log(userInfo);
     },['']);
 
     const handleChange = (event, newValue) => {
@@ -79,8 +94,6 @@ function Mypage() {
         top:"40px"
     }
 
-    const [user, setUser] = useState('');
-
     // const getUser = async () => {
     //     const userData = await axios.get('https://blog.nopublisher.dev/user/mypage',
     //     {
@@ -92,12 +105,13 @@ function Mypage() {
     //     return userData;
     // }
 
-    useEffect( () => {
-            // var data = await getUser()
-            let userInfo = JSON.parse(window.localStorage.getItem('user'));
-            setUser(userInfo)
-            console.log(userInfo);
-    },[''])
+    const logout = async() => {
+        window.localStorage.removeItem('user');
+        setTmp(1);
+        console.log(tmp);
+        console.log(user);
+        
+    }
 
    
 
@@ -112,36 +126,80 @@ function Mypage() {
             </div>
             <div className={classes.root}>
                 <div className={classes.demo1} style={{marginTop:"2em"}}>
-                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                
                 {user.userType ===1 ?
-                <Tab eventKey="home" title="나의 매물">
-                    <div class={classes.formWrapper}>
-                   
-                        <Button style={{marginTop: "0.5em",marginBotton: "4em", marginLeft:"0.5em"}} size="large"  className={classes.margin} 
-                            href = "/RegisterRoom">
-                            방 등록하기
-                        </Button>
-                    </div> 
-                     {rooms && rooms.map(R => ( 
-                        <MyRoom
-                        id={R.id}
-                        name={R.name}
-                        roomType={R.roomType}
-                        address={R.address}
-                        state={R.state}
-                        monthlyPayment={R.monthlyPayment}
-                        images={R.images}
-                        />   
-                        ))}
-                </Tab>
-                : ""}
-                <Tab eventKey="profile" title="최근 본 매물">
+                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                    <Tab eventKey="home" title="나의 정보">
+                        <div class={classes.formWrapper1} style={{paddingBottom:"30px"}}>
+                            지갑 주소
+                            {user.address}
+                        </div> 
+                        <div class={classes.formWrapper1} style={{paddingBottom:"30px"}}>
+                            밸런스
+                        </div> 
+                        <div class={classes.formWrapper}>
+                            <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
+                                    onClick={logout}>
+                                    <bold>로그아웃</bold>
+                                    {tmp && <Redirect to="/" /> }
+                            </Button>
+                            
+                        </div>
+                    </Tab>
+                    <Tab eventKey="profile" title="나의 매물">
+                        <div class={classes.formWrapper}>
                     
-                </Tab>
-                <Tab eventKey="contact" title="계약서 관리">
-                    <ShowContract href={`/`}/>
-                </Tab>
+                            <Button style={{fontSize:"1rem", marginTop: "0.5em", marginLeft:"0.5em"}} size="large"  className={classes.margin} 
+                                href = "/RegisterRoom">
+                                방 등록하기
+                            </Button>
+                        </div> 
+                        {rooms && rooms.map(R => ( 
+                            <MyRoom
+                            id={R.id}
+                            name={R.name}
+                            roomType={R.roomType}
+                            address={R.address}
+                            state={R.state}
+                            monthlyPayment={R.monthlyPayment}
+                            images={R.images}
+                            />   
+                            ))}
+                    </Tab>
+                    <Tab eventKey="contact" title="계약서 관리">
+                        <ShowContract href={`/`}/>
+                    </Tab>
                 </Tabs>
+                : 
+                
+                <div style={{fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"0.5em"}} size="large"  className={classes.margin} >
+                    <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "0.5em",marginBotton: "4em", marginLeft:"7em"}}>
+                        나의 정보
+                    </div>
+                    <div class={classes.formWrapper1}>
+                            지갑 주소
+                        </div> 
+                        <div class={classes.formWrapper1}>
+                            밸런스
+                        </div> 
+                        <div style={{fontWeight:"bold", fontSize:"0.5em", marginTop: "5em",marginBotton: "4em", marginLeft:"7em"}}>
+                        계약서 관리
+                        </div>
+                        <div class={classes.formWrapper1}>
+                        
+                        </div> 
+                        <div class={classes.formWrapper}>
+                            <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
+                                    onClick={logout}>
+                                    <bold>로그아웃</bold>
+                                    
+                            </Button>
+                            
+                        </div>
+                </div>
+                
+                }
+                
                     {/* <AntTabs style={{marginLeft:"7%"}} value={value} onChange={handleChange} aria-label="ant example">
                         <AntTab label="나의 매물">
                         
@@ -152,7 +210,9 @@ function Mypage() {
                     <Typography className={classes.padding} /> */}
                    
                 </div>
+                {tmp && <Redirect to="/" /> }
             </div>
+            
         </div>
     );
 }
