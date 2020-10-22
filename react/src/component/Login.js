@@ -172,7 +172,7 @@ export function Login() {
                         </p>
                     </div>
                 </div>
-                {session && <Redirect to="/Mypage" /> }
+                {session && <Redirect to="/mypage" /> }
             </div> 
                      
         );
