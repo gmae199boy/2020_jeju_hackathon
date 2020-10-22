@@ -5,7 +5,7 @@ import ChatContent from './ChatContent';
 
 function Chat() {
     const [socket, setSocket] = useState(new WebSocket("ws://blog.nopublisher.dev/room/chat/"));
-    const [user, setUser] = useState(window.localStorage.getItem('user'));
+    const [user, setUser] = useState(JSON.parse(window.localStorage.getItem('user')));
     const [text, setText] = useState(null);
     const [content, setContent] = useState(new Array());
     const [b, setB] = useState(null);
@@ -63,7 +63,7 @@ function Chat() {
     // },[content])
 
     const click = async () => {
-        socket.send(JSON.stringify({type:"message", content: text, userName: user.name}));
+        socket.send(JSON.stringify({type:"message", content: text, name: user.name}));
     }
 
     const setContents = async (e) => {
@@ -75,7 +75,7 @@ function Chat() {
             <div>
                 {/* {content[0] && content} */}
                 {content[0] && content.map(con => {
-                    return (<div>{con.name}</div>);
+                    return (<div>{con.name} : {con.content}</div>);
                 })}
             </div>
             <Input placeholder="채팅을 입력해" onChange={setContents}/>
