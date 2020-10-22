@@ -89,6 +89,7 @@ function RoomDetail() {
 
     // 카카오 맵 컴포넌트 
     const [mapView, setMapView] = useState(null);
+   
 
     const tempStyle={
       margin : "0 auto",
@@ -103,16 +104,9 @@ function RoomDetail() {
     //     // });
 
     useEffect(async () => {
-      // const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
-      //   extraHeaders: {
-      //     'Access-Control-Allow-Origin' : '*',
-      //     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
-      //   }
-      // });
-      // console.log(socket);
-      //   socket.emit('message', {
-      //     qq: "qq",
-       
+  
+      let userInfo = JSON.parse(window.localStorage.getItem('user'));
+      setUser(userInfo)
 
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
@@ -165,11 +159,10 @@ function RoomDetail() {
                   </Fab>
                   <br />
               </div>
-          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
-                  href = {`/contract/${id}`}>
-                      계약하기
-          </Button>
-          <br />
+          {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} href = {`/contract/${id}`}>
+                          계약하기</Button>
+          : ""}
+          <br /> 
           <br />
       </div>  : ""}
     </div>

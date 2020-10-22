@@ -8,7 +8,7 @@ import Input from '@material-ui/core/Input';
 import DatePicker from 'react-date-picker';
 import { Redirect } from 'react-router-dom';
 import Clock from 'react-live-clock';
-import moment from 'moment-timezone';
+import Moment from 'react-moment';
 
 const urlElements = window.location.pathname.split('/');
 const id = (urlElements[2]);
@@ -36,14 +36,15 @@ function Contract() {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [SSN, setSSN] = useState(null);
     const [Address, setAddress] = useState(null);
-    const [date, setDate] = useState(null);
     const [term, setTerm] = useState(null);
+    const [date, setDate] = useState(null);
     const [user, setUser] = useState(null);
     const [room, setRoom] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
     const [startDate1, setStartDate1] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [contract, setContract]= useState(null);
+    const currentdate = new Date();
 
     const getRoom = async () => {
         
@@ -105,7 +106,7 @@ function Contract() {
         console.log(user);
         console.log(user.id);
         user.userType === 1 ?
-        await axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
+        axios.post(`https://blog.nopublisher.dev/room/lessor_contract/${id}`,
                     { 
                         "roomId" : id,
                         "lessorId": user.id,
@@ -120,10 +121,10 @@ function Contract() {
                         'Content-Type': 'application/json',
                     },
                 ).then((res) => {
-                    setContract(res);
+                    setContract(1);
                 })
         : 
-        await axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
+        axios.post(`https://blog.nopublisher.dev/room/lessee_contract/${id}`,
             {
                 "roomId" : id,
                 "lesseeId": user.id,
@@ -138,7 +139,7 @@ function Contract() {
                 'Content-Type': 'application/json',
             },
         ).then((res) => {
-            setContract(res);
+            setContract(1);
         })
 }
 
@@ -173,23 +174,17 @@ function Contract() {
                     계약 내용
                 </div>
                 <Box borderRadius={16} borderColor="grey.500" {...defaultProps}>
-                     <div style={{float:'left', textAlign:'left', fontSize: '0.8rem', marginTop: '2em', marginRight: '40px', marginLeft:'1.9em'}}>
+                     <div style={{float:'left', textAlign:'left', fontSize: '0.8rem', marginTop: '2em', marginRight: '38px', marginLeft:'2.1em'}}>
                         계약일
                     </div>
                     <div style={{float:'left', marginTop: '1.3em', marginLeft:'1em'}}> 
-                        <Clock format={'YYYY년 MM 월 DD 일'}/>
-                        {/* <DatePicker
-                        value={startDate}
-                        format="y-MM-dd"
-                        onChange={e => setStartDate(e)}
-
-                        /> */}
+                        <Moment date={currentdate} format={"YYYY-MM-DD"}/>
                         <br />
                 </div>   
                     <br />
-                    <div style={{ float:'left',textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'1em', marginRight:'0.5em'}}>
+                    <div style={{ float:'left',textAlign:'left', fontSize: '0.8rem', marginTop: '0.5em', marginLeft:'2em', marginRight:'10px'}}>
                         임대기한 
-                        <div style={{ width: '164px',fontSize: '1rem', float:'left',marginLeft:'6.3em', marginTop: '-1em'}}> 
+                        <div style={{ width: '164px',fontSize: '1rem', float:'left',marginLeft:'5.5em', marginTop: '-1em'}}> 
                        
                         <DatePicker
                         value={startDate1}

@@ -314,7 +314,7 @@ function RegisterRoom(){
                     </div>
                 </div>
             </div>
-            {rooms && <Redirect to="/SearchRoom" /> }
+            {rooms && <Redirect to="/mypage" /> }
         </div>
     );
 }

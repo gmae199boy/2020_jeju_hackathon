@@ -68,11 +68,39 @@ function Mypage() {
   
     };
 
+    const getUser = async () => {
+        user.userType === 1 ?
+        await axios.get(`https://blog.nopublisher.dev/lessor/${user.id}`,
+            {
+                headers: {
+                    'Access-Control-Allow-Origin' : '*',
+                    'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+                }
+            }
+        ).then((res)=> {
+            window.localStorage.setItem('user', JSON.stringify(res.date));
+            setUser(res.data);
+        })
+        :
+        await axios.get(`https://blog.nopublisher.dev/lessee/${user.id}`,
+        {
+            headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+            }
+        }
+        ).then((res)=> {
+            window.localStorage.setItem('user', JSON.stringify(res.date));
+            setUser(res.data);
+        })
+    }
+
     useEffect (async () => {
       getRooms()
       let userInfo = JSON.parse(window.localStorage.getItem('user'));
       setUser(userInfo)
       console.log(userInfo);
+      await getUser();
     },['']);
 
     const handleChange = (event, newValue) => {
@@ -166,9 +194,13 @@ function Mypage() {
                             />   
                             ))}
                     </Tab>
-                    <Tab eventKey="contact" title="계약서 관리">
-                        <ShowContract href={`/`}/>
-                    </Tab>
+                    {/* <Tab eventKey="contact" title="계약서 관리">
+                        {user && user.map(C => (
+                            <ShowContract />
+                        ))}
+            
+                        <ShowContract href={`/`}/> 
+                    </Tab> */}
                 </Tabs>
                 : 
                 
