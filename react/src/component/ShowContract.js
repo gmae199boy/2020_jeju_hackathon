@@ -9,16 +9,12 @@ import Button from '@material-ui/core/Button';
 // import { Input } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-import DatePicker from 'react-date-picker';
-import Paper from '@material-ui/core/Paper';
-import Figure from 'react-bootstrap/Figure';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge'
+import LookContract from './LookContract';
 
-// const urlElements = window.location.pathname.split('/');
-// const id = (urlElements[2]);
+const urlElements = window.location.pathname.split('/');
+const id = (urlElements[2]);
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,12 +48,10 @@ function ShowContract({id,userId,address,phoneNumber,date,startDate,endDate}) {
                         </Badge>
                         <br/>
                         <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                        
                         <Card.Text>
                             {address}
                         </Card.Text>
-                        <Card.Link href="#">Card Link</Card.Link>
-                        <Card.Link href="#">Another Link</Card.Link>
+                        <Card.Link href={`/lookcontract/${id}`}>계약서 보기</Card.Link>
                     </Card.Body>
                 </Card>                 
             </div> 

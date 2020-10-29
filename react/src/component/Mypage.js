@@ -146,7 +146,12 @@ function Mypage() {
                         </div> 
                         <div class={classes.formWrapper1} >
                             잔여 토큰
+                            <div >
+                                <br />
+                                10 SSH
+                            </div> 
                         </div> 
+                        
                         <div class={classes.formWrapper}>
                             <Button style={{fontSize:"1rem", marginTop: "-0.5em"}} size="large"  className={classes.margin} 
                                     onClick={logout}>
