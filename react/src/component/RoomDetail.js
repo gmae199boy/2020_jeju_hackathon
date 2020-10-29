@@ -2,20 +2,16 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+// import AddIcon from '@material-ui/icons/Add';
 import ChatIcon from '@material-ui/icons/Chat';
 
 // 지도 표시용
 import KakaoMap from './KakaoMap';
-
-// import io from 'socket.io-client';
-// const socket = io.connect('https://blog.nopublisher.dev');
-import io from 'socket.io-client';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,11 +71,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-
-
 function RoomDetail() {
     let [room, setRoom] = useState(null);
-    let [buffer, setBuffer] = useState(null);
     let [b64, setB64] = useState(null);
     let [mimeType, setMimeType] = useState(null);
     const [user, setUser] = useState(null);
@@ -98,10 +91,22 @@ function RoomDetail() {
       zIndex: '2',
     }
 
-    // useEffect(() => {
-    //     // socket.emit('message', {
-    //     //   qq: "qq",
-    //     // });
+    const popupAlert = async() => {
+      const confirm = prompt("이 매물을 신고 하시겠습니까?", "네/아니오");
+      if(confirm === "네") {
+        const reason = prompt("어떤 이유로 신고하시겠습니까?");
+        window.alert("신고 처리가 완료되었습니다.");
+        await axios.post(`https://blog.nopublihser.dev/room/report/${room.id}`, 
+          {
+            registLessee: user._id,
+            reason: reason,
+          },
+        );
+        window.location.href = `http://localhost:3000/RoomDetail/${room.id}`
+      } else {
+        window.alert("신고 처리가 취소되었습니다.");
+      }
+    }
 
     useEffect(async () => {
   
@@ -162,6 +167,8 @@ function RoomDetail() {
           {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} href = {`/contract/${id}`}>
                           계약하기</Button>
           : ""}
+          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} onClick={popupAlert}>
+                          신고하기</Button>
           <br /> 
           <br />
       </div>  : ""}
