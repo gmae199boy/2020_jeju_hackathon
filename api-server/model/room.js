@@ -36,15 +36,12 @@ const RoomSchema = new mongoose.Schema({
     },
     reported: [
         {
-            // reportLessee: {
-            //     type: mongoose.Schema.Types.ObjectId,
-            //     ref: 'Lessee',
-            // },
+            reportLessee: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Lessee',
+            },
             reason: {
                 type: String,
-            },
-            stars: {
-                type: Number,
             },
         }
     ],

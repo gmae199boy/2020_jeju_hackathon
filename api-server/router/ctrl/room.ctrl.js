@@ -189,12 +189,22 @@ const updateRoom = async (req, res) => {
 
 const reportRoom = async (req, res) => {
     try {
-        let room = await Room.findByRoomId(req.params.id);
+        const room = await Room.findByRoomId(req.params.id);
         
-        if (!room) return null;
+        if (!room) return {err: "지정된 방 정보가 없습니다."};
 
-        room.reported.push({...req.body});
-        return await Room.Save(room);
+        const reportContent = {
+            reportLessee: req.body.reportLessee,
+            reason: req.body.reason,
+        };
+
+        const reportedRoom = await Room.updateOne({id: room.id}, {
+            $push: {reportContent}
+        });
+
+        console.log(reportRoom);
+
+        return reportRoom;
     } catch (e) {
         console.log(e);
         return e;
