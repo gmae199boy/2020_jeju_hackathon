@@ -14,29 +14,17 @@ import PaymentComplete from './component/PaymentComplete';
 import SearchRoom from './component/SearchRoom';
 import RoomDetail from './component/RoomDetail';
 import RegisterRoom from './component/RegisterRoom';
-import Mypage from './component/Mypage';
+import mypage from './component/Mypage';
 import Chat from './component/Chat';
 import Logout from "./component/Logout";
+import LookContract from "./component/LookContract";
+import ContractComplete from "./component/ContractComplete";
 
 function App(){
     return( 
       <Router>
           <div style={{paddingTop: '2em'}}>
-          {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-            <div className="container">
-              <Link className="navbar-brand" to={"/sign-in"}>positronX.io</Link>
-              <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/login"}>Login</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/signup"}>Sign up</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>    */}
+
           <div>
             <Route path='/' component={NavBar}/>
             <Route path='/Home' component={Home}/>
@@ -52,8 +40,10 @@ function App(){
             <Route path='/paymentComplete' component={PaymentComplete}/>   
             <Route path='/searchResult' component={SearchResult}/>  
             <Route path='/contract' component={Contract}/>
-            <Route path='/mypage' component={Mypage}/>
+            <Route path='/mypage' component={mypage}/>
             <Route path='/chat' component={Chat}/>
+            <Route path='/lookcontract' component={LookContract}/>
+            <Route path='/contractcomplete' component={ContractComplete}/>
           </div>
         <br />
         <br />
