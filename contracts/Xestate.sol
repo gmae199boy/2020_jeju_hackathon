@@ -35,7 +35,7 @@ contract Xestate {
         string term;
     }
 
-    mapping (uint256 => Contract[]) public contracts;
+    mapping (uint256 => Contract) public contracts;
     uint256 contractIndex;
     
     // All Room Array
@@ -64,7 +64,7 @@ contract Xestate {
     //
     uint8 constant MAX_STARS = 5;
 
-
+    // address constant KIP7 = "0xf0CBC46013ee613ACf67821b06ec04EA241AFe4E";
     
     /*
         Functions
@@ -87,6 +87,8 @@ contract Xestate {
         );
 
         contracts[contractIndex++].push(ct);
+
+        // KIP7.call(bytes4(keccak256("transfer()")));
 
         return true;
     }

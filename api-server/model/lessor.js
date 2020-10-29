@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 // var passport = require('passport');
 import fastifyPassport from "fastify-passport";
-var LocalStrategy = require('passport-local').Strategy; /* this should be after passport*/
+// var LocalStrategy = require('passport-local').Strategy; /* this should be after passport*/
 
 const LessorSchema = new mongoose.Schema({
     id: {
@@ -21,29 +21,6 @@ const LessorSchema = new mongoose.Schema({
             ref: 'Room',
         },
     ],
-    contractedRoom: [
-        {
-            room: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Room',
-            },
-            office: {
-                orner: {
-                    type: String,
-                },
-                address: {
-                    type: String,
-                },
-                struture: {
-                    type: String,
-                },
-                acreage: {
-                    type: Number,
-                },
-            },
-            
-        }
-    ],
     payment: [
         {
             tid: {type: String, index: true},
@@ -62,6 +39,12 @@ const LessorSchema = new mongoose.Schema({
     token: {
         type: Number,
     },
+    contracts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            res: "Contract",
+        }
+    ],
     // review: [
     //     {
     //         auth: {
@@ -83,11 +66,11 @@ LessorSchema.statics.findByLessorName = async function(lessorName) {
 }
 
 LessorSchema.statics.findByLessorId = async function(lessorId) {
-    return await this.findOne({ id: lessorId }).lean();
+    return await this.findOne({ id: lessorId }).populate({path: 'contracts', model: 'Contract'}).lean();
 }
 
 LessorSchema.statics.findByLessorObjectId = async function(lessor_Id) {
-    return await this.findOne({ _id: lessor_Id }).populate('registRoom').lean();
+    return await this.findOne({ _id: lessor_Id }).populate('registRoom').populate({path: 'contracts', model: 'Contract'}).lean();
 }
 
 LessorSchema.statics.Save = async function(instant) {
@@ -98,8 +81,6 @@ LessorSchema.statics.Save = async function(instant) {
     instant.id = idNum;
     return await instant.save();
 }
-
-
 
 LessorSchema.methods.generateToken = function() {
     const token = jwt.sign(

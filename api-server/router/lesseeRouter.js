@@ -27,7 +27,7 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/lessee/mypage',
+        url: '/lessee/mypage/:id',
         handler: readLessee,
     },
     {

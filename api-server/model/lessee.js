@@ -42,6 +42,12 @@ const LesseeSchema = new mongoose.Schema({
     token: {
         type: Number,
     },
+    contracts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            res: "Contract",
+        }
+    ],
 });
 
 LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
@@ -49,7 +55,7 @@ LesseeSchema.statics.findByLesseeName = async function(lesseeName) {
 }
 
 LesseeSchema.statics.findByLesseeId = async function(lesseeId) {
-    return await this.findOne({ id: lesseeId }).lean();
+    return await this.findOne({ id: lesseeId }).populate({path: 'contracts', model: 'Contract'}).lean();
 }
 
 LesseeSchema.statics.Save = async function(instant) {

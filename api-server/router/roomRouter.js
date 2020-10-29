@@ -8,6 +8,7 @@ import {
     searchRoomList,
     createLessorContractRoom,
     createLesseeContractRoom,
+    getContract,
     confirmContract,
     chatForRoom,
 } from './ctrl/room.ctrl';
@@ -63,6 +64,11 @@ const routes = [
         method: 'POST',
         url: '/room/lessee_contract/:id',
         handler: createLesseeContractRoom,
+    },
+    {
+        method: 'GET',
+        url: '/room/get_contract/:id',
+        handler: getContract,
     },
     {
         method: 'POST',

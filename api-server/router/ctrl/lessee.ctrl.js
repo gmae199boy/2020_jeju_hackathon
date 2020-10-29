@@ -22,7 +22,12 @@ const createLessee = async (req, res) => {
 
 const readLessee = async(req, res) => {
     try {
-        return req.session.user;
+        // const json = Number(req.params.id);
+        // console.log(json);
+        // console.log(typeof json);
+        const lessee = await Lessee.findByLesseeId(req.params.id);
+        console.log(lessee);
+        return lessee;
     } catch (e) {
         console.log(e);
         return e;

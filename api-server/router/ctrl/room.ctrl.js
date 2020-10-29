@@ -203,28 +203,14 @@ const reportRoom = async (req, res) => {
 
 const createLessorContractRoom = async (req, res) => {
     try {
-        const room = await Room.findByRoomId(req.params.id);
-        const lessor = await Lessor.findByLessorId(body.lessorId);
-        const contract = await Contract.updateOne({room: room._id, state: CONTRACT_ING}, {
+        const lessor = await Lessor.findByLessorId(req.body.lessorId);
+
+        const contract = await Contract.updateOne({roomId: req.body.roomId}, {
             ...req.body,
             lessor: lessor._id,
         });
-
         console.log(contract);
-
         return contract;
-
-        // let contract = await Contract.findOfficeId(req.params.id);
-        // console.log(contract);
-        // if (contract == undefined) {
-        //     const newContract = new Contract({
-        //         ...req.body,
-        //     });
-        //     return await Contract.Save(newContract);
-        // }
-        // console.log(req.body);
-        // contract = {...req.body};
-        // return await contract.save();
 
     } catch (e) {
         console.log(e);
@@ -234,17 +220,38 @@ const createLessorContractRoom = async (req, res) => {
 
 const createLesseeContractRoom = async (req, res) => {
     try {
+        const contract = await Contract.findOne({roomId: req.body.roomId});
         const room = await Room.findByRoomId(req.params.id);
         const lessee = await Lessee.findByLesseeId(req.body.lesseeId);
-        const contract = new Contract({...req.body, room: room._id, lessee: lessee._id, state: CONTRACT_ING});
+
+        if(contract == undefined) {
+            const newContract = new Contract({
+                ...req.body,
+                roomId: req.body.roomId,
+                room: room._id,
+                lessee: lessee._id,
+                state: CONTRACT_ING,
+            });
+
+            const returnContract = await Contract.Save(newContract);
+            console.log(returnContract);
+            await Lessee.updateOne({id: lessee.id}, {$push: {contracts: returnContract._id}});
+            await Lessor.updateOne({id: 0}, {$push: {contracts: returnContract._id}});
+            return returnContract;
+        }
 
         console.log(contract);
-
-        return await Contract.Save(contract);
+        // await Lessee.updateOne({id: lessee.id}, {$push: {contracts: contract._id}});
+        return await Contract.updateOne({roomId: req.body.roomId}, {
+            ...req.body,
+        });
     } catch (e) {
         console.log(e);
         return e;
     }
+}
+const getContract = async (req, res) => {
+    return await Contract.findOne({roomId: req.body.roomId});
 }
 
 const confirmContract = async (req, res) => {
@@ -270,86 +277,16 @@ const confirmContract = async (req, res) => {
     }
 }
 
-
-const CLIENT = new Array();
-async function chatForRoom (connection, req)  {
-    function sendAll (message) {
-        for (var i=0; i<CLIENT.length; i++) {
-            CLIENT[i].send("Message: " + message);
-        }
-    }
-
+function chatForRoom (connection, req)  {
     connection.socket.on('message', (message) => {
+        console.log(message);
         this.websocketServer.clients.forEach(function each(client) {
+            const json = JSON.parse(message);
             if (client.readyState === 1) {
-                client.send(JSON.stringify({type:'message', name: "kim"}));
+                client.send(JSON.stringify({name: json.name, content: json.content}));
             }
         })
-    })
-
-
-    // connection.socket.on('message', message => {
-    //     console.log(message);
-    //     connection.socket.send(message);
-    // })
-    // this.websocketServer.on('connection', function connection(ws) {
-    //     // CLIENT.push(ws);
-    //     // console.log(CLIENT.length);
-    //     // this.clients.forEach(function (client, i) {
-    //     //     ww.push(client);
-    //     //     if(ww[i] == client) delete ww[i];
-    //     // })
-
-    //     CLIENT.push(connection.socket);
-        
-    //     ws.on('message', function incoming(message) {
-    //         console.log('received: %s', message);
-
-    //         const json = JSON.parse(message);
-            
-    //         CLIENT.forEach(function each(client) {
-    //             // Logger.info('Sending message', data);
-    //             console.log("메세지 보냄");
-    //             console.log(CLIENT);
-    //             client.send(JSON.stringify(json));
-    //         });
-    //     });
-
-        
-    //     // ws.broadcast = function broadcast(message) {
-    //     //     ws.clients.forEach(function each(client) {
-    //     //         // Logger.info('Sending message', data);
-    //     //         client.send(JSON.stringify(message));
-    //     //     });
-    //     // };
-    // });
-    // connection.socket.on('message', (message) => {
-
-
-
-    //     // this.websocketServer.broadcast = function broadcast(data) {
-    //     //     this.websocketServer.clients.forEach(function each(client) {
-    //     //         // Logger.info('Sending message', data);
-    //     //         client.send(JSON.stringify(data));
-    //     //     });
-    //     // };
-        
-    //     console.log(message + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    //     connection.socket.broadcast = function(){
-    //         console.log("sdgkjbadfbnjlsadfjlnsadvgnjl");
-    //     }
-    //     // this.websocketServer.broadcast = function broadcast(data) {
-    //     //     this.websocketServer.clients.forEach(function each(client) {
-    //     //         // Logger.info('Sending message', data);
-    //     //         console.log("asdasdasd");
-    //     //         client.send(JSON.stringify(data));
-    //     //     });
-    //     // };
-    //     // connection.socket.clients.forEach(function each(client) {
-    //     //     client.send({type: "message", content: "asd"});
-    //     //  });
-    //     // connection.socket.emit('message', JSON.stringify({content: "asd"}));
-    // });
+    });
 }
 
 export  {
@@ -362,6 +299,7 @@ export  {
     searchRoomList,
     createLessorContractRoom,
     createLesseeContractRoom,
+    getContract,
     confirmContract,
     chatForRoom,
 };
