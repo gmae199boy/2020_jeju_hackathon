@@ -100,7 +100,7 @@ export default function NavBar() {
           <NavLink to="/RegisterRoom">매물 등록</NavLink>
         </ListItem>
         <ListItem>
-          <NavLink to="/MyPage">마이페이지</NavLink>
+          <NavLink to="/mypage">마이페이지</NavLink>
         </ListItem>
         <ListItem>
           <NavLink to="/payment">결제</NavLink>
