@@ -89,6 +89,7 @@ function RoomDetail() {
 
     // 카카오 맵 컴포넌트 
     const [mapView, setMapView] = useState(null);
+   
 
     const tempStyle={
       margin : "0 auto",
@@ -103,16 +104,9 @@ function RoomDetail() {
     //     // });
 
     useEffect(async () => {
-      // const socket = await io.connect('https://blog.nopublisher.dev/room/chat/0', {
-      //   extraHeaders: {
-      //     'Access-Control-Allow-Origin' : '*',
-      //     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
-      //   }
-      // });
-      // console.log(socket);
-      //   socket.emit('message', {
-      //     qq: "qq",
-       
+  
+      let userInfo = JSON.parse(window.localStorage.getItem('user'));
+      setUser(userInfo)
 
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
@@ -146,7 +140,9 @@ function RoomDetail() {
               <h5>{room && room.address} </h5>
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
-                  <h7>월세 {room && room.monthlyPayment} 만원 </h7>
+                  <h6>월세 {room && room.monthlyPayment} 만원 </h6>
+                  <h6>층수 {room && room.structure} 층 </h6>
+                  <h6>전용 면적 {room && room.acreage} m^2 </h6>
                   <br></br>
               </div>
               <br/>
@@ -163,12 +159,10 @@ function RoomDetail() {
                   </Fab>
                   <br />
               </div>
-          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle}
-                  href = {`/contract/${id}`}>
-                      계약하기
-          </Button>
-          <br />
-          <br />
+          {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} href = {`/contract/${id}`}>
+                          계약하기</Button>
+          : ""}
+          <br /> 
           <br />
       </div>  : ""}
     </div>
