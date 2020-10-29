@@ -34,7 +34,7 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/user/mypage',
+        url: '/lessor/mypage/:id',
         handler: readLessor,
     },
     {
