@@ -2,11 +2,13 @@
  * created by gmae199boy
  */
 import React, {useEffect} from "react";
+import axios from 'axios';
 
-function KakaoMap({coords}) {
+function KakaoMap({coordsx, coordsy}) {
     
-    useEffect(() => {
+    useEffect(async () => {
         const { daum } = window;
+        const coords = new daum.maps.LatLng(coordsy, coordsx);
         const mapContainer = document.getElementById('map');
 
 		const options = {
@@ -21,14 +23,14 @@ function KakaoMap({coords}) {
             position: coords,//new daum.maps.LatLng(x, y),
             map: map
         });
-        
+
         // 지도를 보여준다.
         mapContainer.style.display = "block";
         map.relayout();
         // 지도 중심을 변경한다.
         map.setCenter(coords);
         // 마커를 결과값으로 받은 위치로 옮긴다.
-        marker.setPosition(coords)
+        marker.setPosition(coords);
     }, []);
     return(
         <div id="map" style={{width: '300px', height: '200px',zIndex: '4'}}></div>

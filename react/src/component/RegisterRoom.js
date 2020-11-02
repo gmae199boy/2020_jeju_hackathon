@@ -33,6 +33,8 @@ function RegisterRoom(){
     const [content, setContent] = useState('');
     const [officeStructure, setOfficeStructure] = useState('');
     const [officeAcreage, setOfficeAcreage]= useState('');
+    const [apartName, setApartName] = useState(null);
+    const [stage, setStage] = useState(null);
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -64,8 +66,12 @@ function RegisterRoom(){
         setRoomType(e.target.value);
     }
 
-    const onChangeDetailAddress = e => {
-        setDetailAddress(e.target.value);
+    const onChangeApartName = e => {
+        setApartName(e.target.value);
+    }
+
+    const onChangeStage = e => {
+        setStage(e.target.value);
     }
 
     const onChangeState = e => {
@@ -96,13 +102,15 @@ function RegisterRoom(){
         formData.append('content', content);
         formData.append('structure', officeStructure);
         formData.append('acreage', officeAcreage);
+        formData.append('apartName', apartName);
+        formData.append('stage', stage);
 
         //유저 ObjectId
         formData.append('registLessor', userId);
         // 지도에 마커를 표시할 좌표 x, y
         formData.append('coordsx', coordsx);
         formData.append('coordsy', coordsy);
-        await axios({
+        const res = await axios({
             method : 'POST',
             url : 'https://blog.nopublisher.dev/room/create',
             data : formData,
@@ -111,11 +119,11 @@ function RegisterRoom(){
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
             }
-        }).then((res) => {
-            setRooms(res)
-            console.log(res);
-        });
-        console.log(rooms);
+        })
+
+        setRooms(res);
+        console.log(res);
+        window.location.href = 'http://localhost:3000/mypage';
     }
 
     // 카카오 주소검색 창 팝업
@@ -181,7 +189,10 @@ function RegisterRoom(){
                 {address && address}
                 <br />
                 {address ? 
-                    <Input placeholder="상세 주소를 입력하세요" onChange={onChangeDetailAddress}></Input>
+                    <Input placeholder="아파트 명을 입력해" onChange={onChangeApartName}></Input>
+                    : null}
+                {address ? 
+                    <Input placeholder="층수를 입력해" onChange={onChangeStage}></Input>
                     : null}
                 {address ? 
                     <Button onClick={changeAddress}>확인</Button>
@@ -197,32 +208,6 @@ function RegisterRoom(){
                     <option value="1">원룸</option>
                     <option value="2">오피스텔</option>
                 </select>
-                </div>
-                <div>
-                    {/* <input
-                        type="text"
-                        name = "roomType"
-                        placeholder = "방 종류를 입력하세요"
-                        className="form-control"
-                        id="formGroupExampleInput"
-                        value ={roomType}
-                        onChange={
-                            onChangeRoomType
-                        }
-                    /> */}
-                    {/* <Select
-                    style={{marginTop :'1.7em', marginLeft:'-2em', marginBottom:'-1.5em'}}
-                    labelId="demo-simple-select-placeholder-label-label"
-                    id="demo-simple-select-placeholder-label"
-                    value={roomType}
-                    onChange={onChangeRoomType}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    >
-                    <option value="1" onClick={onClick1}>월세</option>
-                    <option value="2" onClick={onClick2}>오피스텔</option>
-                    </Select> */}
-                    
                 </div>
             </div>
 
@@ -248,22 +233,6 @@ function RegisterRoom(){
                         accept="image/* "  //업로드 가능한 파일 종류. 
                         onChange={onChangeImg} />
                 </div>
-
-                {/* <input as={Col} controlId="content" sm="3" form-control={{width:'60'}}>
-                    <label>계약서 작성</label>
-                    <br />
-                    <Button variant="outlined"
-                            onClick={
-                                () => {
-                                axios({
-                                    method: 'POST',
-                                    url: `https://blog.nopublisher.dev/room/contract/`
-                                })
-                                }
-                            } >작성하기</Button>
-                    
-                </input> */}
-
                 <div style={tempStyle}>
                     <label>설명</label>
                         <input
@@ -314,7 +283,7 @@ function RegisterRoom(){
                     </div>
                 </div>
             </div>
-            {rooms && <Redirect to="/mypage" /> }
+            {/* {rooms && <Redirect to="/mypage" /> } */}
         </div>
     );
 }

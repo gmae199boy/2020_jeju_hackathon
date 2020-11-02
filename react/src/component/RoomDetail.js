@@ -121,12 +121,7 @@ function RoomDetail() {
             setB64(pp);
             setMimeType("image/png"); // e.g., image/png
 
-            const {daum} = window;
-
-            // 해당 주소에 대한 좌표를 받아서
-            const coords = new daum.maps.LatLng(res.data.coordsy, res.data.coordsx);
-
-            setMapView(<KakaoMap coords={coords}></KakaoMap>);
+            setMapView(<KakaoMap coordsx={res.data.coordsx} coordsy={res.data.coordsy}></KakaoMap>);
         }) 
     }, [])
   
