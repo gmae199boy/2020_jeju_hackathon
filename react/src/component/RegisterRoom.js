@@ -35,6 +35,9 @@ function RegisterRoom(){
     const [officeAcreage, setOfficeAcreage]= useState('');
     const [apartName, setApartName] = useState(null);
     const [stage, setStage] = useState(null);
+    const [year, setYear] = useState(null);
+    const [month, setMonth] = useState(null);
+    const [day, setDay] = useState(null);
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -90,6 +93,18 @@ function RegisterRoom(){
         setOfficeStructure(e.target.value);
     }
 
+    const onSetYear = e => {
+        setYear(e.target.value);
+    }
+
+    const onSetMonth = e => {
+        setMonth(e.target.value);
+    }
+
+    const onSetDay = e => {
+        setDay(e.target.value);
+    }
+
     const onClick = async () => {
         let userId = JSON.parse(window.localStorage.getItem('user'))._id;
         const formData = new FormData();
@@ -104,6 +119,9 @@ function RegisterRoom(){
         formData.append('acreage', officeAcreage);
         formData.append('apartName', apartName);
         formData.append('stage', stage);
+        formData.append('year', year);
+        formData.append('month', month);
+        formData.append('day', day);
 
         //유저 ObjectId
         formData.append('registLessor', userId);
@@ -272,6 +290,45 @@ function RegisterRoom(){
                                 id="formGroupExampleInput"
                                 onChange={
                                     onChangeOfficeAcreage
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>등록 년</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 년도 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetYear
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>등록 월</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 월 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetMonth
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>등록 일</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 일 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetDay
                                 }
                             />
                 </div>
