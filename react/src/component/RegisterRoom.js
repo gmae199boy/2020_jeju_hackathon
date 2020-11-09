@@ -9,7 +9,6 @@ import KakaoMap from './KakaoMap';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -24,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RegisterRoom(){
+    const ROOM_STATE_VACANCY = 1;
+    const ROOM_STATE_CONTRACTING = 2;
+    const ROOM_STATE_CONTRACTED = 4;
+
     const [rooms, setRooms] = useState('');
     const [name, setName] = useState('');
     const [roomType, setRoomType] = useState('');
@@ -33,7 +36,6 @@ function RegisterRoom(){
     const [content, setContent] = useState('');
     const [officeStructure, setOfficeStructure] = useState('');
     const [officeAcreage, setOfficeAcreage]= useState('');
-    const [apartName, setApartName] = useState(null);
     const [stage, setStage] = useState(null);
     const [year, setYear] = useState(null);
     const [month, setMonth] = useState(null);
@@ -45,6 +47,9 @@ function RegisterRoom(){
     const [detailAddress, setDetailAddress] = useState(null);
     const [coordsx, setCoordsx] = useState(null);
     const [coordsy, setCoordsy] = useState(null);
+    const [bcode, setBcode] = useState(null);
+    const [apartName, setApartName] = useState(null);
+    const [jibun, setJibun] = useState(null);
 
     const tempStyle={
         margin : "0 auto",
@@ -113,7 +118,6 @@ function RegisterRoom(){
         formData.append('roomType', roomType);
         formData.append('monthlyPayment', monthlyPayment);
         formData.append('address', address);
-        formData.append('state', state);
         formData.append('content', content);
         formData.append('structure', officeStructure);
         formData.append('acreage', officeAcreage);
@@ -122,6 +126,17 @@ function RegisterRoom(){
         formData.append('year', year);
         formData.append('month', month);
         formData.append('day', day);
+        formData.append('bcode', bcode);
+        formData.append('jibun', jibun);
+
+        switch(state) {
+            case "공실": {
+                formData.append('state', ROOM_STATE_VACANCY);
+            } break;
+            case "계약중": {
+                formData.append('state', ROOM_STATE_CONTRACTING);
+            }
+        }
 
         //유저 ObjectId
         formData.append('registLessor', userId);
@@ -154,16 +169,20 @@ function RegisterRoom(){
         new daum.Postcode({
             oncomplete: function(data) {
                 setAddress(data.address);
-                
+                console.log(data);
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
                     if (status === daum.maps.services.Status.OK) {
 
-                        var result = results[0]; //첫번째 결과의 값을 활용
+                        var result = results[0]; //첫번째 결과의 값을 활용y
 
                         setCoordsx(result.x);
                         setCoordsy(result.y);
+                        const jibunCode = data.jibunAddressEnglish.split(",");
+                        setJibun(jibunCode[0]);
+                        setBcode(data.bcode);
+                        setApartName(data.buildingName)
 
                         // 해당 주소에 대한 좌표를 받아서
                         var coords = new daum.maps.LatLng(result.y, result.x);
@@ -230,6 +249,20 @@ function RegisterRoom(){
             </div>
 
             <div style={tempStyle}>
+                <label>방 상태</label>            
+                    <input
+                      type="text"
+                      name = "name"
+                      placeholder = "방의 상태를 입력"
+                      className="form-control"
+                      id="formGroupExampleInput"
+                      onChange={
+                          onChangeState
+                      }
+                    />
+            </div>
+
+            <div style={tempStyle}>
                 <label>월세</label>
                 <Input
                         type="text"
@@ -270,8 +303,7 @@ function RegisterRoom(){
                         <input
                                 type="text"
                                 name = ""
-                                placeholder = "방 구조를 입력하세요"
-                                value ={officeStructure}
+                                placeholder = "구조 입력"
                                 className="form-control"
                                 id="formGroupExampleInput"
                                 onChange={

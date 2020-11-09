@@ -79,6 +79,7 @@ function RoomDetail() {
     const urlElements = window.location.pathname.split('/');
     const id = (urlElements[2])
     const classes = useStyles();
+    const [info, setInfo] = useState(null);
 
     // 카카오 맵 컴포넌트 
     const [mapView, setMapView] = useState(null);
@@ -96,9 +97,10 @@ function RoomDetail() {
       if(confirm === "네") {
         const reason = prompt("어떤 이유로 신고하시겠습니까?");
         window.alert("신고 처리가 완료되었습니다.");
+        const userInfo = JSON.parse(window.localStorage.getItem('user'))
         await axios.post(`https://blog.nopublihser.dev/room/report/${room.id}`, 
           {
-            registLessee: user._id,
+            registLessee: userInfo.address,
             reason: reason,
           },
         );
@@ -116,12 +118,27 @@ function RoomDetail() {
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
+            if(res.data.state == 1) {
+              res.data.state = "공실";
+            } else { 
+              res.data.state = "계약중";  
+            }
             setRoom(res.data);
             let pp = new Buffer(res.data.images[0]).toString('base64');
             setB64(pp);
             setMimeType("image/png"); // e.g., image/png
 
             setMapView(<KakaoMap coordsx={res.data.coordsx} coordsy={res.data.coordsy}></KakaoMap>);
+
+            // axios.get(`https://blog.nopublisher.dev/api/room_info/${res.data.bcode}/${res.data.year}/${res.data.month}`)
+            //   .then((api) => {
+            //     console.log(api);
+            //     let tmp = new Array();
+            //     api.data.forEach(item => {
+            //       if(item.지번 == res.data.jibun) tmp.push(item);
+            //     });
+            //     console.log(tmp);
+            //   })
         }) 
     }, [])
   
@@ -140,9 +157,10 @@ function RoomDetail() {
               <h5>{room && room.address} </h5>
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
-                  <h6>월세 {room && room.monthlyPayment} 만원 </h6>
-                  <h6>층수 {room && room.structure} 층 </h6>
-                  <h6>전용 면적 {room && room.acreage} m^2 </h6>
+                  <h6>월세 : {room && room.monthlyPayment} 만원 </h6>
+                  <h6>층수 : {room && room.structure} 층 </h6>
+                  <h6>전용 면적 : {room && room.acreage} m^2 </h6>
+                  <h6>방 상태 : {room && room.state}  </h6>
                   <br></br>
               </div>
               <br/>
