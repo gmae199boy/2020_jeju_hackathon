@@ -170,6 +170,10 @@ function RegisterRoom(){
             oncomplete: function(data) {
                 setAddress(data.address);
                 console.log(data);
+                const jibunCode = data.jibunAddressEnglish.split(",");
+                setJibun(jibunCode[0]);
+                setBcode(data.bcode);
+                setApartName(data.buildingName)
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
@@ -179,15 +183,11 @@ function RegisterRoom(){
 
                         setCoordsx(result.x);
                         setCoordsy(result.y);
-                        const jibunCode = data.jibunAddressEnglish.split(",");
-                        setJibun(jibunCode[0]);
-                        setBcode(data.bcode);
-                        setApartName(data.buildingName)
 
                         // 해당 주소에 대한 좌표를 받아서
-                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // var coords = new daum.maps.LatLng(result.y, result.x);
 
-                        setMapView(<KakaoMap coords={coords}></KakaoMap>);
+                        setMapView(<KakaoMap coordsx={result.x} coordsy={result.y}></KakaoMap>);
                     }
                 });
             }
@@ -225,9 +225,9 @@ function RegisterRoom(){
                 <br />
                 {address && address}
                 <br />
-                {address ? 
+                {/* {address ? 
                     <Input placeholder="아파트 명을 입력해" onChange={onChangeApartName}></Input>
-                    : null}
+                    : null} */}
                 {address ? 
                     <Input placeholder="층수를 입력해" onChange={onChangeStage}></Input>
                     : null}

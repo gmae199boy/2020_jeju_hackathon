@@ -97,13 +97,13 @@ function RoomDetail() {
       if(confirm === "네") {
         const reason = prompt("어떤 이유로 신고하시겠습니까?");
         window.alert("신고 처리가 완료되었습니다.");
-        const userInfo = JSON.parse(window.localStorage.getItem('user'))
-        await axios.post(`https://blog.nopublihser.dev/room/report/${room.id}`, 
+        const reportedContent = await axios.post(`https://blog.nopublisher.dev/room/report/${room.id}`, 
           {
-            registLessee: userInfo.address,
+            reportLessee: user.address,
             reason: reason,
           },
         );
+        console.log(reportedContent);
         window.location.href = `http://localhost:3000/RoomDetail/${room.id}`
       } else {
         window.alert("신고 처리가 취소되었습니다.");
@@ -129,16 +129,24 @@ function RoomDetail() {
             setMimeType("image/png"); // e.g., image/png
 
             setMapView(<KakaoMap coordsx={res.data.coordsx} coordsy={res.data.coordsy}></KakaoMap>);
+            console.log(res.data.reported);
+            console.log(typeof res.data.reported);
+            if(res.data.reported.length != 0) {
+              res.data.reported.forEach(item => {
+                window.alert("이 매물은 다음의 이유로 신고 당했다");
+                window.alert(item.reason);
+              })
+            }
 
-            // axios.get(`https://blog.nopublisher.dev/api/room_info/${res.data.bcode}/${res.data.year}/${res.data.month}`)
-            //   .then((api) => {
-            //     console.log(api);
-            //     let tmp = new Array();
-            //     api.data.forEach(item => {
-            //       if(item.지번 == res.data.jibun) tmp.push(item);
-            //     });
-            //     console.log(tmp);
-            //   })
+            axios.get(`https://blog.nopublisher.dev/api/room_info/${res.data.bcode}/${res.data.year}/${res.data.month}`)
+              .then((api) => {
+                console.log(api);
+                let tmp = new Array();
+                api.data.forEach(item => {
+                  if(item.지번 == res.data.jibun) tmp.push(item);
+                });
+                console.log(tmp);
+              })
         }) 
     }, [])
   
@@ -157,6 +165,7 @@ function RoomDetail() {
               <h5>{room && room.address} </h5>
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
+                {room.reported.length != 0 ? <h6 style={{color: "red"}}> 이 매물은 신고 받은 매물입니다</h6> : null}
                   <h6>월세 : {room && room.monthlyPayment} 만원 </h6>
                   <h6>층수 : {room && room.structure} 층 </h6>
                   <h6>전용 면적 : {room && room.acreage} m^2 </h6>
@@ -180,8 +189,10 @@ function RoomDetail() {
           {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} href = {`/contract/${id}`}>
                           계약하기</Button>
           : ""}
-          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} onClick={popupAlert}>
+
+          {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} onClick={popupAlert}>
                           신고하기</Button>
+          : ""}
           <br /> 
           <br />
       </div>  : ""}
