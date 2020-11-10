@@ -9,7 +9,6 @@ import KakaoMap from './KakaoMap';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -24,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RegisterRoom(){
+    const ROOM_STATE_VACANCY = 1;
+    const ROOM_STATE_CONTRACTING = 2;
+    const ROOM_STATE_CONTRACTED = 4;
+
     const [rooms, setRooms] = useState('');
     const [name, setName] = useState('');
     const [roomType, setRoomType] = useState('');
@@ -33,6 +36,10 @@ function RegisterRoom(){
     const [content, setContent] = useState('');
     const [officeStructure, setOfficeStructure] = useState('');
     const [officeAcreage, setOfficeAcreage]= useState('');
+    const [stage, setStage] = useState(null);
+    const [year, setYear] = useState(null);
+    const [month, setMonth] = useState(null);
+    const [day, setDay] = useState(null);
 
     // 카카오 주소검색 한 값
     const [mapView, setMapView] = useState(null);
@@ -40,6 +47,9 @@ function RegisterRoom(){
     const [detailAddress, setDetailAddress] = useState(null);
     const [coordsx, setCoordsx] = useState(null);
     const [coordsy, setCoordsy] = useState(null);
+    const [bcode, setBcode] = useState(null);
+    const [apartName, setApartName] = useState(null);
+    const [jibun, setJibun] = useState(null);
 
     const tempStyle={
         margin : "0 auto",
@@ -64,8 +74,12 @@ function RegisterRoom(){
         setRoomType(e.target.value);
     }
 
-    const onChangeDetailAddress = e => {
-        setDetailAddress(e.target.value);
+    const onChangeApartName = e => {
+        setApartName(e.target.value);
+    }
+
+    const onChangeStage = e => {
+        setStage(e.target.value);
     }
 
     const onChangeState = e => {
@@ -84,6 +98,18 @@ function RegisterRoom(){
         setOfficeStructure(e.target.value);
     }
 
+    const onSetYear = e => {
+        setYear(e.target.value);
+    }
+
+    const onSetMonth = e => {
+        setMonth(e.target.value);
+    }
+
+    const onSetDay = e => {
+        setDay(e.target.value);
+    }
+
     const onClick = async () => {
         let userId = JSON.parse(window.localStorage.getItem('user'))._id;
         const formData = new FormData();
@@ -92,17 +118,32 @@ function RegisterRoom(){
         formData.append('roomType', roomType);
         formData.append('monthlyPayment', monthlyPayment);
         formData.append('address', address);
-        formData.append('state', state);
         formData.append('content', content);
         formData.append('structure', officeStructure);
         formData.append('acreage', officeAcreage);
+        formData.append('apartName', apartName);
+        formData.append('stage', stage);
+        formData.append('year', year);
+        formData.append('month', month);
+        formData.append('day', day);
+        formData.append('bcode', bcode);
+        formData.append('jibun', jibun);
+
+        switch(state) {
+            case "공실": {
+                formData.append('state', ROOM_STATE_VACANCY);
+            } break;
+            case "계약중": {
+                formData.append('state', ROOM_STATE_CONTRACTING);
+            }
+        }
 
         //유저 ObjectId
         formData.append('registLessor', userId);
         // 지도에 마커를 표시할 좌표 x, y
         formData.append('coordsx', coordsx);
         formData.append('coordsy', coordsy);
-        await axios({
+        const res = await axios({
             method : 'POST',
             url : 'https://blog.nopublisher.dev/room/create',
             data : formData,
@@ -111,11 +152,11 @@ function RegisterRoom(){
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
             }
-        }).then((res) => {
-            setRooms(res)
-            console.log(res);
-        });
-        console.log(rooms);
+        })
+
+        setRooms(res);
+        console.log(res);
+        window.location.href = 'http://localhost:3000/mypage';
     }
 
     // 카카오 주소검색 창 팝업
@@ -128,21 +169,25 @@ function RegisterRoom(){
         new daum.Postcode({
             oncomplete: function(data) {
                 setAddress(data.address);
-                
+                console.log(data);
+                const jibunCode = data.jibunAddressEnglish.split(",");
+                setJibun(jibunCode[0]);
+                setBcode(data.bcode);
+                setApartName(data.buildingName)
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
                     if (status === daum.maps.services.Status.OK) {
 
-                        var result = results[0]; //첫번째 결과의 값을 활용
+                        var result = results[0]; //첫번째 결과의 값을 활용y
 
                         setCoordsx(result.x);
                         setCoordsy(result.y);
 
                         // 해당 주소에 대한 좌표를 받아서
-                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // var coords = new daum.maps.LatLng(result.y, result.x);
 
-                        setMapView(<KakaoMap coords={coords}></KakaoMap>);
+                        setMapView(<KakaoMap coordsx={result.x} coordsy={result.y}></KakaoMap>);
                     }
                 });
             }
@@ -180,8 +225,11 @@ function RegisterRoom(){
                 <br />
                 {address && address}
                 <br />
+                {/* {address ? 
+                    <Input placeholder="아파트 명을 입력해" onChange={onChangeApartName}></Input>
+                    : null} */}
                 {address ? 
-                    <Input placeholder="상세 주소를 입력하세요" onChange={onChangeDetailAddress}></Input>
+                    <Input placeholder="층수를 입력해" onChange={onChangeStage}></Input>
                     : null}
                 {address ? 
                     <Button onClick={changeAddress}>확인</Button>
@@ -198,32 +246,20 @@ function RegisterRoom(){
                     <option value="2">오피스텔</option>
                 </select>
                 </div>
-                <div>
-                    {/* <input
-                        type="text"
-                        name = "roomType"
-                        placeholder = "방 종류를 입력하세요"
-                        className="form-control"
-                        id="formGroupExampleInput"
-                        value ={roomType}
-                        onChange={
-                            onChangeRoomType
-                        }
-                    /> */}
-                    {/* <Select
-                    style={{marginTop :'1.7em', marginLeft:'-2em', marginBottom:'-1.5em'}}
-                    labelId="demo-simple-select-placeholder-label-label"
-                    id="demo-simple-select-placeholder-label"
-                    value={roomType}
-                    onChange={onChangeRoomType}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    >
-                    <option value="1" onClick={onClick1}>월세</option>
-                    <option value="2" onClick={onClick2}>오피스텔</option>
-                    </Select> */}
-                    
-                </div>
+            </div>
+
+            <div style={tempStyle}>
+                <label>방 상태</label>            
+                    <input
+                      type="text"
+                      name = "name"
+                      placeholder = "방의 상태를 입력"
+                      className="form-control"
+                      id="formGroupExampleInput"
+                      onChange={
+                          onChangeState
+                      }
+                    />
             </div>
 
             <div style={tempStyle}>
@@ -248,22 +284,6 @@ function RegisterRoom(){
                         accept="image/* "  //업로드 가능한 파일 종류. 
                         onChange={onChangeImg} />
                 </div>
-
-                {/* <input as={Col} controlId="content" sm="3" form-control={{width:'60'}}>
-                    <label>계약서 작성</label>
-                    <br />
-                    <Button variant="outlined"
-                            onClick={
-                                () => {
-                                axios({
-                                    method: 'POST',
-                                    url: `https://blog.nopublisher.dev/room/contract/`
-                                })
-                                }
-                            } >작성하기</Button>
-                    
-                </input> */}
-
                 <div style={tempStyle}>
                     <label>설명</label>
                         <input
@@ -283,8 +303,7 @@ function RegisterRoom(){
                         <input
                                 type="text"
                                 name = ""
-                                placeholder = "방 구조를 입력하세요"
-                                value ={officeStructure}
+                                placeholder = "구조 입력"
                                 className="form-control"
                                 id="formGroupExampleInput"
                                 onChange={
@@ -306,6 +325,45 @@ function RegisterRoom(){
                                 }
                             />
                 </div>
+                <div style={tempStyle}>
+                    <label>등록 년</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 년도 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetYear
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>등록 월</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 월 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetMonth
+                                }
+                            />
+                </div>
+                <div style={tempStyle}>
+                    <label>등록 일</label>
+                        <input
+                                type="text"
+                                name = "content"
+                                placeholder = "등록 일 입력"
+                                className="form-control"
+                                id="formGroupExampleInput"
+                                onChange={
+                                    onSetDay
+                                }
+                            />
+                </div>
                 <div container spacing={1} justify="center">
                     <div style={tempStyle}> 
                         <Button variant="contained" color="green" background-color="#03AE43" style={tempStyle}
@@ -314,7 +372,7 @@ function RegisterRoom(){
                     </div>
                 </div>
             </div>
-            {rooms && <Redirect to="/mypage" /> }
+            {/* {rooms && <Redirect to="/mypage" /> } */}
         </div>
     );
 }

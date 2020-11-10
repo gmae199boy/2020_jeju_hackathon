@@ -79,6 +79,7 @@ function RoomDetail() {
     const urlElements = window.location.pathname.split('/');
     const id = (urlElements[2])
     const classes = useStyles();
+    const [info, setInfo] = useState(null);
 
     // 카카오 맵 컴포넌트 
     const [mapView, setMapView] = useState(null);
@@ -96,12 +97,13 @@ function RoomDetail() {
       if(confirm === "네") {
         const reason = prompt("어떤 이유로 신고하시겠습니까?");
         window.alert("신고 처리가 완료되었습니다.");
-        await axios.post(`https://blog.nopublihser.dev/room/report/${room.id}`, 
+        const reportedContent = await axios.post(`https://blog.nopublisher.dev/room/report/${room.id}`, 
           {
-            registLessee: user._id,
+            reportLessee: user.address,
             reason: reason,
           },
         );
+        console.log(reportedContent);
         window.location.href = `http://localhost:3000/RoomDetail/${room.id}`
       } else {
         window.alert("신고 처리가 취소되었습니다.");
@@ -116,17 +118,35 @@ function RoomDetail() {
         axios.get(`https://blog.nopublisher.dev/room/${id}`)
         .then((res) => {
             console.log(res.data);
+            if(res.data.state == 1) {
+              res.data.state = "공실";
+            } else { 
+              res.data.state = "계약중";  
+            }
             setRoom(res.data);
             let pp = new Buffer(res.data.images[0]).toString('base64');
             setB64(pp);
             setMimeType("image/png"); // e.g., image/png
 
-            const {daum} = window;
+            setMapView(<KakaoMap coordsx={res.data.coordsx} coordsy={res.data.coordsy}></KakaoMap>);
+            console.log(res.data.reported);
+            console.log(typeof res.data.reported);
+            if(res.data.reported.length != 0) {
+              res.data.reported.forEach(item => {
+                window.alert("이 매물은 다음의 이유로 신고 당했다");
+                window.alert(item.reason);
+              })
+            }
 
-            // 해당 주소에 대한 좌표를 받아서
-            const coords = new daum.maps.LatLng(res.data.coordsy, res.data.coordsx);
-
-            setMapView(<KakaoMap coords={coords}></KakaoMap>);
+            axios.get(`https://blog.nopublisher.dev/api/room_info/${res.data.bcode}/${res.data.year}/${res.data.month}`)
+              .then((api) => {
+                console.log(api);
+                let tmp = new Array();
+                api.data.forEach(item => {
+                  if(item.지번 == res.data.jibun) tmp.push(item);
+                });
+                console.log(tmp);
+              })
         }) 
     }, [])
   
@@ -145,9 +165,11 @@ function RoomDetail() {
               <h5>{room && room.address} </h5>
               <div style={{zIndex: '1'}}>
               <div class={classes.formWrapper}>
-                  <h6>월세 {room && room.monthlyPayment} 만원 </h6>
-                  <h6>층수 {room && room.structure} 층 </h6>
-                  <h6>전용 면적 {room && room.acreage} m^2 </h6>
+                {room.reported.length != 0 ? <h6 style={{color: "red"}}> 이 매물은 신고 받은 매물입니다</h6> : null}
+                  <h6>월세 : {room && room.monthlyPayment} 만원 </h6>
+                  <h6>층수 : {room && room.structure} 층 </h6>
+                  <h6>전용 면적 : {room && room.acreage} m^2 </h6>
+                  <h6>방 상태 : {room && room.state}  </h6>
                   <br></br>
               </div>
               <br/>
@@ -167,8 +189,10 @@ function RoomDetail() {
           {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} href = {`/contract/${id}`}>
                           계약하기</Button>
           : ""}
-          <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} onClick={popupAlert}>
+
+          {user && user.userType === 2 ? <Button variant="contained" size="large"  className={classes.margin} style={tempStyle} onClick={popupAlert}>
                           신고하기</Button>
+          : ""}
           <br /> 
           <br />
       </div>  : ""}
