@@ -171,6 +171,39 @@ const confirmContractTransaction = async (contract) => {
     }
 }
 
+const reportContractRoom = async (roomId) => {
+    try {
+        const SC = new caver.klay.Contract(ABI_JSON, ADDRESS);
+        const encodeABI = SC.methods.ReportRoom(
+            roomId
+        ).encodeABI();
+
+        const body = {   
+            "from": "0x6AA3ADE913467a141eec7D537A3Cd19bc0e715a5",
+            "value": "0x0",
+            "to": ADDRESS,
+            "input": encodeABI,
+            "submit": true,
+        };
+
+        // POST /v2/tx/contract/execute
+        const kasFetch = await fetch("https://wallet-api.klaytnapi.com/v2/tx/fd/contract/execute", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Authorization": process.env.BASIC,
+                "Content-Type": "application/json",
+                "x-chain-id": "1001",
+            },
+        });
+
+        return await kasFetch.json();
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+}
+
 export {
     createAccount,
     readAccount,
@@ -179,6 +212,7 @@ export {
     getRoomTransaction,
     getRoomTransactionHash,
     confirmContractTransaction,
+    reportContractRoom,
 };
 // _oOrner,
 // _oAddr,

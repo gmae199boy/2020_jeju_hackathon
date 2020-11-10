@@ -24,6 +24,10 @@ const RoomSchema = new mongoose.Schema({
     address: {
         type: String,
     },
+    apartName:{type: String},
+    stage: {type: String},
+    bcode: {type: String},
+    jibun: {type:String},
     registLessor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Lessor',
@@ -37,8 +41,7 @@ const RoomSchema = new mongoose.Schema({
     reported: [
         {
             reportLessee: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Lessee',
+                type: String,
             },
             reason: {
                 type: String,
@@ -95,6 +98,9 @@ const RoomSchema = new mongoose.Schema({
     ],
     structure: {type: String,},
     acreage: {type: Number,},
+    year: {type: String,},
+    month: {type: String,},
+    day: {type: String,},
 });
 
 RoomSchema.statics.findByRoomName = async function(roomName) {

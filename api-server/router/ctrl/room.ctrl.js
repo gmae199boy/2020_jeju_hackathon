@@ -7,16 +7,24 @@ import {
     registRoomTransaction,
     getRoomTransaction,
     confirmContractTransaction,
+    reportContractRoom,
 } from './kas/kas';
+import convert from 'xml-js';
+import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 import { on } from 'process';
+import moment from 'moment';
 
 const imagePath = path.join(__dirname, "/..", "/..", "/..", "/images/");
 
 const CONTRACT_NONE = 1;
 const CONTRACT_ING = 2;
 const CONTRACT_DONE = 4;
+
+const ROOM_STATE_VACANCY = 1;
+const ROOM_STATE_CONTRACTING = 2;
+const ROOM_STATE_CONTRACTED = 4;
 
 /**
  * 
@@ -193,13 +201,16 @@ const reportRoom = async (req, res) => {
         
         if (!room) return {err: "지정된 방 정보가 없습니다."};
 
+        const report = await reportContractRoom(room.id);
+        console.log(report);
+
         const reportContent = {
             reportLessee: req.body.reportLessee,
             reason: req.body.reason,
         };
 
         const reportedRoom = await Room.updateOne({id: room.id}, {
-            $push: {reportContent}
+            $push: {reported: reportContent}
         });
 
         console.log(reportRoom);

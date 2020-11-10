@@ -8,6 +8,64 @@ const caver = new Caver(rpcURL);
 
 const ABI = `[
 	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rooms",
+		"outputs": [
+			{
+				"name": "registLessor",
+				"type": "address"
+			},
+			{
+				"name": "addr",
+				"type": "string"
+			},
+			{
+				"name": "deposit",
+				"type": "uint32"
+			},
+			{
+				"name": "monthlyPayment",
+				"type": "uint32"
+			},
+			{
+				"name": "state",
+				"type": "uint8"
+			},
+			{
+				"name": "roomType",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_roomId",
+				"type": "uint256"
+			}
+		],
+		"name": "ReportRoom",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": false,
 		"inputs": [
 			{
@@ -40,6 +98,53 @@ const ABI = `[
 		],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "contracts",
+		"outputs": [
+			{
+				"name": "orner",
+				"type": "string"
+			},
+			{
+				"name": "addr",
+				"type": "string"
+			},
+			{
+				"name": "structure",
+				"type": "string"
+			},
+			{
+				"name": "acreage",
+				"type": "string"
+			},
+			{
+				"name": "lessorName",
+				"type": "string"
+			},
+			{
+				"name": "lesseeName",
+				"type": "string"
+			},
+			{
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"name": "term",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -95,57 +200,6 @@ const ABI = `[
 			{
 				"name": "",
 				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "contracts",
-		"outputs": [
-			{
-				"name": "orner",
-				"type": "string"
-			},
-			{
-				"name": "addr",
-				"type": "string"
-			},
-			{
-				"name": "structure",
-				"type": "string"
-			},
-			{
-				"name": "acreage",
-				"type": "string"
-			},
-			{
-				"name": "lessorName",
-				"type": "string"
-			},
-			{
-				"name": "lesseeName",
-				"type": "string"
-			},
-			{
-				"name": "date",
-				"type": "string"
-			},
-			{
-				"name": "term",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"name": "reviews",
@@ -166,50 +220,11 @@ const ABI = `[
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "rooms",
-		"outputs": [
-			{
-				"name": "registLessor",
-				"type": "address"
-			},
-			{
-				"name": "addr",
-				"type": "string"
-			},
-			{
-				"name": "deposit",
-				"type": "uint32"
-			},
-			{
-				"name": "monthlyPayment",
-				"type": "uint32"
-			},
-			{
-				"name": "state",
-				"type": "uint8"
-			},
-			{
-				"name": "roomType",
-				"type": "uint8"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
 	}
 ]`;
 
 const ABI_JSON = JSON.parse(ABI);
-const ADDRESS = "0x7b85e94FFc2CEED1bb529414D831F3C8a82b8E2A";
+const ADDRESS = "0x3141ca9b9aFd0a8996DD84ab84fb01398B5f73Dd";
 const KIP7_ADDRESS = "0xf0CBC46013ee613ACf67821b06ec04EA241AFe4E";
 const KIP17_ADDRESS = "0xf93e8c156A0b96259B7452A05DA6Db03F418A289";
 export {

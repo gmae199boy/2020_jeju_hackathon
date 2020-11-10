@@ -86,7 +86,7 @@ contract Xestate {
                 _term
         );
 
-        contracts[contractIndex++].push(ct);
+        contracts[contractIndex++] = ct;
 
         // KIP7.call(bytes4(keccak256("transfer()")));
 
@@ -102,7 +102,7 @@ contract Xestate {
     // * @param {uint8}  _roomType
     // * @return {bool}  success
     // */
-    /// 매물을 등록하기 위한 트랜잭션 입니다.
+    // // 매물을 등록하기 위한 트랜잭션 입니다.
     function RegistRoom(string memory _addr, uint32 _deposit, uint32 _monthly, 
         uint8 _state, uint8 _roomType
     ) public returns (bool) {
@@ -118,6 +118,11 @@ contract Xestate {
         });
         rooms[roomIndex++] = _room;
         
+        return true;
+    }
+
+    function ReportRoom(uint _roomId) public returns(bool) {
+        rooms[_roomId].reported.push(msg.sender);
         return true;
     }
 }

@@ -19,6 +19,7 @@ import roomRouter from './router/roomRouter';
 import lessorRouter from './router/lessorRouter';
 import lesseeRouter from './router/lesseeRouter';
 import shopRouter from './router/shopRouter';
+import apiCallRouter from './router/apiCallRouter';
 
 import multer from 'fastify-multer';
 import fastifyWs from 'fastify-websocket';
@@ -128,6 +129,7 @@ roomRouter.forEach(route => {fastify.route(route);});
 lessorRouter.forEach(route => {fastify.route(route);});
 lesseeRouter.forEach(route => {fastify.route(route);});
 shopRouter.forEach(route => {fastify.route(route);});
+apiCallRouter.forEach(route => {fastify.route(route);});
 
 // const CLIENT = new Array();
 // fastify.websocketServer.on('connection', function connection(ws) {
